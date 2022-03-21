@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request
+import data_handler
 
 
 app = Flask(__name__)
@@ -11,7 +12,9 @@ def index():
 
 @app.route('/list')
 def list_page():
-    return render_template('list.html')
+    questions = data_handler.read_questions('sample_data/question.csv')
+    headers = data_handler.DATA_HEADER
+    return render_template('list.html', questions=questions, headers=headers)
 
 
 @app.route('/question/<question_id>')

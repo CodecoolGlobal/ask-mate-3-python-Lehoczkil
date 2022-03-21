@@ -231,3 +231,24 @@ body {
         width: 250px;
     }
 }
+
+/* list page */
+
+.list_elements{
+    color: white;
+}
+
+.white_link{
+    display: block;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    margin: 40px 40px;
+    font-weight: 400;
+    transition: 0.5s;
+}
+
+.white_link:hover{
+    color: #DF730E;
+    transition: 0.5s;
+}

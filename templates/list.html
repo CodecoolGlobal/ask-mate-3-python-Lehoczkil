@@ -5,7 +5,30 @@
 
 {% endblock %}
 
-
+id,submission_time,view_number,vote_number,title,message,image
 {% block body %}
-
+    <h1 class="orange" id="list_title">Questions</h1>
+    <table class="list_elements">
+            <thead id="thead">
+                <tr>
+                    {% for header in headers %}
+                    <th>{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for line in questions %}
+                    <tr>
+                        <td>{{ line.id }}</td>
+                        <td>{{ line.submission_time }}</td>
+                        <td>{{ line.view_number }}</td>
+                        <td>{{ line.vote_number }}</td>
+                        <td>{{ line.title }}</td>
+                        <td>{{ line.message }}</td>
+                        <td>{{ line.image }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    <a class="white_link" href="/">Back to Main Page</a>
 {% endblock %}
