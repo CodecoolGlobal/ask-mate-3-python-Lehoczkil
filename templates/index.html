@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+
+    <section id="header">
+        <h1 class="main_header">AskMate</h1>
+        <p class="main_header" id="main_subheader">The answers for your <span class="orange">questions</span>  are here.</p>
+    </section>
+
+    <section class="choices">
+        <div class="row">
+                <a href="{{ url_for('add_question') }}">Ask</a>
+                <a href="{{ url_for('list_page') }}">Browse</a>
+        </div>
+    </section>
+
+   <section class="footer">
+        <div>
+            <h4>@2022 - CODECOOL</h4>
+        </div>
+        <div class="links">
+            <a href="">Cookie policy</a>
+            <a href="">Privacy Policy</a>
+            <a href="">Sitemap</a>
+        </div>
+        <div>
+            <h3>Follow Us:</h3>
+        </div>
+        <div class="icons">
+            <a href="https://www.facebook.com/CodecoolOfficial"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.linkedin.com/school/codecool/"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.youtube.com/channel/UC-6g3oyuajeTki6OKysHqGg"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.instagram.com/codecool_official/"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://twitter.com/Codecool_global"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+    </section>
+{% endblock %}
