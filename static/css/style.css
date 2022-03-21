@@ -240,7 +240,38 @@ body {
 /* list page */
 
 .list_elements{
-    color: white;
+    border-collapse: collapse;
+    margin: auto;
+    font-size: 0.9em;
+    min-width: 400px;
+    width: 95%;
+    box-shadow: 15px 15px 5px rgba(255, 255, 255, 0.15);
+}
+
+.list_elements thead tr{
+    background-color: #009879;
+    color: #ffffff;
+    text-align: center;
+}
+
+.list_elements th, .list_elements td{
+    padding: 12px 15px;
+}
+
+.list_elements tbody tr {
+    border-bottom: thin solid #dddddd;
+}
+
+.list_elements tbody tr:nth-of-type(even) {
+    background-color: grey;
+}
+
+.list_elements tbody tr:nth-of-type(odd) {
+    background-color: white;
+}
+
+.list_elements tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }
 
 .white_link{
@@ -248,7 +279,7 @@ body {
     text-decoration: none;
     color: white;
     font-size: 20px;
-    margin: 40px 40px;
+    margin: 2.5% 0 2.5% 5%;
     font-weight: 400;
     transition: 0.5s;
 }
@@ -256,4 +287,9 @@ body {
 .white_link:hover{
     color: #DF730E;
     transition: 0.5s;
+}
+
+#list_title{
+    text-align: center;
+    font-size: 60px;
 }
