@@ -116,3 +116,118 @@ body {
 .icons .fa-brands:hover{
     color: #DF730E;
 }
+
+@media(max-width:300px){
+
+    html, body {overflow-x: hidden;}
+
+    .main_header{
+        font-size: 30px;
+    }
+
+    #main_subheader{
+        font-size: 12px;
+    }
+
+    .choices{
+        width: 90%;
+    }
+
+    .row {
+        display: block;
+    }
+
+    .row a{
+        margin-top: 20px;
+        width: 200px;
+        font-size:15px;
+    }
+}
+
+@media (min-width:301px) and (max-width:420px){
+
+    html, body {overflow-x: hidden;}
+
+    .main_header{
+        font-size: 40px;
+    }
+
+    #main_subheader{
+        font-size: 15px;
+    }
+
+    .choices{
+        width: 100%;
+    }
+
+    .row {
+        display: block;
+    }
+
+    .row a{
+        margin-top: 20px;
+    }
+}
+
+@media(min-width: 421px) and (max-width: 750px){
+    html, body {overflow-x: hidden;}
+
+    .main_header{
+        font-size: 60px;
+    }
+
+    #main_subheader{
+        font-size: 22px;
+    }
+
+    .choices{
+        width: 80%;
+    }
+
+    .row a{
+        font-size: 15px;
+        width: 180px;
+    }
+}
+
+@media(min-width: 751px) and (max-width: 900px){
+    html, body {overflow-x: hidden;}
+
+    .main_header{
+        font-size: 60px;
+    }
+
+    #main_subheader{
+        font-size: 25px;
+    }
+
+    .choices{
+        width: 80%;
+    }
+
+    .row a{
+        font-size: 23px;
+        width: 220px;
+    }
+}
+
+@media(min-width: 901px) and (max-width: 1100px){
+    html, body {overflow-x: hidden;}
+
+    .main_header{
+        font-size: 70px;
+    }
+
+    #main_subheader{
+        font-size: 30px;
+    }
+
+    .choices{
+        width: 80%;
+    }
+
+    .row a{
+        font-size: 25px;
+        width: 250px;
+    }
+}
