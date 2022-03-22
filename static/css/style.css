@@ -394,3 +394,9 @@ body {
 #message{
     margin-right: 10px;
 }
+
+#no_answer{
+    color: #DF730E;
+    font-size: 25px;
+    font-weight: 500;
+}

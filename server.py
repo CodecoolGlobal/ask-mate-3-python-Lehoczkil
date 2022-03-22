@@ -29,13 +29,12 @@ def questions_page(question_id=None):
     for quest in all_questions:
         if quest['id'] == question_id:
             question = quest
-            question_image = quest['image']
     all_answers = data_handler.read_questions('sample_data/answer.csv')
     answers = []
     for ans in all_answers:
         if ans['question_id'] == question_id:
             answers.append(ans)
-    return render_template('questions.html', question=question, answers=answers, question_image=question_image)
+    return render_template('questions.html', question=question, answers=answers)
 
 
 def allowed_file(filename):

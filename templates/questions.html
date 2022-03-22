@@ -13,11 +13,11 @@
         <div class="question_details">
             <h1>{{ question.title }}</h1>
             <p>{{ question.message }}</p>
-            <img src="/static/images/{{ question_image }}" onerror="this.style.display='none'">
+            <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
         </div>
         <div class="answers">
             {% if not answers %}
-                <p>There are no answers yet</p>
+                <p id="no_answer">There are no answers yet</p>
             {% else %}
             {% endif %}
             {% for answer in answers %}
