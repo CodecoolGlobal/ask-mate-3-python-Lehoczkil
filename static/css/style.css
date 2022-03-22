@@ -400,3 +400,33 @@ body {
     font-size: 25px;
     font-weight: 500;
 }
+
+.question_box{
+    margin: 50px auto;
+    padding: 10px 20px;
+    width: 60%;
+}
+
+.question_form input, .comment-form textarea{
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 50px 0;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    background: #f0f0f0;
+}
+
+.question_form button{
+    margin: 10px 0;
+}
+
+.question_form label{
+    color: white;
+    font-weight: 500;
+}
+
+.form_title{
+    margin-left: 20%;
+}
+
