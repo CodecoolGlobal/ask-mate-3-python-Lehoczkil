@@ -22,8 +22,15 @@ def questions_page():
     return render_template('questions.html')
 
 
-@app.route('/add-question')
+@app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
+    question_fields = ['title', 'message']
+    new_question_data_items = []
+    if request.method == 'POST':
+        for field in question_fields:
+            new_question_data_items.append(request.form[field])
+        data_handler.write_questions('sample_data/question.csv', new_question_data_items)
+        return redirect('/list')
     return render_template('add_question.html')
 
 
