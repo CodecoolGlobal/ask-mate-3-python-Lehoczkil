@@ -34,8 +34,8 @@ def questions_page(question_id=None):
 
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
-    question_fields = ['title', 'message']
-    new_question_data_items = []
+    question_fields = ['title', 'message', 'image']
+    new_question_data_items = ['view', 'vote']
     if request.method == 'POST':
         for field in question_fields:
             new_question_data_items.append(request.form[field])
