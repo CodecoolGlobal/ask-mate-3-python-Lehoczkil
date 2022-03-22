@@ -18,8 +18,13 @@ def list_page():
 
 
 @app.route('/question/<question_id>')
-def questions_page():
-    return render_template('questions.html')
+def questions_page(question_id=None):
+    all_questions = data_handler.read_questions('sample_data/question.csv')
+    question = {}
+    for quest in all_questions:
+        if quest['id'] == question_id:
+            question = quest
+    return render_template('questions.html', question=question)
 
 
 @app.route('/add_question', methods=['GET', 'POST'])
