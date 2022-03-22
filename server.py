@@ -1,8 +1,13 @@
 from flask import Flask, render_template, redirect, url_for, request
 import data_handler
+import os
+from werkzeug.utils import secure_filename
 
+UPLOAD_FOLDER = 'static/images'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 @app.route('/')
@@ -32,13 +37,25 @@ def questions_page(question_id=None):
     return render_template('questions.html', question=question, answers=answers)
 
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
     question_fields = ['title', 'message', 'image']
     new_question_data_items = ['view', 'vote']
     if request.method == 'POST':
         for field in question_fields:
-            new_question_data_items.append(request.form[field])
+            if field == 'image':
+                image_file = request.files['image']
+                if image_file and allowed_file(image_file.filename):
+                    filename = secure_filename(image_file.filename)
+                    image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    new_question_data_items.append(image_file.filename)
+            else:
+                new_question_data_items.append(request.form[field])
         data_handler.write_questions('sample_data/question.csv', new_question_data_items)
         return redirect('/list')
     return render_template('add_question.html')
