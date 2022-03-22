@@ -13,7 +13,7 @@
         <div class="question_details">
             <h1>{{ question.title }}</h1>
             <p>{{ question.message }}</p>
-            <img src="/static/images/{{ question_image }}">
+            <img src="/static/images/{{ question_image }}" onerror="this.style.display='none'">
         </div>
         <div class="answers">
             {% if not answers %}
@@ -24,7 +24,7 @@
                 <div class="answer">
                     <p id="vote">{{ answer.vote_number }}</p>
                     <p id="message">{{ answer.message }}</p>
-                    <img src="/static/images/{{ answer.image }}">
+                    <img src="/static/images/{{ answer.image }}" onerror="this.style.display='none'">
                 </div>
             {% endfor %}
         </div>
