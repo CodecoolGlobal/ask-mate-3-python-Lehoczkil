@@ -13,6 +13,7 @@
         <div class="question_details">
             <h1>{{ question.title }}</h1>
             <p>{{ question.message }}</p>
+            <img src="/static/images/{{ image }}" alt="Image attached to question">
         </div>
         <div class="answers">
             {% if not answers %}
@@ -23,7 +24,7 @@
                 <div class="answer">
                     <p id="vote">{{ answer.vote_number }}</p>
                     <p id="message">{{ answer.message }}</p>
-                    <p id="image">{{ answer.image }}</p>
+                    <img src="/static/images/{{ image }}" alt="Image attached to answer">
                 </div>
             {% endfor %}
         </div>
