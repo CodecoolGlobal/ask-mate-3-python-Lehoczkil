@@ -7,19 +7,58 @@
 
 
 {% block body %}
-    <table>
-        <tr>
-            <td>{{ question.title }}</td>
-        </tr>
-    <tr>
-        <td>{{ question.message }}</td>
-    </tr>
-    {% for answer in answers %}
-        <tr>
-            <td>{{ answer.vote_number }}</td>
-            <td>{{ answer.message }}</td>
-            <td>{{ answer.image }}</td>
-        </tr>
-    {% endfor %}
-    </table>
+    <h1 class="orange" id="list_title">Question Details</h1>
+    <a class="white_link" href="/list">Back to Questions Page</a>
+    <section class="details">
+        <div class="question_details">
+            <h1>{{ question.title }}</h1>
+            <p>{{ question.message }}</p>
+        </div>
+        <div class="answers">
+            {% if not answers %}
+                <p>There are no answers yet</p>
+            {% else %}
+            {% endif %}
+            {% for answer in answers %}
+                <div class="answer">
+                    <p id="vote">{{ answer.vote_number }}</p>
+                    <p id="message">{{ answer.message }}</p>
+                    <p id="image">{{ answer.image }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="footer" id="details-footer">
+        <div>
+            <h4>@2022 - CODECOOL</h4>
+        </div>
+        <div class="links">
+            <a href="">Cookie policy</a>
+            <a href="">Privacy Policy</a>
+            <a href="">Sitemap</a>
+        </div>
+        <div id="footer_follow_us">
+            <div>
+                <h3>Follow Us:</h3>
+            </div>
+            <div class="icons">
+                <div>
+                    <a href="https://www.facebook.com/CodecoolOfficial"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+                <div>
+                    <a href="https://www.linkedin.com/school/codecool/"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+                <div>
+                    <a href="https://www.youtube.com/channel/UC-6g3oyuajeTki6OKysHqGg"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+                <div>
+                    <a href="https://www.instagram.com/codecool_official/"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <div>
+                    <a href="https://twitter.com/Codecool_global"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

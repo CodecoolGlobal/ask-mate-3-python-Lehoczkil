@@ -344,3 +344,53 @@ body {
     font-weight: 700;
     transition: 0.5s;
 }
+
+/* details page */
+
+#details-footer{
+    position: relative;
+    margin-top: 600px;
+}
+
+.details {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.answer{
+    display: flex;
+    color: wheat;
+}
+
+.question_details{
+    width: 30%;
+    text-align: left;
+    margin: auto auto 100px auto;
+}
+
+.question_details h1{
+    color: wheat;
+    font-size: 30px;
+}
+
+.question_details p{
+    color: wheat;
+    font-size: 20px;
+}
+
+#vote{
+    background: #DF730E;
+    border-radius: 50px 50px 50px 50px;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 3px;
+    margin-right: 10px;
+    padding: 10px 0;
+    width: 70px;
+}
+
+#message{
+    margin-right: 10px;
+}
