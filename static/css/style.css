@@ -326,3 +326,21 @@ body {
     text-align: center;
     font-size: 60px;
 }
+
+#list-footer{
+    position: relative;
+    margin-top: 350px;
+}
+
+.table_question_title{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    transition: 0.5s;
+}
+
+.table_question_title:hover{
+    color: darkgreen;
+    font-weight: 700;
+    transition: 0.5s;
+}
