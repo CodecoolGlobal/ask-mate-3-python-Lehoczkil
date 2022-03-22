@@ -68,6 +68,33 @@ body {
     transition: 0.5s;
 }
 
+.ask_question_button {
+    display: block;
+    text-decoration: none;
+    color: white;
+    border: none;
+    width: 250px;
+    padding: 15px 0;
+    background: #DF730E;
+    position: relative;
+    margin: auto;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50px 50px 50px 50px;
+    font-weight: 500;
+    font-size: 25px;
+    transition: 0.5s;
+}
+
+.ask_question_button:hover {
+    background: white;
+    color: #DF730E;
+    font-weight: 700;
+    font-size: 30px;
+    width: 275px;
+    transition: 0.5s;
+}
+
 .footer{
     width: 90%;
     display: flex;
