@@ -7,5 +7,16 @@
 
 
 {% block body %}
-
+    <form action="/add_question" method="post">
+        <label style="display: block; margin-top: 10px">Title:</label>
+        <input type="text" name="title">
+        <label style="display: block; margin-top: 10px">Message:</label>
+        <input type="text" name="message">
+        <label style="display: block; margin-top: 10px">Upload screenshot:</label>
+        <input type="file">
+        {# css class needed for input textfield #}
+        <br>
+        <button type="submit">Submit the question</button>
+        <a class="white_link" href="/list">Back</a>
+    </form>
 {% endblock %}
