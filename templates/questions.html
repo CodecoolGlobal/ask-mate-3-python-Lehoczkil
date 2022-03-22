@@ -7,5 +7,19 @@
 
 
 {% block body %}
-    {{ question }}
+    <table>
+        <tr>
+            <td>{{ question.title }}</td>
+        </tr>
+    <tr>
+        <td>{{ question.message }}</td>
+    </tr>
+    {% for answer in answers %}
+        <tr>
+            <td>{{ answer.vote_number }}</td>
+            <td>{{ answer.message }}</td>
+            <td>{{ answer.image }}</td>
+        </tr>
+    {% endfor %}
+    </table>
 {% endblock %}
