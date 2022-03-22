@@ -7,13 +7,13 @@
 
 
 {% block body %}
-    <form action="/add_question" method="post">
+    <form action="/add_question" method="post" enctype="multipart/form-data">
         <label style="display: block; margin-top: 10px">Title:</label>
         <input type="text" name="title">
         <label style="display: block; margin-top: 10px">Message:</label>
         <input type="text" name="message">
         <label style="display: block; margin-top: 10px">Upload screenshot:</label>
-        <input type="file">
+        <input type="file" name="image" accept="image/jpeg, image/png">
         {# css class needed for input textfield #}
         <br>
         <button type="submit">Submit the question</button>
