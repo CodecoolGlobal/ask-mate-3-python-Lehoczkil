@@ -1,4 +1,6 @@
 import csv
+import calendar
+import time
 
 DATA_HEADER = ['id', 'submission time', 'view number', 'vote number', 'title', 'message', 'image']
 
@@ -14,7 +16,9 @@ def read_questions(filename):
 
 def write_questions(filename, line):
     last_id = len(read_questions(filename))-1
+    timestamp = calendar.timegm(time.gmtime())
     line.insert(0, last_id + 1)
+    line.insert(1, timestamp)
     with open(filename, 'a', newline='') as f:
         fieldnames = DATA_HEADER
         writer = csv.DictWriter(f, fieldnames=fieldnames)
