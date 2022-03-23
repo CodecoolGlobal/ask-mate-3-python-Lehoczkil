@@ -115,7 +115,7 @@ def post_answer(question_id=None):
                     new_data_items.append(image_file.filename)
             else:
                 new_data_items.append(request.form.get(field))
-        data_handler.write_questions('sample_data/answer.csv', new_data_items)
+        data_handler.write_answer('sample_data/answer.csv', new_data_items)
         return redirect('/list')
 
     return render_template('post_answer.html', line=line)

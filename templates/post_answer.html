@@ -13,10 +13,10 @@
         <form class="question_form" action="/question/{{ line.id }}/new-answer" method="POST">
 
             <label for="message">Write your answer here:</label><br>
-            <input type="text" id="message"><br>
+            <input type="text" name="message" id="message"><br>
 
             <label for="image">Upload screenshot:</label>
-            <input type="file" id="image" accept="image/jpeg, image/png">
+            <input type="file" name="image" id="image" accept="image/jpeg, image/png">
             <br>
             <button class="ask_question_button" type="submit">Submit Answer</button>
 
