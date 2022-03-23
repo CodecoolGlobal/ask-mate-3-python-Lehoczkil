@@ -29,6 +29,9 @@
                     <p id="vote">{{ answer.vote_number }}</p>
                     <p id="message">{{ answer.message }}</p>
                     <img src="/static/images/{{ answer.image }}" onerror="this.style.display='none'">
+                    <form action="/answer/{{ answer.id }}/delete" method="POST">
+                        <button type="submit">Delete</button>
+                    </form>
                 </div>
             {% endfor %}
         </div>

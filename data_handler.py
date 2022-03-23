@@ -2,7 +2,8 @@ import csv
 import calendar
 import time
 
-DATA_HEADER = ['id', 'submission time', 'view number', 'vote number', 'title', 'message', 'image']
+QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'title', 'message', 'image']
 
 
 def read_questions(filename):
@@ -20,15 +21,18 @@ def write_questions(filename, line):
     line.insert(0, last_id + 1)
     line.insert(1, timestamp)
     with open(filename, 'a', newline='') as f:
-        fieldnames = DATA_HEADER
+        fieldnames = QUESTION_HEADER
         writer = csv.DictWriter(f, fieldnames=fieldnames)
-        new_row = dict(zip(DATA_HEADER, line))
+        new_row = dict(zip(QUESTION_HEADER, line))
         writer.writerow(new_row)
 
 
 def delete_line(filename, line):
     with open(filename, 'w', newline='') as f:
-        fieldnames = DATA_HEADER
+        if filename == 'sample_data/answer.csv':
+            fieldnames = ANSWER_HEADER
+        elif filename == 'sample_data/question.csv':
+            fieldnames = QUESTION_HEADER
         writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction='ignore')
         writer.writeheader()
         for data in line:

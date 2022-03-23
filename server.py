@@ -19,7 +19,7 @@ def index():
 @app.route('/list')
 def list_page():
     questions = data_handler.read_questions('sample_data/question.csv')
-    headers = data_handler.DATA_HEADER
+    headers = data_handler.QUESTION_HEADER
     return render_template('list.html', questions=questions, headers=headers)
 
 
@@ -97,7 +97,21 @@ def post_answer(question_id=None):
                 new_data_items.append(request.form.get(field))
         data_handler.write_questions('sample_data/answer.csv', new_data_items)
         return redirect('/list')
+
     return render_template('post_answer.html', line=line)
+
+
+@app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
+def delete_answer(answer_id=None):
+    all_answers = data_handler.read_questions('sample_data/answer.csv')
+    new_all_answers = []
+    for ans in all_answers:
+        if ans['id'] == answer_id:
+            continue
+        else:
+            new_all_answers.append(ans)
+    data_handler.delete_line('sample_data/answer.csv', new_all_answers)
+    return redirect('/list')
 
 
 if __name__ == '__main__':
