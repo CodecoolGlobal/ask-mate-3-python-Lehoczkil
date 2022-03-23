@@ -8,9 +8,8 @@
 
 {% block body %}
     <h1 class="orange" id="list_title">Question Details</h1>
-    <a class="white_link" href="/list">Back to Questions Page</a>
+    <a id="left_arrow" href="/list"><i class="fa-solid fa-arrow-left"></i></a>
     <form action="/question/{{ question.id }}/delete">
-    <button type="submit">Delete</button>
     </form>
     <section class="details">
         <div class="question_details">
@@ -18,22 +17,29 @@
             <p>{{ question.message }}</p>
             <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
         </div>
+        <div id="del_div">
+            <button class="red_button" id="del_button" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
         <div class="answers">
-            <a href="/question/{{ question.id }}/new-answer">Post a new answer</a>
+            <a class="red_button" id="new_ans" href="/question/{{ question.id }}/new-answer">Post a new answer</a>
             {% if not answers %}
-                <p id="no_answer">There are no answers yet</p>
+                <div>
+                    <p id="no_answer">There are no answers yet</p>
+                    <i id="sad" class="fa-solid fa-face-frown-open"></i>
+                </div>
             {% else %}
             {% endif %}
-            {% for answer in answers %}
-                <div class="answer">
-                    <p id="vote">{{ answer.vote_number }}</p>
-                    <p id="message">{{ answer.message }}</p>
-                    <img src="/static/images/{{ answer.image }}" onerror="this.style.display='none'">
-                    <form action="/answer/{{ answer.id }}/delete" method="POST">
-                        <button type="submit">Delete</button>
-                    </form>
-                </div>
-            {% endfor %}
+            <div id="all_ans">
+                 {% for answer in answers %}
+                    <div class="answer">
+                        <p id="vote">{{ answer.vote_number }}</p>
+                        <p id="message">{{ answer.message }}</p>
+                        <img src="/static/images/{{ answer.image }}" onerror="this.style.display='none'">
+                        <form action="/answer/{{ answer.id }}/delete" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                 {% endfor %}
         </div>
     </section>
 
