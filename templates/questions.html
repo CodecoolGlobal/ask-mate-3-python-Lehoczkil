@@ -9,6 +9,9 @@
 {% block body %}
     <h1 class="orange" id="list_title">Question Details</h1>
     <a class="white_link" href="/list">Back to Questions Page</a>
+    <form action="/question/{{ question.id }}/delete">
+    <button type="submit">Delete</button>
+    </form>
     <section class="details">
         <div class="question_details">
             <h1>{{ question.title }}</h1>
