@@ -27,7 +27,7 @@ def write_questions(filename, line):
         writer.writerow(new_row)
 
 
-def delete_line(filename, line):
+def update_line(filename, line):
     with open(filename, 'w', newline='') as f:
         if filename == 'sample_data/answer.csv':
             fieldnames = ANSWER_HEADER

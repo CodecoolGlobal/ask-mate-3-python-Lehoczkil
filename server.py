@@ -47,7 +47,7 @@ def delete_question(question_id=None):
             continue
         else:
             new_all_questions.append(quest)
-    data_handler.delete_line('sample_data/question.csv', new_all_questions)
+    data_handler.update_line('sample_data/question.csv', new_all_questions)
     return redirect('/list')
 
 
@@ -73,6 +73,26 @@ def add_question():
         data_handler.write_questions('sample_data/question.csv', new_question_data_items)
         return redirect('/list')
     return render_template('add_question.html')
+
+
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+def edit_question(question_id=None):
+    all_questions = data_handler.read_questions('sample_data/question.csv')
+    new_all_questions = []
+    question = {}
+    if request.method == 'POST':
+        for question in all_questions:
+            if question['id'] == question_id:
+                question['title'] = request.form.get('title')
+                question['message'] = request.form.get('message')
+            new_all_questions.append(question)
+        data_handler.update_line('sample_data/question.csv', new_all_questions)
+        return redirect('/list')
+
+    for quest in all_questions:
+        if quest['id'] == question_id:
+            question = quest
+    return render_template('edit_question.html', question=question)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
@@ -110,7 +130,7 @@ def delete_answer(answer_id=None):
             continue
         else:
             new_all_answers.append(ans)
-    data_handler.delete_line('sample_data/answer.csv', new_all_answers)
+    data_handler.update_line('sample_data/answer.csv', new_all_answers)
     return redirect('/list')
 
 

@@ -1,0 +1,24 @@
+{% extends 'questions.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+    <h1 class="orange" id="list_title">Edit Question Details</h1>
+    <a class="white_link" href="/list">Back to Question's Page</a>
+    <section class="details">
+        <div class="question_details">
+            <form action="/question/{{ question.id }}/edit", method="post">
+                <label>Title</label>
+                <input type="text" size="50" name="title" value="{{ question.title }}">
+                <label>Message</label>
+                <textarea name="message" cols="30" rows="10">{{ question.message }}</textarea>
+                <button type="submit">Update</button>
+            </form>
+            <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+        </div>
+    </section>
+{% endblock %}
