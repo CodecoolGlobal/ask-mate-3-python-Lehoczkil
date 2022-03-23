@@ -28,9 +28,7 @@
                     <i id="sad" class="fa-solid fa-face-frown-open"></i>
                 </div>
             {% else %}
-            {% endif %}
-            <div id="all_ans">
-                 {% for answer in answers %}
+                {% for answer in answers %}
                     <div class="answer">
                         <p id="vote">{{ answer.vote_number }}</p>
                         <p id="message">{{ answer.message }}</p>
@@ -39,7 +37,8 @@
                             <button type="submit">Delete</button>
                         </form>
                     </div>
-                 {% endfor %}
+                {% endfor %}
+            {% endif %}
         </div>
     </section>
 

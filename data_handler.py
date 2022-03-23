@@ -16,7 +16,7 @@ def read_questions(filename):
 
 
 def write_questions(filename, line):
-    last_id = len(read_questions(filename))-1
+    last_id = len(read_questions(filename))
     timestamp = calendar.timegm(time.gmtime())
     line.insert(0, last_id + 1)
     line.insert(1, timestamp)

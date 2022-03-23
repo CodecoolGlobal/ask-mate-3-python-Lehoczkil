@@ -63,13 +63,13 @@ def add_question():
     if request.method == 'POST':
         for field in question_fields:
             if field == 'image':
-                image_file = request.files['image']
+                image_file = request.files.get('image')
                 if image_file and allowed_file(image_file.filename):
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     new_question_data_items.append(image_file.filename)
             else:
-                new_question_data_items.append(request.form[field])
+                new_question_data_items.append(request.form.get(field))
         data_handler.write_questions('sample_data/question.csv', new_question_data_items)
         return redirect('/list')
     return render_template('add_question.html')

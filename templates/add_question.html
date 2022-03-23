@@ -10,14 +10,17 @@
     <h1 class="orange" id="list_title">Add Question</h1>
     <a id="left_arrow" href="/list"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="question_box">
-        <form class="question_form" action="/add_question" method="post" enctype="multipart/form-data">
-            <label for="title">Title:</label>
-            <input type="text" id="title">
-            <label for="message">Message:</label>
-            <input type="text" id="message">
-            <label for="image">Upload screenshot:</label>
-            <input type="file" id="image" accept="image/jpeg, image/png">
-            <button class="ask_question_button" type="submit">Submit</button>
+        <form action="/add_question" method="post" enctype="multipart/form-data">
+            <label style="display: block; margin-top: 10px">Title:</label>
+            <input type="text" name="title">
+            <label style="display: block; margin-top: 10px">Message:</label>
+            <input type="text" name="message">
+            <label style="display: block; margin-top: 10px">Upload screenshot:</label>
+            <input type="file" name="image" accept="image/jpeg, image/png">
+            {# css class needed for input textfield #}
+            <br>
+            <button type="submit">Submit the question</button>
+            <a class="white_link" href="/list">Back</a>
         </form>
     </div>
     <section class="footer" id="details-footer">
