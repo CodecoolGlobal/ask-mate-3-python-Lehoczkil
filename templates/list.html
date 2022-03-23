@@ -2,7 +2,7 @@
 
 
 {% block head %}
-
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 {% endblock %}
 
 
@@ -11,7 +11,7 @@
     <a class="ask_question_button" href="{{ url_for('add_question') }}">Ask a question</a>
     <a class="white_link" href="/">Back to Main Page</a>
 
-    <table class="list_elements">
+    <table class="sortable list_elements">
             <thead>
                 <tr>
                     {% for header in headers %}
