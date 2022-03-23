@@ -21,23 +21,25 @@
             <button class="red_button" id="del_button" type="submit"><i class="fa-solid fa-trash-can"></i></button>
         </div>
         <div class="answers">
-            <a class="red_button" id="new_ans" href="/question/{{ question.id }}/new-answer">Post a new answer</a>
+            <a class="red_button" id="new_ans" href="/question/{{ question.id }}/new-answer">Post answer <i class="fa-solid fa-pen-to-square"></i></a>
             {% if not answers %}
                 <div>
                     <p id="no_answer">There are no answers yet</p>
                     <i id="sad" class="fa-solid fa-face-frown-open"></i>
                 </div>
             {% else %}
-                {% for answer in answers %}
-                    <div class="answer">
-                        <p id="vote">{{ answer.vote_number }}</p>
-                        <p id="message">{{ answer.message }}</p>
-                        <img src="/static/images/{{ answer.image }}" onerror="this.style.display='none'">
-                        <form action="/answer/{{ answer.id }}/delete" method="POST">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </div>
-                {% endfor %}
+                <div id="answer_container">
+                    {% for answer in answers %}
+                        <div class="answer">
+                            <p id="vote">{{ answer.vote_number }}</p>
+                            <p id="message">{{ answer.message }}</p>
+                            <img src="/static/images/{{ answer.image }}" onerror="this.style.display='none'">
+                            <form action="/answer/{{ answer.id }}/delete" method="POST">
+                                <button id="del_ans" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                </div>
             {% endif %}
         </div>
     </section>

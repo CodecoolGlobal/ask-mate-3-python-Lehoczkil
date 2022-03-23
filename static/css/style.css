@@ -7,7 +7,7 @@ body {
 }
 
 #header{
-    margin-top: 150px;
+    margin-top: 7%;
     text-align: center;
 }
 
@@ -33,7 +33,7 @@ body {
     width: 50%;
     margin: auto;
     text-align: center;
-    padding-top: 50px;
+    padding-top: 5%;
     color: white;
 }
 
@@ -329,7 +329,7 @@ body {
 
 #list-footer{
     position: relative;
-    margin-top: 350px;
+    margin-top: 10%;
 }
 
 .table_question_title{
@@ -348,7 +348,7 @@ body {
 
 #details-footer{
     position: relative;
-    margin-top: 600px;
+    margin-top: 15%;
 }
 
 .details {
@@ -358,8 +358,15 @@ body {
 }
 
 .answer{
+    background: white;
+    border: none;
+    border-radius: 25px 25px 25px 25px;
+    color: #302D2D;
     display: flex;
-    color: wheat;
+    font-weight: 500;
+    margin-bottom: 2%;
+    padding-top: 1.5%;
+    padding-left: 5%;
 }
 
 .question_details{
@@ -489,10 +496,6 @@ body {
     font-size: 50px;
 }
 
-#all_ans{
-    margin-top: 10%;
-}
-
 .list_arrow{
     margin-bottom: 2.5%;
 }
@@ -500,4 +503,26 @@ body {
 #post_ans_title{
     margin-top: 5%;
     text-align: center;
+}
+
+#answer_container{
+    margin-top: 10%;
+}
+
+#del_ans{
+    background: #e1340a;
+    border: none;
+    border-radius: 50px 50px 50px 50px;
+    color: white;
+    font-size: 15px;
+    margin-top: 8px;
+    margin-left: 5px;
+    padding: 10px 20px;
+    transition: 0.5s;
+}
+
+#del_ans:hover{
+    background: #a82404;
+    font-size: 16px;
+    transition: 0.5s;
 }
