@@ -18,7 +18,9 @@
             <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
         </div>
         <div id="del_div">
-            <button class="red_button" id="del_button" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+            <form action="/question/{{ question.id }}/delete">
+                <button class="red_button" id="del_button" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+            </form>
         </div>
         <div class="answers">
             <a class="red_button" id="new_ans" href="/question/{{ question.id }}/new-answer">Post answer <i class="fa-solid fa-pen-to-square"></i></a>
