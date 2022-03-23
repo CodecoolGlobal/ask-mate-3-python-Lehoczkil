@@ -7,5 +7,15 @@
 
 
 {% block body %}
+    <h1>{{ title }}</h1>
+    <form action="/question/{{ line.id }}/new-answer" method="POST">
 
+        <label for="message">Write your answer here:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50"></textarea><br>
+
+        <label for="image">Upload screenshot:</label>
+        <input type="file" id="image" accept="image/jpeg, image/png">
+        <br>
+        <button type="submit">Submit Answer</button>
+    </form>
 {% endblock %}

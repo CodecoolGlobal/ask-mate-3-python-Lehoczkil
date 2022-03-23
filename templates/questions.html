@@ -16,6 +16,7 @@
             <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
         </div>
         <div class="answers">
+            <a href="/question/{{ question.id }}/new-answer">Post a new answer</a>
             {% if not answers %}
                 <p id="no_answer">There are no answers yet</p>
             {% else %}

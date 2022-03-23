@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 import data_handler
 import os
 from werkzeug.utils import secure_filename
+from datetime import date as dt
 
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -22,7 +23,7 @@ def list_page():
     return render_template('list.html', questions=questions, headers=headers)
 
 
-@app.route('/question/<question_id>')
+@app.route('/question/<question_id>', methods=['GET', 'POST'])
 def questions_page(question_id=None):
     all_questions = data_handler.read_questions('sample_data/question.csv')
     question = {}
@@ -61,9 +62,29 @@ def add_question():
     return render_template('add_question.html')
 
 
-@app.route('/question/<question_id>/new-answer')
-def post_answer():
-    return render_template('post_answer.html')
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+def post_answer(question_id=None):
+    all_questions = data_handler.read_questions('sample_data/question.csv')
+    answer_fields = ['message', 'image']
+    new_data_items = [0, question_id]
+    line = {}
+    for quest in all_questions:
+        if quest['id'] == question_id:
+            line = quest
+
+    if request.method == 'POST':
+        for field in answer_fields:
+            if field == 'image':
+                image_file = request.files.get('image')
+                if image_file and allowed_file(image_file.filename):
+                    filename = secure_filename(image_file.filename)
+                    image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    new_data_items.append(image_file.filename)
+            else:
+                new_data_items.append(request.form.get(field))
+        data_handler.write_questions('sample_data/answer.csv', new_data_items)
+        return redirect('/list')
+    return render_template('post_answer.html', line=line)
 
 
 if __name__ == '__main__':
