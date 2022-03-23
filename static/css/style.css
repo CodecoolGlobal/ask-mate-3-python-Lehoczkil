@@ -493,3 +493,12 @@ body {
 #all_ans{
     margin-top: 10%;
 }
+
+.list_arrow{
+    margin-bottom: 2.5%;
+}
+
+#post_ans_title{
+    margin-top: 5%;
+    text-align: center;
+}
