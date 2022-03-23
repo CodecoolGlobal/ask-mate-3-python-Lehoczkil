@@ -38,6 +38,19 @@ def questions_page(question_id=None):
     return render_template('questions.html', question=question, answers=answers)
 
 
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id=None):
+    all_questions = data_handler.read_questions('sample_data/question.csv')
+    new_all_questions = []
+    for quest in all_questions:
+        if quest['id'] == question_id:
+            continue
+        else:
+            new_all_questions.append(quest)
+    data_handler.delete_line('sample_data/question.csv', new_all_questions)
+    return redirect('/list')
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
