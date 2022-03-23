@@ -24,3 +24,12 @@ def write_questions(filename, line):
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         new_row = dict(zip(DATA_HEADER, line))
         writer.writerow(new_row)
+
+
+def delete_line(filename, line):
+    with open(filename, 'w', newline='') as f:
+        fieldnames = DATA_HEADER
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction='ignore')
+        writer.writeheader()
+        for data in line:
+            writer.writerow(data)
