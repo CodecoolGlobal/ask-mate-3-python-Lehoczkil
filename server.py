@@ -60,7 +60,7 @@ def allowed_file(filename):
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
     question_fields = ['title', 'message', 'image']
-    new_question_data_items = ['view', 'vote']
+    new_question_data_items = ['0', '0']
     if request.method == 'POST':
         for field in question_fields:
             if field == 'image':
@@ -134,6 +134,34 @@ def delete_answer(answer_id=None):
             new_all_answers.append(ans)
     data_handler.update_line('sample_data/answer.csv', new_all_answers)
     return redirect('/question/' + question_id)
+
+
+@app.route('/question/<question_id>/vote-down', methods=['GET', 'POST'])
+def vote_down(question_id=None):
+    all_questions = data_handler.read_questions('sample_data/question.csv')
+    new_all_questions = []
+    for quest in all_questions:
+        if quest['id'] == question_id:
+            quest['vote_number'] = str(int(quest['vote_number']) - 1)
+            new_all_questions.append(quest)
+        else:
+            new_all_questions.append(quest)
+    data_handler.update_line('sample_data/question.csv', new_all_questions)
+    return redirect('/list')
+
+
+@app.route('/question/<question_id>/vote-up', methods=['GET', 'POST'])
+def vote_up(question_id=None):
+    all_questions = data_handler.read_questions('sample_data/question.csv')
+    new_all_questions = []
+    for quest in all_questions:
+        if quest['id'] == question_id:
+            quest['vote_number'] = str(int(quest['vote_number']) + 1)
+            new_all_questions.append(quest)
+        else:
+            new_all_questions.append(quest)
+    data_handler.update_line('sample_data/question.csv', new_all_questions)
+    return redirect('/list')
 
 
 if __name__ == '__main__':

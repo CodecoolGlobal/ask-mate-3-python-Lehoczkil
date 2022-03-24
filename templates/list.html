@@ -25,7 +25,13 @@
                         <td>{{ line.id }}</td>
                         <td>{{ date[questions.index(line)] }}</td>
                         <td>{{ line.view_number }}</td>
-                        <td>{{ line.vote_number }}</td>
+                        <td><form action="/question/{{ line.id }}/vote-up" method="post">
+                            <button type="submit">UP</button>
+                        </form>
+                            {{ line.vote_number }}
+                        <form action="/question/{{ line.id }}/vote-down" method="post">
+                            <button type="submit">DOWN</button>
+                        </form> </td>
                         <td><a class="table_question_title" href="/question/{{ line.id }}">{{ line.title }}</a></td>
                         <td>{{ line.message }}</td>
                         <td>{{ line.image }}</td>
