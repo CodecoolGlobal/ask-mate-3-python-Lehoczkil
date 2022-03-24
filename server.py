@@ -137,12 +137,12 @@ def delete_answer(answer_id=None):
 
 
 @app.route('/question/<question_id>/vote-down', methods=['GET', 'POST'])
-def vote_down(question_id=None):
+def question_vote_down(question_id=None):
     all_questions = data_handler.read_questions('sample_data/question.csv')
     new_all_questions = []
     for quest in all_questions:
         if quest['id'] == question_id:
-            quest['vote_number'] = str(int(quest['vote_number']) - 1)
+            quest['vote_number'] = int(quest['vote_number']) - 1
             new_all_questions.append(quest)
         else:
             new_all_questions.append(quest)
@@ -151,17 +151,47 @@ def vote_down(question_id=None):
 
 
 @app.route('/question/<question_id>/vote-up', methods=['GET', 'POST'])
-def vote_up(question_id=None):
+def question_vote_up(question_id=None):
     all_questions = data_handler.read_questions('sample_data/question.csv')
     new_all_questions = []
     for quest in all_questions:
         if quest['id'] == question_id:
-            quest['vote_number'] = str(int(quest['vote_number']) + 1)
+            quest['vote_number'] = int(quest['vote_number']) + 1
             new_all_questions.append(quest)
         else:
             new_all_questions.append(quest)
     data_handler.update_line('sample_data/question.csv', new_all_questions)
     return redirect('/list')
+
+
+@app.route('/answer/<answer_id>/vote-up', methods=['GET', 'POST'])
+def answer_vote_up(answer_id=None):
+    all_answers = data_handler.read_questions('sample_data/answer.csv')
+    new_all_answers = []
+    for answer in all_answers:
+        if answer['id'] == answer_id:
+            question_id = answer['question_id']
+            answer['vote_number'] = int(answer['vote_number']) + 1
+            new_all_answers.append(answer)
+        else:
+            new_all_answers.append(answer)
+    data_handler.update_line('sample_data/answer.csv', new_all_answers)
+    return redirect('/question/' + question_id)
+
+
+@app.route('/answer/<answer_id>/vote-down', methods=['GET', 'POST'])
+def answer_vote_down(answer_id=None):
+    all_answers = data_handler.read_questions('sample_data/answer.csv')
+    new_all_answers = []
+    for answer in all_answers:
+        if answer['id'] == answer_id:
+            question_id = answer['question_id']
+            answer['vote_number'] = int(answer['vote_number']) - 1
+            new_all_answers.append(answer)
+        else:
+            new_all_answers.append(answer)
+    data_handler.update_line('sample_data/answer.csv', new_all_answers)
+    return redirect('/question/' + question_id)
 
 
 if __name__ == '__main__':
