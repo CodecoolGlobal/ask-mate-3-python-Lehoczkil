@@ -2,12 +2,20 @@
 
 
 {% block head %}
-    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
 {% endblock %}
 
 
 {% block body %}
     <h1 class="orange" id="list_title">Questions</h1>
+    <form action="/list" method="post">
+        <label for="select_sort">Sort by:</label><br>
+            <select name="select_sort" id="select_sort" onchange="this.form.submit()">
+                {% for header in headers %}
+                     <option value="{{ header }}">{{ header }}</option>
+                {% endfor %}
+            </select>
+    </form>
     <a class="ask_question_button" href="{{ url_for('add_question') }}">Ask a question</a>
     <a id="left_arrow" href="/"><i class="fa-solid fa-arrow-left list_arrow"></i></a>
 

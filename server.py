@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 import data_handler
 import os
 from werkzeug.utils import secure_filename
+from operator import itemgetter
 
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -15,11 +16,18 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/list')
+@app.route('/list', methods=['GET', 'POST'])
 def list_page():
     questions = data_handler.read_questions('sample_data/question.csv')
     headers = data_handler.QUESTION_HEADER
     converted_dates = data_handler.convert_date()
+
+    if request.method == 'POST':
+        select_id = request.form.get('select_sort')
+
+        questions = sorted(questions,
+                           key=lambda dicti: int(dicti[select_id]) if dicti[select_id].lstrip("-").isnumeric() else dicti[select_id].lower())
+
     return render_template('list.html', questions=questions, headers=headers, date=converted_dates)
 
 
@@ -36,7 +44,8 @@ def questions_page(question_id=None):
     for ans in all_answers:
         if ans['question_id'] == question_id:
             answers.append(ans)
-    return render_template('questions.html', question=question, answers=answers, date=converted_dates, id=int(question.get('id')) - 1)
+    return render_template('questions.html', question=question, answers=answers,
+                           date=converted_dates, id=int(question['id']))
 
 
 @app.route('/question/<question_id>/delete')
