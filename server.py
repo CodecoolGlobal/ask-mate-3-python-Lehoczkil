@@ -60,7 +60,7 @@ def allowed_file(filename):
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
     question_fields = ['title', 'message', 'image']
-    new_question_data_items = ['0', '0']
+    new_question_data_items = [0, 0]
     if request.method == 'POST':
         for field in question_fields:
             if field == 'image':
@@ -68,7 +68,7 @@ def add_question():
                 if image_file and allowed_file(image_file.filename):
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    new_question_data_items.append(image_file.filename)
+                    new_question_data_items.append(filename)
             else:
                 new_question_data_items.append(request.form.get(field))
         data_handler.write_questions('sample_data/question.csv', new_question_data_items)
@@ -113,7 +113,7 @@ def post_answer(question_id=None):
                 if image_file and allowed_file(image_file.filename):
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    new_data_items.append(image_file.filename)
+                    new_data_items.append(filename)
             else:
                 new_data_items.append(request.form.get(field))
         data_handler.write_answer('sample_data/answer.csv', new_data_items)

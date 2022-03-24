@@ -565,3 +565,17 @@ body {
     text-align: center;
     margin-top: 5%;
 }
+
+.vote_button{
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    padding: 0;
+    transition: 0.5s;
+}
+
+.vote_button:hover{
+    color: #a82404;
+    font-size: 22px;
+    transition: 0.5s;
+}
