@@ -13,9 +13,9 @@
         <div class="question_details">
             <div class="question_box">
                 <form class="question_form" action="/question/{{ question.id }}/edit", method="post">
-                    <label for="title" id="edit_question_label">Title</label>
+                    <label for="title edit" id="edit_question_label">Title</label>
                     <input type="text" size="50" name="title" id="title edit" value="{{ question.title }}">
-                    <label for="message" id="edit_question_label">Message</label>
+                    <label for="message edit" id="edit_question_label">Message</label>
                     <input type="text" id="message edit" name="message" value="{{ question.message }}">
                     <button class="red_button" type="submit"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
                 </form>
