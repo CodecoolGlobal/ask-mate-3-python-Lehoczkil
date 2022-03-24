@@ -7,18 +7,20 @@
 
 
 {% block body %}
-    <h1 class="orange" id="list_title">Edit Question Details</h1>
-    <a class="white_link" href="/list">Back to Question's Page</a>
+    <h1 class="orange" id="list_title">Edit Question</h1>
+    <a id="left_arrow" href="/list"><i class="fa-solid fa-arrow-left"></i></a>
     <section class="details">
         <div class="question_details">
-            <form action="/question/{{ question.id }}/edit", method="post">
-                <label>Title</label>
-                <input type="text" size="50" name="title" value="{{ question.title }}">
-                <label>Message</label>
-                <textarea name="message" cols="30" rows="10">{{ question.message }}</textarea>
-                <button type="submit">Update</button>
-            </form>
-            <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+            <div class="question_box">
+                <form class="question_form" action="/question/{{ question.id }}/edit", method="post">
+                    <label for="title" id="edit_question_label">Title</label>
+                    <input type="text" size="50" name="title" id="title edit" value="{{ question.title }}">
+                    <label for="message" id="edit_question_label">Message</label>
+                    <input type="text" id="message edit" name="message" value="{{ question.message }}">
+                    <button class="red_button" type="submit"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+                </form>
+                <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+            </div>
         </div>
     </section>
 {% endblock %}

@@ -13,6 +13,11 @@
     </form>
     <section class="details">
         <div class="question_details">
+            <div id="edit_container">
+                <a href="/question/{{ question.id }}/edit">
+                    <i class="fa-solid fa-file-pen"></i>
+                </a>
+            </div>
             <h1>{{ question.title }}</h1>
             <p>{{ question.message }}</p>
             <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
