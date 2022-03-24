@@ -13,11 +13,12 @@ def read_questions(filename):
         reader = csv.DictReader(f)
         for row in reader:
             rows.append(row)
-    return rows[::-1]
+    return rows
 
 
 def write_questions(filename, line):
-    last_id = len(read_questions(filename))
+    id_s = [int(question[QUESTION_HEADER[0]]) for question in read_questions(filename)]
+    last_id = max(id_s)
     timestamp = calendar.timegm(time.gmtime())
     line.insert(0, last_id + 1)
     line.insert(1, timestamp)
@@ -29,7 +30,8 @@ def write_questions(filename, line):
 
 
 def write_answer(filename, line):
-    last_id = len(read_questions(filename))
+    id_s = [int(question[QUESTION_HEADER[0]]) for question in read_questions(filename)]
+    last_id = max(id_s)
     timestamp = calendar.timegm(time.gmtime())
     line.insert(0, last_id + 1)
     line.insert(1, timestamp)
