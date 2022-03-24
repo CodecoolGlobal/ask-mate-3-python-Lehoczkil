@@ -87,7 +87,7 @@ def edit_question(question_id=None):
                 question['message'] = request.form.get('message')
             new_all_questions.append(question)
         data_handler.update_line('sample_data/question.csv', new_all_questions)
-        return redirect('/list')
+        return redirect('/question/' + question_id)
 
     for quest in all_questions:
         if quest['id'] == question_id:
@@ -125,13 +125,14 @@ def post_answer(question_id=None):
 def delete_answer(answer_id=None):
     all_answers = data_handler.read_questions('sample_data/answer.csv')
     new_all_answers = []
+    question_id = 0
     for ans in all_answers:
         if ans['id'] == answer_id:
-            continue
+            question_id = ans['question_id']
         else:
             new_all_answers.append(ans)
     data_handler.update_line('sample_data/answer.csv', new_all_answers)
-    return redirect('/list')
+    return redirect('/question/' + question_id)
 
 
 if __name__ == '__main__':
