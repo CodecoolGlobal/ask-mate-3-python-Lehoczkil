@@ -18,7 +18,10 @@ def read_questions(filename):
 
 def write_questions(filename, line):
     id_s = [int(question[QUESTION_HEADER[0]]) for question in read_questions(filename)]
-    last_id = max(id_s)
+    try:
+        last_id = max(id_s)
+    except ValueError:
+        last_id = 0
     timestamp = calendar.timegm(time.gmtime())
     line.insert(0, last_id + 1)
     line.insert(1, timestamp)
@@ -31,7 +34,10 @@ def write_questions(filename, line):
 
 def write_answer(filename, line):
     id_s = [int(question[ANSWER_HEADER[0]]) for question in read_questions(filename)]
-    last_id = max(id_s)
+    try:
+        last_id = max(id_s)
+    except ValueError:
+        last_id = 0
     timestamp = calendar.timegm(time.gmtime())
     line.insert(0, last_id + 1)
     line.insert(1, timestamp)
