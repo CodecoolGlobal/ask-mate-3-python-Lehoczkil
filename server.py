@@ -168,13 +168,14 @@ def question_vote_up(question_id=None):
 def answer_vote_up(answer_id=None):
     all_answers = data_handler.read_questions('sample_data/answer.csv')
     new_all_answers = []
-    for answer in all_answers:
-        if answer['id'] == answer_id:
-            question_id = answer['question_id']
-            answer['vote_number'] = int(answer['vote_number']) + 1
-            new_all_answers.append(answer)
-        else:
-            new_all_answers.append(answer)
+    if request.method == 'POST':
+        for answer in all_answers:
+            if answer['id'] == answer_id:
+                question_id = answer['question_id']
+                answer['vote_number'] = int(answer['vote_number']) + 1
+                new_all_answers.append(answer)
+            else:
+                new_all_answers.append(answer)
     data_handler.update_line('sample_data/answer.csv', new_all_answers)
     return redirect('/question/' + question_id)
 
@@ -183,13 +184,14 @@ def answer_vote_up(answer_id=None):
 def answer_vote_down(answer_id=None):
     all_answers = data_handler.read_questions('sample_data/answer.csv')
     new_all_answers = []
-    for answer in all_answers:
-        if answer['id'] == answer_id:
-            question_id = answer['question_id']
-            answer['vote_number'] = int(answer['vote_number']) - 1
-            new_all_answers.append(answer)
-        else:
-            new_all_answers.append(answer)
+    if request.method == 'POST':
+        for answer in all_answers:
+            if answer['id'] == answer_id:
+                question_id = answer['question_id']
+                answer['vote_number'] = int(answer['vote_number']) - 1
+                new_all_answers.append(answer)
+            else:
+                new_all_answers.append(answer)
     data_handler.update_line('sample_data/answer.csv', new_all_answers)
     return redirect('/question/' + question_id)
 

@@ -41,11 +41,11 @@
                 <div id="answer_container">
                     {% for answer in answers %}
                         <div class="answer">
-                            <form action="/answer/{{ question.id }}/vote-up" method="POST">
+                            <form action="/answer/{{ answer.id }}/vote-up" method="POST">
                                 <button type="submit">UP</button>
                             </form>
                             <p id="vote">{{ answer.vote_number }}</p>
-                            <form action="/answer/{{ question.id }}/vote-down" method="POST">
+                            <form action="/answer/{{ answer.id }}/vote-down" method="POST">
                                 <button type="submit">DOWN</button>
                             </form>
                             <p id="message">{{ answer.message }}</p>
