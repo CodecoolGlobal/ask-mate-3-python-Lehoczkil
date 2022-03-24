@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 import data_handler
 import os
 from werkzeug.utils import secure_filename
-from datetime import date as dt
+from datetime import datetime
 
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -20,7 +20,11 @@ def index():
 def list_page():
     questions = data_handler.read_questions('sample_data/question.csv')
     headers = data_handler.QUESTION_HEADER
-    return render_template('list.html', questions=questions, headers=headers)
+    converted_dates = []
+    for question in questions:
+        question_date = int(data_handler.find_question_date(question['id']))
+        converted_dates.append(datetime.fromtimestamp(question_date))
+    return render_template('list.html', questions=questions, headers=headers, date=converted_dates)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])

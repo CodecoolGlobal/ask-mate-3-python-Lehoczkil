@@ -38,6 +38,7 @@ def write_answer(filename, line):
         new_row = dict(zip(ANSWER_HEADER, line))
         writer.writerow(new_row)
 
+
 def update_line(filename, line):
     with open(filename, 'w', newline='') as f:
         if filename == 'sample_data/answer.csv':
@@ -48,3 +49,11 @@ def update_line(filename, line):
         writer.writeheader()
         for data in line:
             writer.writerow(data)
+
+
+def find_question_date(question_id=None):
+    all_questions = read_questions('sample_data/question.csv')
+    for question in all_questions:
+        if question[QUESTION_HEADER[0]] == question_id:
+            question_date = question[QUESTION_HEADER[1]]
+            return question_date
