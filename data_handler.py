@@ -1,6 +1,7 @@
 import csv
 import calendar
 import time
+from datetime import datetime
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
@@ -51,9 +52,10 @@ def update_line(filename, line):
             writer.writerow(data)
 
 
-def find_question_date(question_id=None):
+def convert_date():
     all_questions = read_questions('sample_data/question.csv')
+    converted_dates = []
     for question in all_questions:
-        if question[QUESTION_HEADER[0]] == question_id:
-            question_date = question[QUESTION_HEADER[1]]
-            return question_date
+        question_date = int(question[QUESTION_HEADER[1]])
+        converted_dates.append(datetime.fromtimestamp(question_date))
+    return converted_dates
