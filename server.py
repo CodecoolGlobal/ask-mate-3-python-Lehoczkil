@@ -26,6 +26,7 @@ def list_page():
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def questions_page(question_id=None):
     all_questions = data_handler.read_questions('sample_data/question.csv')
+    converted_dates = data_handler.convert_date()
     question = {}
     for quest in all_questions:
         if quest['id'] == question_id:
@@ -35,7 +36,7 @@ def questions_page(question_id=None):
     for ans in all_answers:
         if ans['question_id'] == question_id:
             answers.append(ans)
-    return render_template('questions.html', question=question, answers=answers)
+    return render_template('questions.html', question=question, answers=answers, date=converted_dates, id=int(question['id']))
 
 
 @app.route('/question/<question_id>/delete')
