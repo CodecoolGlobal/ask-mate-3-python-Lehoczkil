@@ -41,20 +41,23 @@
                 <div id="answer_container">
                     {% for answer in answers %}
                         <div class="answer">
-                            <div id="vote_container">
-                                <form action="/answer/{{ answer.id }}/vote-up" method="POST">
-                                    <button type="submit" class="vote_button" ><i class="fa-solid fa-angle-up"></i></button>
-                                </form>
-                                <form action="/answer/{{ answer.id }}/vote-down" method="POST">
-                                    <button type="submit" class="vote_button" ><i class="fa-solid fa-angle-down"></i></button>
+                            <div id="answer-flex">
+                                <div id="vote_container">
+                                    <form action="/answer/{{ answer.id }}/vote-up" method="POST">
+                                        <button type="submit" class="vote_button" ><i class="fa-solid fa-angle-up"></i></button>
+                                    </form>
+                                    <form action="/answer/{{ answer.id }}/vote-down" method="POST">
+                                        <button type="submit" class="vote_button" ><i class="fa-solid fa-angle-down"></i></button>
+                                    </form>
+                                </div>
+                                <p id="vote">{{ answer.vote_number }}</p>
+                                <p id="message">{{ answer.message }}</p>
+                                <form action="/answer/{{ answer.id }}/delete" method="POST">
+                                    <button id="del_ans" type="submit"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>
                             </div>
-                            <p id="vote">{{ answer.vote_number }}</p>
-                            <p id="message">{{ answer.message }}</p>
-                            <form action="/answer/{{ answer.id }}/delete" method="POST">
-                                <button id="del_ans" type="submit"><i class="fa-solid fa-trash-can"></i></button>
-                            </form>
-                            <div class="answer_img-container">
+
+                            <div id="answer_img_container">
                                 <img  src="/static/images/{{ answer.image }}" onerror="this.style.display='none'">
                             </div>
                         </div>
