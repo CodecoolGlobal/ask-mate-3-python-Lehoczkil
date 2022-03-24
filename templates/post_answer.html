@@ -10,7 +10,7 @@
     <h1 class="orange" id="post_ans_title">{{ line.title }}</h1>
     <a id="left_arrow" href="/list"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="question_box">
-        <form class="question_form" action="/question/{{ line.id }}/new-answer" method="POST">
+        <form class="question_form" action="/question/{{ line.id }}/new-answer" method="POST" enctype="multipart/form-data">
 
             <label for="message">Write your answer here:</label><br>
             <input type="text" name="message" id="message"><br>

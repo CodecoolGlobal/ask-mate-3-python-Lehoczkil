@@ -30,7 +30,7 @@ def write_questions(filename, line):
 
 
 def write_answer(filename, line):
-    id_s = [int(question[QUESTION_HEADER[0]]) for question in read_questions(filename)]
+    id_s = [int(question[ANSWER_HEADER[0]]) for question in read_questions(filename)]
     last_id = max(id_s)
     timestamp = calendar.timegm(time.gmtime())
     line.insert(0, last_id + 1)
