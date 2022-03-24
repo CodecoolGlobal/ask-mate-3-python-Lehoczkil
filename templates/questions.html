@@ -20,7 +20,9 @@
             </div>
             <h1>{{ question.title }}</h1>
             <p>{{ question.message }}</p>
-            <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+            <div class="question_image_container">
+                <img id="question_image" src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+            </div>
         </div>
         <div id="del_div">
             <form action="/question/{{ question.id }}/delete">
