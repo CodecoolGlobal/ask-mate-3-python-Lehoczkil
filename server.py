@@ -36,7 +36,7 @@ def questions_page(question_id=None):
     for ans in all_answers:
         if ans['question_id'] == question_id:
             answers.append(ans)
-    return render_template('questions.html', question=question, answers=answers, date=converted_dates, id=int(question['id']))
+    return render_template('questions.html', question=question, answers=answers, date=converted_dates, id=int(question.get('id')) - 1)
 
 
 @app.route('/question/<question_id>/delete')
