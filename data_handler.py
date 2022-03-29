@@ -7,17 +7,13 @@ QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title
 ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 
-def read_questions(filename):
-    rows = []
+def read_file(filename):
     with open(filename, 'r') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            rows.append(row)
-    return rows
+        return [row for row in csv.DictReader(f)]
 
 
-def write_questions(filename, line):
-    id_s = [int(question[QUESTION_HEADER[0]]) for question in read_questions(filename)]
+def write_to_file(filename, line, headers):
+    id_s = [int(question[headers[0]]) for question in read_file(filename)]
     try:
         last_id = max(id_s)
     except ValueError:
@@ -26,25 +22,8 @@ def write_questions(filename, line):
     line.insert(0, last_id + 1)
     line.insert(1, timestamp)
     with open(filename, 'a', newline='') as f:
-        fieldnames = QUESTION_HEADER
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        new_row = dict(zip(QUESTION_HEADER, line))
-        writer.writerow(new_row)
-
-
-def write_answer(filename, line):
-    id_s = [int(question[ANSWER_HEADER[0]]) for question in read_questions(filename)]
-    try:
-        last_id = max(id_s)
-    except ValueError:
-        last_id = 0
-    timestamp = calendar.timegm(time.gmtime())
-    line.insert(0, last_id + 1)
-    line.insert(1, timestamp)
-    with open(filename, 'a', newline='') as f:
-        fieldnames = ANSWER_HEADER
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        new_row = dict(zip(ANSWER_HEADER, line))
+        writer = csv.DictWriter(f, fieldnames=headers)
+        new_row = dict(zip(headers, line))
         writer.writerow(new_row)
 
 
@@ -61,9 +40,9 @@ def update_line(filename, line):
 
 
 def convert_date():
-    all_questions = read_questions('sample_data/question.csv')
+    questions = read_file('sample_data/question.csv')
     converted_dates = []
-    for question in all_questions:
+    for question in questions:
         question_date = int(question[QUESTION_HEADER[1]])
         converted_dates.append(datetime.fromtimestamp(question_date))
     return converted_dates

@@ -18,7 +18,7 @@ def index_page():
 
 @app.route('/list', methods=['GET', 'POST'])
 def list_questions_page():
-    questions = data_handler.read_questions('sample_data/question.csv')
+    questions = data_handler.read_file('sample_data/question.csv')
     headers = data_handler.QUESTION_HEADER
     converted_dates = data_handler.convert_date()
 
@@ -34,13 +34,13 @@ def list_questions_page():
 
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
-    questions = data_handler.read_questions('sample_data/question.csv')
+    questions = data_handler.read_file('sample_data/question.csv')
     converted_dates = data_handler.convert_date()
     question_needed = {}
     for question in questions:
         if question['id'] == question_id:
             question_needed = question
-    answers = data_handler.read_questions('sample_data/answer.csv')
+    answers = data_handler.read_file('sample_data/answer.csv')
     answers_needed = [answer for answer in answers if answer['question_id'] == question_id]
     return render_template('question_details.html', question=question_needed, answers=answers_needed,
                            date=converted_dates, id=int(question_needed['id']))
@@ -48,7 +48,7 @@ def question_details_page(question_id=None):
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id=None):
-    questions = data_handler.read_questions('sample_data/question.csv')
+    questions = data_handler.read_file('sample_data/question.csv')
     edited_questions = [question for question in questions if question['id'] != question_id]
     data_handler.update_line('sample_data/question.csv', edited_questions)
     return redirect(url_for('list_questions_page'))
@@ -78,14 +78,14 @@ def add_question():
     data = [0, 0]
     if request.method == 'POST':
         new_data = add_image(question_fields, data)
-        data_handler.write_questions('sample_data/question.csv', new_data)
+        data_handler.write_to_file('sample_data/question.csv', new_data, data_handler.QUESTION_HEADER)
         return redirect(url_for('list_questions_page'))
     return render_template('add_question.html')
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id=None):
-    questions = data_handler.read_questions('sample_data/question.csv')
+    questions = data_handler.read_file('sample_data/question.csv')
     edited_questions = []
     question_needed = {}
     if request.method == 'POST':
@@ -105,7 +105,7 @@ def edit_question(question_id=None):
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def post_answer(question_id=None):
-    questions = data_handler.read_questions('sample_data/question.csv')
+    questions = data_handler.read_file('sample_data/question.csv')
     answer_fields = ['message', 'image']
     data = [0, question_id]
     line = {}
@@ -115,14 +115,14 @@ def post_answer(question_id=None):
 
     if request.method == 'POST':
         new_data = add_image(answer_fields, data)
-        data_handler.write_answer('sample_data/answer.csv', new_data)
+        data_handler.write_to_file('sample_data/answer.csv', new_data, data_handler.ANSWER_HEADER)
         return redirect(url_for('question_details_page', question_id=question_id))
     return render_template('post_answer.html', line=line)
 
 
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
 def delete_answer(answer_id=None):
-    answers = data_handler.read_questions('sample_data/answer.csv')
+    answers = data_handler.read_file('sample_data/answer.csv')
     edited_answers = [answer for answer in answers if answer['id'] != answer_id]
     question_id = 0
     for answer in answers:
@@ -133,7 +133,7 @@ def delete_answer(answer_id=None):
 
 
 def question_vote(direction, question_id):
-    questions = data_handler.read_questions('sample_data/question.csv')
+    questions = data_handler.read_file('sample_data/question.csv')
     edited_questions = []
     for question in questions:
         if question['id'] == question_id:
@@ -160,7 +160,7 @@ def question_vote_up(question_id=None):
 
 
 def answer_vote(direction, answer_id):
-    answers = data_handler.read_questions('sample_data/answer.csv')
+    answers = data_handler.read_file('sample_data/answer.csv')
     edited_answers = []
     question_id = 0
     for answer in answers:
