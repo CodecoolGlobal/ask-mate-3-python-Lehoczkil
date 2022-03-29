@@ -1,4 +1,4 @@
-{% extends 'questions.html' %}
+{% extends 'question_details.html' %}
 
 
 {% block head %}
@@ -19,7 +19,11 @@
                     <input type="text" id="message edit" name="message" value="{{ question.message }}">
                     <button class="red_button" type="submit"><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
                 </form>
-                <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+
+                <div class="question_image_container">
+                    <img src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image" id="question_image">
+                </div>
+
             </div>
         </div>
     </section>
