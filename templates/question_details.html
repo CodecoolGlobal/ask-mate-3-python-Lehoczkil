@@ -7,57 +7,58 @@
 
 
 {% block body %}
-    <h1 class="orange" id="list_title">Question Details</h1>
-    <a id="left_arrow" href="/list"><i class="fa-solid fa-arrow-left"></i></a>
-    <form action="/question/{{ question.id }}/delete">
-    </form>
-    <section class="details">
-        <div class="question_details">
-            <div id="edit_container">
-                <a href="/question/{{ question.id }}/edit">
-                    <i class="fa-solid fa-file-pen"></i>
-                </a>
+    {% include 'header.html' %}
+            
+    <h1 id="question-title" >Question Details</h1>
+    <a id="left-arrow" href="{{ url_for('list_questions_page') }}"><i class="fa-solid fa-arrow-left"></i></a>
+
+    <section>
+        <div class="question-details">
+            <div id="edit-container">
+                <a href="{{ url_for('edit_question', question_id=question.id) }}"><i class="fa-solid fa-file-pen"></i></a>
             </div>
             <p>{{ date[id] }}</p>
             <h1>{{ question.title }}</h1>
             <p>{{ question.message }}</p>
-            <div class="question_image_container">
-                <img id="question_image" src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+            <div class="question-image-container">
+                <img id="question-image" src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+            </div>
+            <div id="delete-container">
+                <form action="{{ url_for('delete_question', question_id=question.id) }}" >
+                    <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                </form>
             </div>
         </div>
-        <div id="del_div">
-            <form action="/question/{{ question.id }}/delete">
-                <button class="red_button" id="del_button" type="submit"><i class="fa-solid fa-trash-can"></i></button>
-            </form>
-        </div>
+
+        <a class="submit-button post-answer" href="{{ url_for('post_answer', question_id=question.id) }}">Post answer <i class="fa-solid fa-pen-to-square"></i></a>
+
         <div class="answers">
-            <a class="red_button" id="new_ans" href="/question/{{ question.id }}/new-answer">Post answer <i class="fa-solid fa-pen-to-square"></i></a>
             {% if not answers %}
                 <div>
                     <p id="no_answer">There are no answers yet</p>
                     <i id="sad" class="fa-solid fa-face-frown-open"></i>
                 </div>
             {% else %}
-                <div id="answer_container">
+                <div id="answer-container">
                     {% for answer in answers %}
                         <div class="answer">
                             <div id="answer-flex">
-                                <div id="vote_container">
-                                    <form action="/answer/{{ answer.id }}/vote-up" method="POST">
-                                        <button type="submit" class="vote_button" ><i class="fa-solid fa-angle-up"></i></button>
+                                <div id="vote-container">
+                                    <form action="{{ url_for('answer_vote_up', answer_id=answer.id) }}" method="post" >
+                                        <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>
                                     </form>
-                                    <form action="/answer/{{ answer.id }}/vote-down" method="POST">
-                                        <button type="submit" class="vote_button" ><i class="fa-solid fa-angle-down"></i></button>
+                                    <form action="{{ url_for('answer_vote_down', answer_id=answer.id) }}" method="post">
+                                        <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-down"></i></button>
                                     </form>
                                 </div>
                                 <p id="vote">{{ answer.vote_number }}</p>
                                 <p id="message">{{ answer.message }}</p>
-                                <form action="/answer/{{ answer.id }}/delete" method="POST">
-                                    <button id="del_ans" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                <form action="{{ url_for('delete_answer', answer_id=answer.id) }}" method="post">
+                                    <button id="del-ans" type="submit"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>
                             </div>
 
-                            <div id="answer_img_container">
+                            <div id="answer-img-container">
                                 <img  src="/static/images/{{ answer.image }}" onerror="this.style.display='none'">
                             </div>
                         </div>
@@ -65,38 +66,7 @@
                 </div>
             {% endif %}
         </div>
+
     </section>
 
-    <section class="footer" id="details-footer">
-        <div>
-            <h4>@2022 - CODECOOL</h4>
-        </div>
-        <div class="links">
-            <a href="">Cookie policy</a>
-            <a href="">Privacy Policy</a>
-            <a href="">Sitemap</a>
-        </div>
-        <div id="footer_follow_us">
-            <div>
-                <h3>Follow Us:</h3>
-            </div>
-            <div class="icons">
-                <div>
-                    <a href="https://www.facebook.com/CodecoolOfficial"><i class="fa-brands fa-facebook-f"></i></a>
-                </div>
-                <div>
-                    <a href="https://www.linkedin.com/school/codecool/"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <div>
-                    <a href="https://www.youtube.com/channel/UC-6g3oyuajeTki6OKysHqGg"><i class="fa-brands fa-youtube"></i></a>
-                </div>
-                <div>
-                    <a href="https://www.instagram.com/codecool_official/"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-                <div>
-                    <a href="https://twitter.com/Codecool_global"><i class="fa-brands fa-twitter"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
 {% endblock %}

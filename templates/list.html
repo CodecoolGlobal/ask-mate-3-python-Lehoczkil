@@ -7,77 +7,48 @@
 
 
 {% block body %}
-    <h1 class="orange" id="list_title">Questions</h1>
-    <a class="ask_question_button" href="{{ url_for('add_question') }}">Ask a question</a>
-    <a id="left_arrow" href="/"><i class="fa-solid fa-arrow-left list_arrow"></i></a>
-    <div id="sort_container">
-        <form class="question_form" action="/list" method="post">
-            <label for="select_sort">Sort by:</label><br>
-            <select name="select_sort" id="select_sort" onchange="this.form.submit()">
-                {% for header in headers %}
-                     <option value="{{ header }}">{{ header }}</option>
-                {% endfor %}
-            </select>
-        </form>
-    </div>
-    <table class="sortable list_elements">
-            <thead>
-                <tr>
-                    {% for header in headers %}
-                    <th>{{ header }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for line in questions %}
-                    <tr>
-                        <td>{{ line.id }}</td>
-                        <td>{{ date[questions.index(line)] }}</td>
-                        <td>{{ line.view_number }}</td>
-                        <td><form action="/question/{{ line.id }}/vote-up" method="post">
-                            <button type="submit" class="vote_button" ><i class="fa-solid fa-angle-up"></i></button>
-                        </form>
-                            {{ line.vote_number }}
-                        <form action="/question/{{ line.id }}/vote-down" method="post">
-                            <button type="submit" class="vote_button" ><i class="fa-solid fa-angle-down"></i></button>
-                        </form> </td>
-                        <td><a class="table_question_title" href="/question/{{ line.id }}">{{ line.title }}</a></td>
-                        <td>{{ line.message }}</td>
-                        <td>{{ line.image }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    <section class="footer" id="list-footer">
-        <div>
-            <h4>@2022 - CODECOOL</h4>
-        </div>
-        <div class="links">
-            <a href="">Cookie policy</a>
-            <a href="">Privacy Policy</a>
-            <a href="">Sitemap</a>
-        </div>
-        <div id="footer_follow_us">
-            <div>
-                <h3>Follow Us:</h3>
+
+    {% include 'header.html' %}
+    <section class="center">
+        <section class="table-container">
+            <h1 id="question-title">Questions</h1>
+            <div class="table-header">
+                <table>
+                    <thead>
+                        <tr>
+                            {% for header in headers %}
+                                <th>{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                </table>
             </div>
-            <div class="icons">
-                <div>
-                    <a href="https://www.facebook.com/CodecoolOfficial"><i class="fa-brands fa-facebook-f"></i></a>
-                </div>
-                <div>
-                    <a href="https://www.linkedin.com/school/codecool/"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <div>
-                    <a href="https://www.youtube.com/channel/UC-6g3oyuajeTki6OKysHqGg"><i class="fa-brands fa-youtube"></i></a>
-                </div>
-                <div>
-                    <a href="https://www.instagram.com/codecool_official/"><i class="fa-brands fa-instagram"></i></a>
-                </div>
-                <div>
-                    <a href="https://twitter.com/Codecool_global"><i class="fa-brands fa-twitter"></i></a>
-                </div>
+
+            <div class="table-content">
+                <table>
+                    <tbody>
+                        {% for line in questions %}
+                            <tr>
+                                <td>{{ line.id }}</td>
+                                <td>{{ date[questions.index(line)] }}</td>
+                                <td>{{ line.view_number }}</td>
+                                <td><form action="{{ url_for('question_vote_up', question_id=line.id) }}" method="post">
+                                        <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>
+                                    </form>
+                                    {{ line.vote_number }}
+                                <form action="{{ url_for('question_vote_down', question_id=line.id) }}" method="post">
+                                    <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-down"></i></button>
+                                </form> </td>
+                                <td><a class="table-question-title" href="{{ url_for('question_details_page', question_id=line.id) }}">{{ line.title }}</a></td>
+                                <td>{{ line.message }}</td>
+                                <td>{{ line.image }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </section>
+
     </section>
+
 {% endblock %}
