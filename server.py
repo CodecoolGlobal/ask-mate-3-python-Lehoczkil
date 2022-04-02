@@ -15,6 +15,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def index_page():
     return render_template('index.html')
 
+@app.route('/contacts')
+def contacts_page():
+    return render_template('contacts.html')
+
 
 @app.route('/list', methods=['GET', 'POST'])
 def list_questions_page():
