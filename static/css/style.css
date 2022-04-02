@@ -493,3 +493,100 @@ section {
         width: 20vw;
         margin: 0 0 1vw 2vw;
 }
+
+/*-------------------------------------------------Contacts Page------------------------------------------------------*/
+
+.contacts-body{
+        background: #10002b;
+}
+
+.header-container{
+        background-image: linear-gradient(rgba(32, 50, 122, 0.7), rgba(4,9,30,0.7)), url(/static/webpage_images/contacts_banner.jpg);
+        background-position: center;
+        background-size: cover;
+        min-height: 50vh;
+}
+
+.contacts-nav{
+        background: transparent;
+        width: 100%;
+}
+
+.nav-title-contacts{
+        padding-left: 3vw;
+}
+
+.header-container h1{
+        margin-top: 7vw;
+        font-size: 7vw;
+}
+
+.location{
+        background-image: url("/static/webpage_images/contacts_banner.jpg");
+        background-size: cover;
+        border: 2px solid #2E6F95;
+        margin: 5vw auto;
+        padding: 0;
+        width: 80%;
+}
+
+.location iframe{
+        height: 100%;
+        padding: 0.5vw;
+        width: 99%;
+}
+
+.contacts-container{
+        align-items: center;
+        color: #10002b;
+        display: flex;
+        justify-content: space-between;
+        width: 70%;
+
+}
+
+.contacts-col{
+        flex-basis: 45%;
+        text-align: center;
+}
+
+.contacts-col div{
+        align-items: center;
+        display: flex;
+        margin: auto;
+}
+
+.contacts-col div h5, .contacts-col div p, .contacts-col div i{
+        margin: 2vw 1vw;
+}
+
+.right div h5, .right div p, .right div i{
+        margin: 1.5vw 1vw;
+}
+
+.left, .right{
+        background: linear-gradient(45deg, #10002b, #B7094C);
+        border: 1vw solid #2E6F95;
+        color: white;
+}
+
+.left{
+        margin-top: -12vw;
+}
+
+.right{
+        margin-top: 7vw;
+        margin-bottom: 2vw;
+}
+
+.contacts-col a{
+        color: white;
+        display: flex;
+        text-decoration: none;
+        transition: 0.4s;
+}
+
+.contacts-col a:hover{
+        color: #10002b;
+        transition: 0.4s;
+}
