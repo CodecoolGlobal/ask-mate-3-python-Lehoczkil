@@ -30,7 +30,7 @@
                         {% for line in questions %}
                             <tr>
                                 <td>{{ line.id }}</td>
-                                <td>{{ date[questions.index(line)] }}</td>
+                                <td>{{ line.submission_time }}</td>
                                 <td>{{ line.view_number }}</td>
                                 <td><form action="{{ url_for('question_vote_up', question_id=line.id) }}" method="post">
                                         <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>

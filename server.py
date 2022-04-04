@@ -16,6 +16,7 @@ def index_page():
     print(data_handler.read_table('question'))
     return render_template('index.html')
 
+
 @app.route('/contacts')
 def contacts_page():
     return render_template('contacts.html')
@@ -28,19 +29,15 @@ def about_us_page():
 
 @app.route('/list', methods=['GET', 'POST'])
 def list_questions_page():
-    # questions = data_handler.read_file('sample_data/question.csv')
-    questions = data_handler.read_table()
+    questions = data_handler.read_table('question')
     headers = data_handler.QUESTION_HEADER
-    converted_dates = data_handler.convert_date()
 
     if request.method == 'POST':
         select_id = request.form.get('select_sort')
-        questions = sorted(questions,
-                           key=lambda dicti: int(dicti[select_id]) if dicti[select_id].lstrip("-").isnumeric()
-                           else dicti[select_id].lower())
+        questions = data_handler.read_table('question', select_id)
 
-        return redirect(url_for('list_questions_page', questions=questions, headers=headers, date=converted_dates))
-    return render_template('list.html', questions=questions, headers=headers, date=converted_dates)
+        return redirect(url_for('list_questions_page', questions=questions, headers=headers))
+    return render_template('list.html', questions=questions, headers=headers)
 
 
 @app.route('/question/<question_id>')

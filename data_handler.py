@@ -3,7 +3,7 @@ import calendar
 import time
 from datetime import datetime
 import database_common
-from psycopg2 import sql
+
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
@@ -15,12 +15,12 @@ def read_file(filename):
 
 
 @database_common.connection_handler
-def read_table(cursor, table_name, order_method='submission_time'):
-    query = """
+def read_table(cursor, table_name, order_method='submission_time', order_type='ASC'):
+    query = f"""
         SELECT * 
-        FROM {}
-        ORDER BY {}"""
-    cursor.execute(sql.SQL(query).format(sql.Identifier(table_name, order_method)))
+        FROM {table_name}
+        ORDER BY {order_method} {order_type}"""
+    cursor.execute(query)
     return cursor.fetchall()
 
 
