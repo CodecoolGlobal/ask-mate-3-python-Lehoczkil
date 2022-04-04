@@ -1,3 +1,9 @@
+:root{
+        --purple: #10002b;
+        --red: #B7094C;
+        --blue: #2E6F95;
+}
+
 body {
         background: #B7094C;
         color: white;
@@ -10,7 +16,7 @@ body {
 
 nav{
         align-items: center;
-        background: #10002b;
+        background: var(--purple);
         display: flex;
         justify-content: space-between;
         padding: 1% 4%;
@@ -55,13 +61,13 @@ nav div ul li i{
 }
 
 nav div ul li i:hover{
-        color: #B7094C;
+        color: var(--red);
         font-size: 1vw;
         transition: 0.5s;
 }
 
 .underline::after{
-        background: #B7094C;
+        background: var(--red);
         content: '';
         display: block;
         height: 3px;
@@ -83,14 +89,14 @@ nav div ul li i:hover{
 }
 
 #about-us, .button{
-        background: #B7094C;
+        background: var(--red);
         border-radius: 25px;
         padding: 0.5% 2%;
         transition: 0.5s;
 }
 
 #about-us:hover, .button:hover{
-        background: #2E6F95;
+        background: var(--blue);
         border-radius: 10px;
 }
 
@@ -111,7 +117,7 @@ section {
 }
 
 .purple {
-        background: #10002b;
+        background: var(--purple);
 }
 
 .curve {
@@ -124,7 +130,7 @@ section {
 }
 
 .curve::before {
-        background-color: #B7094C;
+        background-color: var(--red);
         border-radius: 100% 50%;
         content: '';
         display: block;
@@ -135,7 +141,7 @@ section {
 }
 
 .curve::after {
-        background-color: #10002b;
+        background-color: var(--purple);
         border-radius: 100% 50%;
         content: '';
         display: block;
@@ -210,7 +216,7 @@ section {
 }
 
 .table-header table, .table-content table{
-        background: #10002b;
+        background: var(--purple);
         border-collapse: collapse;
         border: none;
         table-layout: fixed;
@@ -218,7 +224,7 @@ section {
 }
 
 .table-content table tr:hover{
-        color: #B7094C;
+        color: var(--red);
         transition: 0.2s;
 }
 
@@ -262,7 +268,7 @@ section {
 }
 
 .table-header table a:hover, .table-content table a:hover{
-        color: #B7094C;
+        color: var(--red);
         transition: 0.5s;
 }
 
@@ -277,7 +283,7 @@ section {
 .vote-button{
         background: transparent;
         border: none;
-        color: #B7094C;
+        color: var(--red);
         font-size: 1vw;
         padding: 0;
         transition: 0.5s;
@@ -297,7 +303,7 @@ section {
 }
 
 .question-box{
-        background: #10002b;
+        background: var(--purple);
         border-radius: 1vw;
         margin: auto;
         padding: 2vw;
@@ -328,7 +334,7 @@ section {
 }
 
 .submit-button:hover{
-        background: #2E6F95;
+        background: var(--blue);
         border-radius: 1.5vw;
         padding: 0.8vw 5vw;
         transition: 0.5s;
@@ -346,7 +352,7 @@ section {
 /*-------------------------------------------------Question Details---------------------------------------------------*/
 
 #left-arrow{
-        background: #10002b;
+        background: var(--purple);
         border: none;
         border-radius: 2vw;
         color: white;
@@ -358,12 +364,12 @@ section {
 }
 
 #left-arrow:hover{
-        background: #2E6F95;
+        background: var(--blue);
         border-radius: 0.7vw;
 }
 
 .question-details{
-        background: #10002b;
+        background: var(--purple);
         border-radius: 1vw;
         margin-bottom: 5vw;
         padding: 1vw;
@@ -387,7 +393,7 @@ section {
 }
 
 #edit-container a:hover, #delete-container button:hover, #answer-delete:hover {
-        color: #2E6F95;
+        color: var(--blue);
         font-size: 1.2vw;
         transition: 0.2s;
 }
@@ -406,7 +412,7 @@ section {
 }
 
 .post-answer{
-        background: #10002b;
+        background: var(--purple);
         color: white;
         text-decoration: none;
 }
@@ -435,7 +441,7 @@ section {
         background: white;
         border: none;
         border-radius: 2vw;
-        color: #10002b;
+        color: var(--purple);
         margin-bottom: 2.5vw;
 }
 
@@ -456,12 +462,12 @@ section {
 }
 
 .vote-button:hover{
-        color: #2E6F95;
+        color: var(--blue);
         transition: 0.5s;
 }
 
 #vote{
-        background: #10002b;
+        background: var(--purple);
         border-radius: 1vw;
         color: white;
         font-size: 1vw;
@@ -480,7 +486,7 @@ section {
 }
 
 #del-ans:hover{
-        color: #2E6F95;
+        color: var(--blue);
         transition: 0.5s;
 }
 
@@ -497,7 +503,7 @@ section {
 /*-------------------------------------------------Contacts Page------------------------------------------------------*/
 
 .contacts-body{
-        background: #10002b;
+        background: var(--purple);
 }
 
 .header-container{
@@ -524,7 +530,7 @@ section {
 .location{
         background-image: url("/static/webpage_images/contacts_banner.jpg");
         background-size: cover;
-        border: 2px solid #2E6F95;
+        border: 2px solid var(--blue);
         margin: 5vw auto;
         padding: 0;
         width: 80%;
@@ -538,7 +544,7 @@ section {
 
 .contacts-container{
         align-items: center;
-        color: #10002b;
+        color: var(--purple);
         display: flex;
         justify-content: space-between;
         width: 70%;
@@ -565,8 +571,8 @@ section {
 }
 
 .left, .right{
-        background: linear-gradient(45deg, #10002b, #B7094C);
-        border: 1vw solid #2E6F95;
+        background: linear-gradient(45deg, var(--purple), var(--red));
+        border: 0.5vw solid white;
         color: white;
 }
 
@@ -587,6 +593,75 @@ section {
 }
 
 .contacts-col a:hover{
-        color: #10002b;
+        color: var(--purple);
         transition: 0.4s;
+}
+
+/*--------------------------------------------------About Us Page-----------------------------------------------------*/
+
+.staff-container{
+        color: var(--purple);
+        height: 15vw;
+        justify-content: center;
+        margin-top: 5vw;
+        padding: 0;
+}
+
+.staff-line{
+        background: var(--red);
+        height: 60%;
+        width: 100%;
+}
+
+.text-container-staff{
+        background: white;
+        border: 1vw solid var(--red);
+        height: 167%;
+        margin:  -4% auto 0 auto;
+        text-align: center;
+        width: 30%;
+}
+
+.text-container-staff h1{
+        text-transform: uppercase;
+        font-size: 7vw;
+        margin: 0;
+        padding-top: 2.3vw;
+}
+
+.staff-members{
+        align-items: normal;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: center;
+        margin: 5vw auto;
+        width: 90%;
+}
+
+.member{
+        border: 0.5vw solid var(--red);
+        margin-top: 2vw;
+        flex-basis: 22%;
+        background: white;
+}
+
+.staff-image-container img {
+        border-radius: 50%;
+        max-width: 10vw;
+        margin-top: 0.5vw;
+}
+
+.staff-text-container{
+        color: var(--purple);
+}
+
+.staff-text-container h5{
+        margin: 0.5vw 0 0 0;
+        font-size: 1.2vw;
+}
+
+.staff-text-container p{
+        margin-top: 0.2vw;
+        font-size: 0.7vw;
 }

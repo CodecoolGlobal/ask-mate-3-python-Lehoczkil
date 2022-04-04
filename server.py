@@ -20,6 +20,11 @@ def contacts_page():
     return render_template('contacts.html')
 
 
+@app.route('/about-us')
+def about_us_page():
+    return render_template('about-us.html')
+
+
 @app.route('/list', methods=['GET', 'POST'])
 def list_questions_page():
     questions = data_handler.read_file('sample_data/question.csv')
