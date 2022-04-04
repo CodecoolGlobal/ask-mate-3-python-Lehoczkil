@@ -27,7 +27,8 @@ def about_us_page():
 
 @app.route('/list', methods=['GET', 'POST'])
 def list_questions_page():
-    questions = data_handler.read_file('sample_data/question.csv')
+    # questions = data_handler.read_file('sample_data/question.csv')
+    questions = data_handler.list_questions()
     headers = data_handler.QUESTION_HEADER
     converted_dates = data_handler.convert_date()
 

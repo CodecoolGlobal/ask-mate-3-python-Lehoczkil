@@ -2,6 +2,7 @@ import csv
 import calendar
 import time
 from datetime import datetime
+import database_common
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
@@ -10,6 +11,16 @@ ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message
 def read_file(filename):
     with open(filename, 'r') as f:
         return [row for row in csv.DictReader(f)]
+
+
+@database_common.connection_handler
+def list_questions(cursor):
+    query = f'''
+        SELECT * 
+        FROM question
+        ORDER BY submission_time'''
+    cursor.execute(query)
+    return cursor.fetchall()
 
 
 def write_to_file(filename, line, headers):
