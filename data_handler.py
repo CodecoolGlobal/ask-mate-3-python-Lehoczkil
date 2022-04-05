@@ -74,6 +74,7 @@ def add_question(cursor, submission_time, title, message, image):
         VALUES ('{submission_time}', 0, 0, '{title}', '{message}', '{image}');""")
 
 
+
 @database_common.connection_handler
 def update_question(cursor, question_id, updated_title, updated_message):
     query = f"""
