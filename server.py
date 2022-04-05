@@ -1,5 +1,3 @@
-import datetime
-
 from flask import Flask, render_template, redirect, url_for, request
 import data_handler
 import os
@@ -74,12 +72,11 @@ def add_image(fields, data):
 
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
-    submission_time = datetime.datetime.today()
     title = request.form.get('title')
     message = request.form.get('message')
     image = request.form.get('image')
     if request.method == 'POST':
-        data_handler.add_question(submission_time, title, message, image)
+        data_handler.add_question(title, message, image)
         return redirect(url_for('list_questions_page'))
     return render_template('add_question.html')
 
@@ -100,11 +97,11 @@ def edit_question(question_id=None):
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def post_answer(question_id):
     question = data_handler.search_by_id('question', 'id', question_id)
-    submission_time = datetime.datetime.today()
+
     message = request.form.get('message')
     image = request.form.get('image')
     if request.method == 'POST':
-        data_handler.add_answer(submission_time, question_id, message, image)
+        data_handler.add_answer(question_id, message, image)
         return redirect(url_for('question_details_page', question_id=question_id))
     return render_template('post_answer.html', question=question)
 
