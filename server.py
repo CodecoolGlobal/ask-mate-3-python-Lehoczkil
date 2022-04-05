@@ -31,7 +31,7 @@ def about_us_page():
 @app.route('/list', methods=['GET', 'POST'])
 def list_questions_page():
     questions = data_handler.read_table('question')
-    headers = data_handler.QUESTION_HEADER
+    headers = [table_header for table_header in questions[0]]
 
     if request.method == 'POST':
         select_id = request.form.get('select_sort')
