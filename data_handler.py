@@ -3,6 +3,7 @@ import calendar
 import time
 from datetime import datetime
 import database_common
+from psycopg2 import sql
 
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
@@ -32,6 +33,16 @@ def search_by_id(cursor, table_name, column, question_id):
         WHERE {column} = {question_id}"""
     cursor.execute(query)
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def delete_question(cursor, question_id):
+    query = f"""
+        DELETE 
+        FROM question
+        WHERE id ={question_id}
+        """
+    cursor.execute(query)
 
 
 def write_to_file(filename, line, headers):

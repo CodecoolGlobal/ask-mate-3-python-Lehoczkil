@@ -48,9 +48,7 @@ def question_details_page(question_id=None):
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id=None):
-    questions = data_handler.read_file('sample_data/question.csv')
-    edited_questions = [question for question in questions if question['id'] != question_id]
-    data_handler.update_line('sample_data/question.csv', edited_questions)
+    data_handler.delete_question(question_id)
     return redirect(url_for('list_questions_page'))
 
 
