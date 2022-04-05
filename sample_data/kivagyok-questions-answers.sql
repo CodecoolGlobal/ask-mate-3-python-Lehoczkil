@@ -17,7 +17,7 @@ INSERT INTO question VALUES (12, '2020-08-23 18:10:00', 0, -1, 'Virtual Sunshine
 INSERT INTO question VALUES (13, '2020-09-03 11:19:00', 0, 0, 'How is it possible?', 'If Batman’s parents are dead, then how was he born?');
 INSERT INTO question VALUES (14, '2020-09-23 18:10:00', 0, 4, 'Ingredients', 'If corn oil is made from corn and vegetable oil is made from vegetables. What is baby oil made from?');
 INSERT INTO question VALUES (15, '2020-10-10 14:03:00', 0, 3, 'Let in or Outlet?', 'Why is an electrical socket called an outlet when you plug things into it?');
-SELECT pg_catalog.setval('question_id_seq', 2, true);
+SELECT pg_catalog.setval('question_id_seq', 15, true);
 
 INSERT INTO answer VALUES (0, '2020-05-01 10:55:00', 3, 0, 'You guessed');
 INSERT INTO answer VALUES (1, '2020-05-01 10:55:00', 3, 1, 'Idiot...');
@@ -37,4 +37,4 @@ INSERT INTO answer VALUES (14, '2020-09-07 21:09:00', 0, 13, 'magic');
 INSERT INTO answer VALUES (15, '2020-09-24 08:16:00', 0, 14, 'you do not want to know');
 INSERT INTO answer VALUES (16, '2020-09-25 17:45:00', 0, 14, 'from babies, obviously');
 INSERT INTO answer VALUES (17, '2020-10-10 16:33:00', 4, 15, 'Let in sounds better');
-SELECT pg_catalog.setval('answer_id_seq', 2, true);
+SELECT pg_catalog.setval('answer_id_seq', 17, true);

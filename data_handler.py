@@ -67,6 +67,13 @@ def add_answer(cursor, submission_time, question_id, message, image):
         VALUES ('{submission_time}', 0, {question_id}, '{message}', '{image}');""")
 
 
+@database_common.connection_handler
+def add_question(cursor, submission_time, title, message, image):
+    cursor.execute(f"""
+        INSERT INTO question (submission_time, view_number, vote_number, title, message, image)
+        VALUES ('{submission_time}', 0, 0, '{title}', '{message}', '{image}');""")
+
+
 def update_line(filename, line):
     with open(filename, 'w', newline='') as f:
         if filename == 'sample_data/answer.csv':

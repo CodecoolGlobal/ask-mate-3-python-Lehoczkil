@@ -74,11 +74,12 @@ def add_image(fields, data):
 
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
-    question_fields = ['title', 'message', 'image']
-    data = [0, 0]
+    submission_time = datetime.datetime.today()
+    title = request.form.get('title')
+    message = request.form.get('message')
+    image = request.form.get('image')
     if request.method == 'POST':
-        new_data = add_image(question_fields, data)
-        data_handler.write_to_file('sample_data/question.csv', new_data, data_handler.QUESTION_HEADER)
+        data_handler.add_question(submission_time, title, message, image)
         return redirect(url_for('list_questions_page'))
     return render_template('add_question.html')
 
