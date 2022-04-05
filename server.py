@@ -13,7 +13,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index_page():
-    print(data_handler.read_table('question'))
     return render_template('index.html')
 
 
@@ -42,16 +41,9 @@ def list_questions_page():
 
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
-    questions = data_handler.read_file('sample_data/question.csv')
-    converted_dates = data_handler.convert_date()
-    question_needed = {}
-    for question in questions:
-        if question['id'] == question_id:
-            question_needed = question
-    answers = data_handler.read_file('sample_data/answer.csv')
-    answers_needed = [answer for answer in answers if answer['question_id'] == question_id]
-    return render_template('question_details.html', question=question_needed, answers=answers_needed,
-                           date=converted_dates, id=int(question_needed['id']))
+    questions = data_handler.search_by_id('question', 'id', question_id)
+    answers = data_handler.search_by_id('answer', 'question_id', question_id)
+    return render_template('question_details.html', questions=questions, answers=answers)
 
 
 @app.route('/question/<question_id>/delete')

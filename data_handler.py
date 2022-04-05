@@ -15,11 +15,21 @@ def read_file(filename):
 
 
 @database_common.connection_handler
-def read_table(cursor, table_name, order_method='submission_time', order_type='ASC'):
+def read_table(cursor, table_name, order_method='submission_time', order_type='DESC'):
     query = f"""
         SELECT * 
         FROM {table_name}
         ORDER BY {order_method} {order_type}"""
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def search_by_id(cursor, table_name, column, question_id):
+    query = f"""
+        SELECT *
+        FROM {table_name}
+        WHERE {column} = {question_id}"""
     cursor.execute(query)
     return cursor.fetchall()
 
