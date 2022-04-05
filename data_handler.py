@@ -45,21 +45,6 @@ def delete_question(cursor, question_id):
     cursor.execute(query)
 
 
-def write_to_file(filename, line, headers):
-    id_s = [int(question[headers[0]]) for question in read_file(filename)]
-    try:
-        last_id = max(id_s)
-    except ValueError:
-        last_id = 0
-    timestamp = calendar.timegm(time.gmtime())
-    line.insert(0, last_id + 1)
-    line.insert(1, timestamp)
-    with open(filename, 'a', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=headers)
-        new_row = dict(zip(headers, line))
-        writer.writerow(new_row)
-
-
 @database_common.connection_handler
 def add_answer(cursor, submission_time, question_id, message, image):
     cursor.execute(f"""
@@ -74,7 +59,6 @@ def add_question(cursor, submission_time, title, message, image):
         VALUES ('{submission_time}', 0, 0, '{title}', '{message}', '{image}');""")
 
 
-
 @database_common.connection_handler
 def update_question(cursor, question_id, updated_title, updated_message):
     query = f"""
@@ -83,12 +67,3 @@ def update_question(cursor, question_id, updated_title, updated_message):
         WHERE id = '{question_id}'
         """
     cursor.execute(query)
-
-
-def convert_date():
-    questions = read_file('sample_data/question.csv')
-    converted_dates = []
-    for question in questions:
-        question_date = int(question[QUESTION_HEADER[1]])
-        converted_dates.append(datetime.fromtimestamp(question_date))
-    return converted_dates
