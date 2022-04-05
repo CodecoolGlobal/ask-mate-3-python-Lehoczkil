@@ -7,10 +7,10 @@
 
 
 {% block body %}
-    <h1 id="question-title">{{ line.title }}</h1>
+    <h1 id="question-title">{{ question.title }}</h1>
     <a id="left-arrow" href="{{ url_for('list_questions_page') }}"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="question-box">
-        <form class="question-form" action="{{ url_for('post_answer', question_id=line.id) }}" method="POST" enctype="multipart/form-data">
+        <form class="question-form" action="{{ url_for('post_answer', question_id=15) }}" method="POST" enctype="multipart/form-data">
 
             <label for="message">Write your answer here:</label><br>
             <input type="text" name="message" id="message"><br>

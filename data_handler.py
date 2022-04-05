@@ -60,6 +60,13 @@ def write_to_file(filename, line, headers):
         writer.writerow(new_row)
 
 
+@database_common.connection_handler
+def add_answer(cursor, submission_time, question_id, message, image):
+    cursor.execute(f"""
+        INSERT INTO answer (submission_time, vote_number, question_id, message, image)
+        VALUES ('{submission_time}', 0, {question_id}, '{message}', '{image}');""")
+
+
 def update_line(filename, line):
     with open(filename, 'w', newline='') as f:
         if filename == 'sample_data/answer.csv':

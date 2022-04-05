@@ -1,3 +1,5 @@
+import datetime
+
 from flask import Flask, render_template, redirect, url_for, request
 import data_handler
 import os
@@ -102,20 +104,15 @@ def edit_question(question_id=None):
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
-def post_answer(question_id=None):
-    questions = data_handler.read_file('sample_data/question.csv')
-    answer_fields = ['message', 'image']
-    data = [0, question_id]
-    line = {}
-    for question in questions:
-        if question['id'] == question_id:
-            line = question
-
+def post_answer(question_id):
+    question = data_handler.search_by_id('question', 'id', question_id)
+    submission_time = datetime.datetime.today()
+    message = request.form.get('message')
+    image = request.form.get('image')
     if request.method == 'POST':
-        new_data = add_image(answer_fields, data)
-        data_handler.write_to_file('sample_data/answer.csv', new_data, data_handler.ANSWER_HEADER)
+        data_handler.add_answer(submission_time, question_id, message, image)
         return redirect(url_for('question_details_page', question_id=question_id))
-    return render_template('post_answer.html', line=line)
+    return render_template('post_answer.html', question=question)
 
 
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
