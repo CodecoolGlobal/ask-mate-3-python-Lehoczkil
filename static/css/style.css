@@ -642,7 +642,7 @@ section {
 .member{
         border: 0.5vw solid var(--red);
         margin-top: 2vw;
-        flex-basis: 22%;
+        flex-basis: 17%;
         background: white;
 }
 
