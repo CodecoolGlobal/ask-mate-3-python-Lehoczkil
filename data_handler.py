@@ -6,15 +6,6 @@ import database_common
 from psycopg2 import sql
 
 
-QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-
-
-def read_file(filename):
-    with open(filename, 'r') as f:
-        return [row for row in csv.DictReader(f)]
-
-
 @database_common.connection_handler
 def read_table(cursor, table_name, order_method='submission_time', order_type='DESC'):
     query = f"""
