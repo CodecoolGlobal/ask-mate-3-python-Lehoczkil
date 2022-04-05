@@ -43,9 +43,9 @@ def list_questions_page():
 
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
-    questions = data_handler.search_by_id('question', 'id', question_id)
+    question = data_handler.search_by_id('question', 'id', question_id)
     answers = data_handler.search_by_id('answer', 'question_id', question_id)
-    return render_template('question_details.html', questions=questions, answers=answers)
+    return render_template('question_details.html', question=question, answers=answers)
 
 
 @app.route('/question/<question_id>/delete')
@@ -86,22 +86,15 @@ def add_question():
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id=None):
-    questions = data_handler.read_file('sample_data/question.csv')
-    edited_questions = []
-    question_needed = {}
+    question = data_handler.search_by_id('question', 'id', question_id)
+
     if request.method == 'POST':
-        for question in questions:
-            if question['id'] == question_id:
-                question['title'] = request.form.get('title')
-                question['message'] = request.form.get('message')
-            edited_questions.append(question)
-        data_handler.update_line('sample_data/question.csv', edited_questions)
+        updated_title = request.form.get('title')
+        updated_message = request.form.get('message')
+        data_handler.update_question(question_id, updated_title, updated_message )
         return redirect(url_for('question_details_page', question_id=question_id))
 
-    for question in questions:
-        if question['id'] == question_id:
-            question_needed = question
-    return render_template('edit_question.html', question=question_needed)
+    return render_template('edit_question.html', question=question)
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])

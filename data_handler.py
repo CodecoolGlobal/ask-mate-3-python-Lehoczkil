@@ -74,16 +74,14 @@ def add_question(cursor, submission_time, title, message, image):
         VALUES ('{submission_time}', 0, 0, '{title}', '{message}', '{image}');""")
 
 
-def update_line(filename, line):
-    with open(filename, 'w', newline='') as f:
-        if filename == 'sample_data/answer.csv':
-            fieldnames = ANSWER_HEADER
-        elif filename == 'sample_data/question.csv':
-            fieldnames = QUESTION_HEADER
-        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction='ignore')
-        writer.writeheader()
-        for data in line:
-            writer.writerow(data)
+@database_common.connection_handler
+def update_question(cursor, question_id, updated_title, updated_message):
+    query = f"""
+        UPDATE question 
+        SET  title = '{updated_title}', message = '{updated_message}'
+        WHERE id = '{question_id}'
+        """
+    cursor.execute(query)
 
 
 def convert_date():
