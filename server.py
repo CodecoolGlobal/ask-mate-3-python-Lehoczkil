@@ -108,13 +108,9 @@ def post_answer(question_id):
 
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
 def delete_answer(answer_id=None):
-    answers = data_handler.read_file('sample_data/answer.csv')
-    edited_answers = [answer for answer in answers if answer['id'] != answer_id]
-    question_id = 0
-    for answer in answers:
-        if answer['id'] == answer_id:
-            question_id = answer['question_id']
-    data_handler.update_line('sample_data/answer.csv', edited_answers)
+    answer_data = data_handler.search_by_id('answer', 'id', answer_id)
+    data_handler.delete_answer(answer_id)
+    question_id = answer_data[0]['question_id']
     return redirect(url_for('question_details_page', question_id=question_id))
 
 

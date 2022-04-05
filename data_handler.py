@@ -20,7 +20,8 @@ def search_by_id(cursor, table_name, column, question_id):
         FROM {table_name}
         WHERE {column} = {question_id}"""
     cursor.execute(query)
-    return cursor.fetchall()
+    data_by_id = cursor.fetchall()
+    return [dict(detail) for detail in data_by_id]
 
 
 @database_common.connection_handler
@@ -29,6 +30,16 @@ def delete_question(cursor, question_id):
         DELETE 
         FROM question
         WHERE id ={question_id}
+        """
+    cursor.execute(query)
+
+
+@database_common.connection_handler
+def delete_answer(cursor, answer_id):
+    query = f"""
+        DELETE 
+        FROM answer
+        WHERE id = {answer_id}
         """
     cursor.execute(query)
 
