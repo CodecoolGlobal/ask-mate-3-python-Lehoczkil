@@ -1,7 +1,6 @@
 DELETE FROM question;
 DELETE FROM answer;
 
-INSERT INTO question VALUES (0, '2020-04-01 6:41:00', 0, 4, 'May I ask?', 'Is this site working already?');
 INSERT INTO question VALUES (1, '2020-05-01 10:41:00', 0, 4, 'Adoptation dilemma', 'Should I tell my parents I’m adopted?');
 INSERT INTO question VALUES (2, '2020-05-03 09:20:00', 0, -3, 'Cannibalism', 'If I eat myself, will I get twice as big or disappear completely?');
 INSERT INTO question VALUES (3, '2020-05-08 10:48:00', 0, 2, 'Space Battles', 'Do you think NASA invented thunderstorms to cover up the sound of space battles?');
@@ -19,7 +18,6 @@ INSERT INTO question VALUES (14, '2020-09-23 18:10:00', 0, 4, 'Ingredients', 'If
 INSERT INTO question VALUES (15, '2020-10-10 14:03:00', 0, 3, 'Let in or Outlet?', 'Why is an electrical socket called an outlet when you plug things into it?');
 SELECT pg_catalog.setval('question_id_seq', 15, true);
 
-INSERT INTO answer VALUES (0, '2020-05-01 10:55:00', 3, 0, 'You guessed');
 INSERT INTO answer VALUES (1, '2020-05-01 10:55:00', 3, 1, 'Idiot...');
 INSERT INTO answer VALUES (2, '2020-05-01 10:59:00', 0, 1, 'How old are you?');
 INSERT INTO answer VALUES (3, '2020-05-01 11:03:00', 0, 1, 'You should find the rigth moment to do so', 'Pngtreeexpression_emoticon_package_wink_cartoon_3803203.png');
