@@ -98,9 +98,9 @@ def edit_question(question_id=None):
 def post_answer(question_id):
     question = data_handler.search_by_id('question', 'id', question_id)
 
-    message = request.form.get('message')
-    image = request.form.get('image')
     if request.method == 'POST':
+        message = request.form.get('message')
+        image = request.form.get('image')
         data_handler.add_answer(question_id, message, image)
         return redirect(url_for('question_details_page', question_id=question_id))
     return render_template('post_answer.html', question=question)
