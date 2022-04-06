@@ -179,3 +179,11 @@ def get_tag(cursor):
         SELECT name
         FROM tag""")
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def delete_tag(cursor, tag_id):
+    cursor.execute(sql.SQL("""
+        DELETE FROM tag
+        WHERE id = {tag_id}
+        """).format(tag_id=sql.Literal(tag_id)))
