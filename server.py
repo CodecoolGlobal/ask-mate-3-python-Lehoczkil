@@ -249,9 +249,18 @@ def delete_tag(tag_id):
         return redirect('/question/<question_id>')
 
 
+@app.route('/search')
+def get_search_results():
+    search_phrase = request.args.get('search-query')
+    results = data_handler.find_search_results(search_phrase)
+    headers = [header for header in results[0]]
+    return render_template('search_results.html', results=results, headers=headers)
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
         debug=True,
         port=5200
     )
+
