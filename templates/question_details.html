@@ -51,20 +51,26 @@
                     {% for answer in answers %}
                         <div class="answer">
                             <div id="answer-flex">
-                                <div id="vote-container">
-                                    <form action="{{ url_for('answer_vote_up', answer_id=answer.id) }}" method="post" >
-                                        <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>
-                                    </form>
-                                    <form action="{{ url_for('answer_vote_down', answer_id=answer.id) }}" method="post">
-                                        <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-down"></i></button>
-                                    </form>
+                                <div class="vote-wrapper">
+                                    <div id="vote-container">
+                                        <form action="{{ url_for('answer_vote_up', answer_id=answer.id) }}" method="post" >
+                                            <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>
+                                        </form>
+                                        <form action="{{ url_for('answer_vote_down', answer_id=answer.id) }}" method="post">
+                                            <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-down"></i></button>
+                                        </form>
+                                    </div>
+                                    <p id="vote">{{ answer.vote_number }}</p>
                                 </div>
-                                <p id="vote">{{ answer.vote_number }}</p>
                                 <p id="message">{{ answer.message }}</p>
-                                <p id="date">{{ answer.submission_time }}</p>
-                                <form action="{{ url_for('delete_answer', answer_id=answer.id) }}" method="post">
-                                    <button id="del-ans" type="submit"><i class="fa-solid fa-trash-can"></i></button>
-                                </form>
+                                <div class="date-del-wrapper">
+                                    <p id="date">{{ answer.submission_time }}</p>
+                                    <div class="del-ans-container">
+                                        <form action="{{ url_for('delete_answer', answer_id=answer.id) }}" method="post">
+                                            <button id="del-ans" type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
 
                             <div id="answer-img-container">

@@ -5,7 +5,7 @@
             <li>
                 <form action="{{ url_for('get_search_results') }}" method="get">
                     <input placeholder="Search..." type="text" name="search-query">
-                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button type="submit" class="search"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
             </li>
             <li class="underline"><a href="{{ url_for('list_questions_page') }}">Questions</a></li>
