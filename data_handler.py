@@ -62,3 +62,13 @@ def update_question(cursor, question_id, updated_title, updated_message):
     SET "title"={title}, "message"={message}
     WHERE id = {question_id}
     """).format(title=sql.Literal(updated_title), message=sql.Literal(updated_message), question_id=sql.Literal(question_id)))
+
+
+@database_common.connection_handler
+def get_comment_data(cursor, comment_id):
+    cursor.execute(sql.SQL("""
+    SELECT *
+    FROM comment
+    WHERE id = {comment_id}
+    """).format(comment_id=sql.Literal(comment_id)))
+    return cursor.fetchall()
