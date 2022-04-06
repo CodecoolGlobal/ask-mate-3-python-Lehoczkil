@@ -112,3 +112,10 @@ def delete_comment(cursor, comment_id):
     cursor.execute(sql.SQL("""
     DELETE FROM comment
     WHERE id={comment_id}""").format(comment_id=sql.Literal(comment_id)))
+
+
+@database_common.connection_handler
+def add_tag(cursor, tag):
+    cursor.execute("""
+    INSERT INTO tag (name)
+    VALUES ({name})""").format(tag=sql.Literal(tag))
