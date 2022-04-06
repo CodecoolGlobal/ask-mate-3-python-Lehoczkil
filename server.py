@@ -3,7 +3,6 @@ import data_handler
 import os
 from werkzeug.utils import secure_filename
 
-
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -88,7 +87,7 @@ def edit_question(question_id=None):
     if request.method == 'POST':
         updated_title = request.form.get('title')
         updated_message = request.form.get('message')
-        data_handler.update_question(question_id, updated_title, updated_message )
+        data_handler.update_question(question_id, updated_title, updated_message)
         return redirect(url_for('question_details_page', question_id=question_id))
 
     return render_template('edit_question.html', question=question)
@@ -169,6 +168,15 @@ def answer_vote_up(answer_id=None):
 def answer_vote_down(answer_id=None):
     question_id = answer_vote('down', answer_id)
     return redirect(url_for('question_details_page', question_id=question_id))
+
+
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def add_comment_to_question(question_id):
+    if request.method == 'POST':
+        message = request.form.get('message')
+        data_handler.add_comment_to_question(question_id, message)
+        return redirect('/answer/<answer_id>')
+    return render_template('new-comment.html')
 
 
 if __name__ == '__main__':
