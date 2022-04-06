@@ -232,6 +232,17 @@ def edit_question_comment(comment_id, question_id):
     return render_template('edit_comment.html', question_id=question_id, comment_id=comment_id, comment=comment)
 
 
+@app.route('/question/<question_id>/tag', methods=['GET', 'POST'])
+def add_tag(question_id):
+    tags = data_handler.get_tag()
+    if request.method == 'POST':
+        new_tag = request.form.get('tag_name')
+        data_handler.add_tag_to_table(new_tag)
+        data_handler.add_tag_to_question(question_id, new_tag)
+        return redirect('/question/<question_id>')
+    return render_template('tag.html', question_id=question_id, tags=tags)
+        
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
