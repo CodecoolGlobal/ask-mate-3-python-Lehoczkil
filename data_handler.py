@@ -80,3 +80,11 @@ def add_comment_to_question(cursor, question_id, message):
     INSERT INTO comment (question_id, message, edited_count)
     VALUES ({question_id}, {message}, {edited_count})
     """).format(question_id=sql.Literal(question_id), message=sql.Literal(message), edited_count=sql.Literal(0)))
+
+
+@database_common.connection_handler
+def add_comment_to_answer(cursor, answer_id, message):
+    cursor.execute(sql.SQL("""
+    INSERT INTO comment (answer_id, message, edited_count)
+    VALUES ({answer_id}, {message}, {edited_count})
+    """).format(answer_id=sql.Literal(answer_id), message=sql.Literal(message), edited_count=sql.Literal(0)))
