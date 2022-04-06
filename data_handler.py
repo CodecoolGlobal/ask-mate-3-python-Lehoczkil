@@ -194,9 +194,10 @@ def get_tag(cursor):
 @database_common.connection_handler
 def find_search_results(cursor, expression):
     cursor.execute(sql.SQL("""
-        SELECT title, message
+        SELECT DISTINCT question.*
         FROM question
-        WHERE title LIKE {expression} OR message LIKE {expression}""").format(expression=sql.Literal('%' + expression + '%')))
+        INNER JOIN answer ON question.id = answer.question_id
+        WHERE question.title ILIKE {expression} OR question.message ILIKE {expression} OR answer.message ILIKE {expression}""").format(expression=sql.Literal('%' + expression + '%')))
     return cursor.fetchall()
 
 
