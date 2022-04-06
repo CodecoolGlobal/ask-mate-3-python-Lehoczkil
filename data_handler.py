@@ -88,3 +88,10 @@ def add_comment_to_answer(cursor, answer_id, message):
     INSERT INTO comment (answer_id, message, edited_count)
     VALUES ({answer_id}, {message}, {edited_count})
     """).format(answer_id=sql.Literal(answer_id), message=sql.Literal(message), edited_count=sql.Literal(0)))
+
+
+@database_common.connection_handler
+def delete_comment(cursor, comment_id):
+    cursor.execute(sql.SQL("""
+    DELETE FROM comment
+    WHERE id={comment_id}""").format(comment_id=sql.Literal(comment_id)))
