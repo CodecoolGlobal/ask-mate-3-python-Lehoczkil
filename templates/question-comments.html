@@ -46,7 +46,9 @@
                     {% for comment in comments %}
                         <div class="answer">
                             <div id="answer-flex">
-                                <p id="message">{{ comment.message }}</p>
+                                <div>
+                                    <p id="message comment">{{ comment.message }}</p>
+                                </div>
                             </div>
                         </div>
                     {% endfor %}

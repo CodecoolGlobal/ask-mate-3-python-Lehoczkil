@@ -680,3 +680,10 @@ section {
         margin-top: 0.2vw;
         font-size: 0.7vw;
 }
+
+
+/*------------------------------------------------Add Comment Page----------------------------------------------------*/
+
+#message\ comment{
+        margin-left: 5vw;
+}
