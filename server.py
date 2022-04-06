@@ -12,7 +12,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index_page():
-    return render_template('index.html')
+    latest_five = data_handler.display_five_latest_questions()
+    return render_template('index.html', questions=latest_five)
 
 
 @app.route('/contacts')
