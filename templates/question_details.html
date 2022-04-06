@@ -61,10 +61,10 @@
                                 </div>
                                 <p id="vote">{{ answer.vote_number }}</p>
                                 <p id="message">{{ answer.message }}</p>
+                                <p id="date">{{ answer.submission_time }}</p>
                                 <form action="{{ url_for('delete_answer', answer_id=answer.id) }}" method="post">
                                     <button id="del-ans" type="submit"><i class="fa-solid fa-trash-can"></i></button>
                                 </form>
-                                <p id="date">{{ answer.submission_time }}</p>
                             </div>
 
                             <div id="answer-img-container">

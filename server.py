@@ -44,9 +44,11 @@ def list_questions_page():
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
-    question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
+    if question:
+        question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     answers = data_handler.search_by_id('answer', 'question_id', question_id)
-    answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
+    if answers:
+        answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     return render_template('question_details.html', question=question, answers=answers)
 
 
@@ -247,9 +249,18 @@ def delete_tag(tag_id):
         return redirect('/question/<question_id>')
 
 
+@app.route('/search')
+def get_search_results():
+    search_phrase = request.args.get('search-query')
+    results = data_handler.find_search_results(search_phrase)
+    headers = [header for header in results[0]]
+    return render_template('search_results.html', results=results, headers=headers)
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
         debug=True,
         port=5200
     )
+
