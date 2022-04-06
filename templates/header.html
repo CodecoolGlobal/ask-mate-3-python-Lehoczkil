@@ -2,7 +2,12 @@
     <a href="/" id="nav-title">Ask<span>Mate</span></a>
     <div>
         <ul>
-            <li><input placeholder="Search..." type="text"><i class="fa-solid fa-magnifying-glass"></i></li>
+            <li>
+                <form action="{{ url_for('get_search_results') }}" method="get">
+                    <input placeholder="Search..." type="text" name="search-query">
+                    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </li>
             <li class="underline"><a href="{{ url_for('list_questions_page') }}">Questions</a></li>
             <li class="underline"><a href="{{ url_for('add_question') }}">Ask</a></li>
             <li class="underline"><a href="{{ url_for('contacts_page') }}">Contacts</a></li>
