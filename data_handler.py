@@ -216,4 +216,4 @@ def display_latest_question(cursor):
         ORDER BY submission_time DESC
         LIMIT 5
         """))
-
+    return cursor.fetchall()
