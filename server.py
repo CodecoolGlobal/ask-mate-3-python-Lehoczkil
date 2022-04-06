@@ -251,8 +251,14 @@ def delete_tag(tag_id):
 @app.route('/search')
 def get_search_results():
     search_phrase = request.args.get('search-query')
-    results = data_handler.find_search_results(search_phrase)
-    headers = [header for header in results[0]]
+    if search_phrase and not search_phrase.isspace():
+        try:
+            results = data_handler.find_search_results(search_phrase)
+            headers = [header for header in results[0]]
+        except Exception:
+            return render_template('search_results.html', message="No results found")
+    else:
+        return redirect(request.referrer)
     return render_template('search_results.html', results=results, headers=headers)
 
 
