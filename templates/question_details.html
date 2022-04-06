@@ -29,6 +29,11 @@
                         <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
                     </form>
                 </div>
+                <div id="comments-container">
+                    <form action="{{ url_for('question_comments_page', question_id=question_detail.id) }}" >
+                        <button type="submit">See comments</button>
+                    </form>
+                </div>
 
             </div>
             <a class="submit-button post-answer add-comment" href="{{ url_for('add_comment_to_question', question_id=question_detail.id) }}">Add Comment <i class="fa-solid fa-pen-to-square"></i></a>

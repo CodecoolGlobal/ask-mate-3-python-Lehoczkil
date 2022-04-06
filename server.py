@@ -49,6 +49,13 @@ def question_details_page(question_id=None):
     return render_template('question_details.html', question=question, answers=answers)
 
 
+@app.route('/question/<question_id>/comments')
+def question_comments_page(question_id=None):
+    question = data_handler.search_by_id('question', 'id', question_id)
+    comments = data_handler.search_by_id('comment', 'question_id', question_id)
+    return render_template('question-comments.html', question=question, comments=comments)
+
+
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id=None):
     data_handler.delete_question(question_id)
@@ -128,21 +135,6 @@ def delete_answer(answer_id=None):
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
-# def question_vote(direction, question_id):
-#     questions = data_handler.read_file('sample_data/question.csv')
-#     edited_questions = []
-#     for question in questions:
-#         if question['id'] == question_id:
-#             if direction == 'up':
-#                 question['vote_number'] = int(question['vote_number']) + 1
-#             else:
-#                 question['vote_number'] = int(question['vote_number']) - 1
-#             edited_questions.append(question)
-#         else:
-#             edited_questions.append(question)
-#     data_handler.update_line('sample_data/question.csv', edited_questions)
-
-
 @app.route('/question/<question_id>/vote-down', methods=['GET', 'POST'])
 def question_vote_down(question_id=None):
     data_handler.vote_down_question(question_id)
@@ -194,8 +186,8 @@ def add_comment_to_question(question_id):
     if request.method == 'POST':
         updated_message = request.form.get('message')
         data_handler.add_comment_to_question(question_id, updated_message)
-        return redirect('/answer/<answer_id>')
-    return render_template('add-comment.html')
+        return redirect(url_for('question_details_page', question_id=question_id))
+    return render_template('add-comment.html', question_id=question_id)
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
@@ -204,7 +196,7 @@ def add_comment_to_answer(answer_id):
         updated_message = request.form.get('message')
         data_handler.add_comment_to_answer(answer_id, updated_message)
         return redirect('/answer/<answer_id>')
-    return render_template('new-comment.html')
+    return render_template('new-comment.html', answer_id=answer_id)
 
 
 @app.route('/answer/<answer_id>/delete_comment/<comment_id>', methods=['GET', 'POST'])

@@ -66,7 +66,7 @@ nav div ul li i:hover{
         transition: 0.5s;
 }
 
-.underline::after{
+.underline::after, #comments-container button::after {
         background: var(--red);
         content: '';
         display: block;
@@ -76,7 +76,7 @@ nav div ul li i:hover{
         width: 0;
 }
 
-.underline:hover::after{
+.underline:hover::after, #comments-container button:hover::after {
     width: 100%;
 }
 
@@ -377,11 +377,11 @@ section {
         width: 60%;
 }
 
-#edit-container, #delete-container{
+#edit-container, #delete-container, #comments-container {
         position: relative;
 }
 
-#edit-container a, #delete-container button {
+#edit-container a, #delete-container button, #comments-container button {
         background: transparent;
         border: none;
         color: white;
@@ -398,8 +398,13 @@ section {
         transition: 0.2s;
 }
 
-#delete-container button{
+#delete-container button, #comments-container button {
         bottom: 0;
+}
+
+#comments-container button{
+        left: 0;
+        padding-right: 52.5vw;
 }
 
 #question-image{

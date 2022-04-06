@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+    {% include 'header.html' %}
+            
+    <h1 id="question-title" >Question Comments</h1>
+    {% for question_detail in question %}
+        <a id="left-arrow" href="{{ url_for('question_details_page', question_id=question_detail.id) }}"><i class="fa-solid fa-arrow-left"></i></a>
+    {% endfor %}
+
+    <section>
+        {% for question_detail in question %}
+            <div class="question-details">
+                <div id="edit-container">
+                    <a href="{{ url_for('edit_question', question_id=question_detail.id) }}"><i class="fa-solid fa-file-pen"></i></a>
+                </div>
+                <p>{{ question_detail.submission_time }}</p>
+                <h1>{{ question_detail.title }}</h1>
+                <p>{{ question_detail.message | safe }}</p>
+                <div class="question-image-container">
+                    <img id="question-image" src="/static/images/{{ question_detail.image }}" onerror="this.style.display='none'" alt="image">
+                </div>
+                <div id="delete-container">
+                    <form action="{{ url_for('delete_question', question_id=question_detail.id) }}" >
+                        <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
+                </div>
+            </div>
+            <a class="submit-button post-answer add-comment" href="{{ url_for('add_comment_to_question', question_id=question_detail.id) }}">Add Comment <i class="fa-solid fa-pen-to-square"></i></a>
+        {% endfor %}
+
+        <div class="answers">
+            {% if not comments %}
+                <div>
+                    <p id="no_answer">There are no comments yet</p>
+                    <i id="sad" class="fa-solid fa-face-frown-open"></i>
+                </div>
+            {% else %}
+                <div id="answer-container">
+                    {% for comment in comments %}
+                        <div class="answer">
+                            <div id="answer-flex">
+                                <p id="message">{{ comment.message }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+    </section>
+
+{% endblock %}

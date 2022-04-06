@@ -9,11 +9,10 @@
 {% block body %}
 
     {% include 'header.html' %}
-
     <section class="add-question">
         <h1>Add Comment</h1>
         <div class="question-box">
-            <form class="question-form" action="{{ url_for('add_question') }}" method="post" enctype="multipart/form-data">
+            <form class="question-form" action="{{ url_for('add_comment_to_question', question_id=question_id) }}" method="post" enctype="multipart/form-data">
                 <label for="message">Message:</label>
                 <textarea rows="5" name="message" id="message"></textarea>
                 <div>
