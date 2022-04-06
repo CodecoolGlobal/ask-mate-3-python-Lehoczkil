@@ -179,6 +179,15 @@ def add_comment_to_question(question_id):
     return render_template('new-comment.html')
 
 
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def add_comment_to_answer(answer_id):
+    if request.method == 'POST':
+        message = request.form.get('message')
+        data_handler.add_comment_to_answer(answer_id, message)
+        return redirect('/answer/<answer_id>')
+    return render_template('new-comment.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
