@@ -237,7 +237,14 @@ def add_tag(question_id):
         data_handler.add_tag_to_question(question_id, new_tag)
         return redirect('/question/<question_id>')
     return render_template('tag.html', question_id=question_id, tags=tags)
-        
+
+
+@app.route('/question/<question_id>/tag/<tag_id>/delete', methods=['GET', 'POST'])
+def delete_tag(tag_id):
+    if request.method == 'GET':
+        data_handler.delete_tag(tag_id)
+        return redirect('/question/<question_id>')
+
 
 if __name__ == '__main__':
     app.run(
