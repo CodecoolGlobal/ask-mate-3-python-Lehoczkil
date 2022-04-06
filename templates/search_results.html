@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+
+    {% include 'header.html' %}
+    {% if results %}
+        <section class="center">
+            <section class="table-container">
+                <h1 id="question-title">Search Results</h1>
+                <h2>Related Questions and Answers</h2>
+                <div class="table-header">
+                    <table>
+                        <thead>
+                            <tr>
+                                {% for header in headers %}
+                                    <th>{{ header }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="table-content">
+                    <table>
+                        <tbody>
+                            {% for line in results %}
+                                <tr>
+                                    <td>{{ line.id }}</td>
+                                    <td>{{ line.submission_time }}</td>
+                                    <td>{{ line.view_number }}</td>
+                                    <td><form action="{{ url_for('question_vote_up', question_id=line.id) }}" method="post">
+                                            <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>
+                                        </form>
+                                        {{ line.vote_number }}
+                                    <form action="{{ url_for('question_vote_down', question_id=line.id) }}" method="post">
+                                        <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-down"></i></button>
+                                    </form> </td>
+                                    <td><a class="table-question-title" href="{{ url_for('question_details_page', question_id=line.id) }}">{{ line.title }}</a></td>
+                                    <td>{{ line.message }}</td>
+                                    <td>{{ line.image }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </section>
+    {% elif message %}
+         <section class="center">
+            <section class="table-container">
+                <h1 id="question-title">Search Results</h1>
+                <h2>{{ message }}</h2>
+            </section>
+         </section>
+    {% endif %}
+{% endblock %}
