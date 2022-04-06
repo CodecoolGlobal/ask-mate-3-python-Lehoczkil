@@ -188,6 +188,13 @@ def add_comment_to_answer(answer_id):
     return render_template('new-comment.html')
 
 
+@app.route('/answer/<answer_id>/delete_comment/<comment_id>', methods=['GET', 'POST'])
+def delete_comment(comment_id):
+    if request.method == 'GET':
+        data_handler.delete_comment(comment_id)
+        return redirect('/answer/<answer_id>')
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
