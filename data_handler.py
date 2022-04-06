@@ -91,6 +91,14 @@ def add_comment_to_answer(cursor, answer_id, message):
 
 
 @database_common.connection_handler
+def edit_comment(cursor, message, comment_id, edited_count):
+    cursor.execute(sql.SQL("""
+    UPDATE comment
+    SET 'message' = {message}, 'edited_count'
+    WHERE id = {comment_id}""").format(comment_id=sql.Literal(comment_id), message=sql.Literal(message), edited_count=sql.Literal(edited_count)))
+
+
+@database_common.connection_handler
 def delete_comment(cursor, comment_id):
     cursor.execute(sql.SQL("""
     DELETE FROM comment
