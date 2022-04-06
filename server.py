@@ -126,7 +126,7 @@ def update_answer(answer_id):
     if request.method == 'POST':
         update_message = request.form.get('message')
         data_handler.update_answer(answer_id, update_message)
-        return redirect('question_details_page')
+        return redirect(url_for('question_details_page', question_id=answer[0]['question_id']))
     return render_template('edit-answer.html', answer=answer)
 
 

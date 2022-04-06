@@ -508,6 +508,10 @@ section {
         transition: 0.5s;
 }
 
+.edit{
+        color: var(--purple);
+}
+
 #answer-img-container{
         display: block;
         text-align: left;
