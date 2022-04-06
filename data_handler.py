@@ -119,3 +119,11 @@ def add_tag(cursor, tag):
     cursor.execute("""
     INSERT INTO tag (name)
     VALUES ({name})""").format(tag=sql.Literal(tag))
+
+
+@database_common.connection_handler
+def get_tag(cursor):
+    cursor.execute("""
+        SELECT name
+        FROM tag""")
+    return cursor.fetchall()
