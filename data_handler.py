@@ -192,6 +192,15 @@ def get_tag(cursor):
 
 
 @database_common.connection_handler
+def find_search_results(cursor, expression):
+    cursor.execute(sql.SQL("""
+        SELECT title, message
+        FROM question
+        WHERE title LIKE {expression} OR message LIKE {expression}""").format(expression=sql.Literal('%' + expression + '%')))
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
 def delete_tag(cursor, tag_id):
     cursor.execute(sql.SQL("""
         DELETE FROM tag
