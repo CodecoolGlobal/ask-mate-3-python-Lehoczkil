@@ -86,16 +86,6 @@ def update_question(cursor, question_id, updated_title, updated_message):
 
 
 @database_common.connection_handler
-def get_comment_data(cursor, comment_id):
-    cursor.execute(sql.SQL("""
-    SELECT *
-    FROM comment
-    WHERE id = {comment_id}
-    """).format(comment_id=sql.Literal(comment_id)))
-    return cursor.fetchall()
-
-
-@database_common.connection_handler
 def add_comment_to_question(cursor, question_id, message):
     cursor.execute(sql.SQL("""
     INSERT INTO comment (question_id, message, edited_count)
@@ -112,7 +102,7 @@ def add_comment_to_answer(cursor, answer_id, message):
 
 
 @database_common.connection_handler
-def edit_comment(cursor, message, comment_id):
+def edit_comment(cursor, comment_id, message,):
     cursor.execute(sql.SQL("""
     UPDATE comment
     SET "message" = {message}, edited_count = edited_count + 1

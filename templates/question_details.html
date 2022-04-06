@@ -63,9 +63,6 @@
                                     <p id="vote">{{ answer.vote_number }}</p>
                                 </div>
                                 <p id="message">{{ answer.message }}</p>
-                                <div class="edit-ans-wrapper">
-
-                                </div>
                                 <div class="date-del-wrapper">
                                     <a class="edit" id="del-ans" href="{{ url_for('update_answer', answer_id=answer.id) }}"><i class="fa-solid fa-file-pen"></i></a>
                                     <p id="date">{{ answer.submission_time }}</p>

@@ -210,7 +210,7 @@ def delete_question_comment(comment_id, question_id):
 
 @app.route('/answer/<answer_id>/comment/<comment_id>', methods=['GET', 'POST'])
 def edit_answer_comment(comment_id, answer_id):
-    comment = data_handler.get_comment_data(comment_id)
+    comment = data_handler.search_by_id()
     if request.method == 'POST':
         edited_comment = request.form['message']
         edited_count = int(request.form['edited_count']) + 1
@@ -221,13 +221,12 @@ def edit_answer_comment(comment_id, answer_id):
 
 @app.route('/question/<question_id>/comment/<comment_id>', methods=['GET', 'POST'])
 def edit_question_comment(comment_id, question_id):
-    comment = data_handler.get_comment_data(comment_id)
+    comment = data_handler.search_by_id('comment', 'id', comment_id)
     if request.method == 'POST':
-        edited_comment = request.form['message']
-        edited_count = int(request.form['edited_count']) + 1
-        data_handler.edit_comment(edited_comment, comment_id, edited_count)
-        return redirect('question/<question_id>')
-    return render_template('edit-comment.html', question_id=question_id, comment_id=comment_id, comment=comment)
+        new_message = request.form['message']
+        data_handler.edit_comment(comment_id, new_message)
+        return redirect(url_for('question_comments_page', question_id=comment[0]['question_id']))
+    return render_template('edit-comment.html', question_id=question_id, comment=comment)
 
 
 @app.route('/question/<question_id>/tag', methods=['GET', 'POST'])
