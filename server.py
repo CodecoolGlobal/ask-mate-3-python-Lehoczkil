@@ -160,13 +160,17 @@ def answer_vote(direction, answer_id):
 
 @app.route('/answer/<answer_id>/vote-up', methods=['GET', 'POST'])
 def answer_vote_up(answer_id=None):
-    question_id = answer_vote('up', answer_id)
+    question = data_handler.get_question_by_answer_id(answer_id, )[0]
+    question_id = question['question_id']
+    data_handler.vote_up_answer(answer_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/vote-down', methods=['GET', 'POST'])
 def answer_vote_down(answer_id=None):
-    question_id = answer_vote('down', answer_id)
+    question = data_handler.get_question_by_answer_id(answer_id, )[0]
+    question_id = question['question_id']
+    data_handler.vote_down_answer(answer_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
