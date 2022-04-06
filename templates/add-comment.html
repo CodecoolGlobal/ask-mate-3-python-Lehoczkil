@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+
+    {% include 'header.html' %}
+    <section class="add-question">
+        <h1>Add Comment</h1>
+        <div class="question-box">
+            <form class="question-form" action="{{ url_for('add_comment_to_question', question_id=question_id) }}" method="post" enctype="multipart/form-data">
+                <label for="message">Message:</label>
+                <textarea rows="5" name="message" id="message"></textarea>
+                <div>
+                    <button class="submit-button" type="submit"><i class="fa-solid fa-pen submit-child"></i></button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+{% endblock %}

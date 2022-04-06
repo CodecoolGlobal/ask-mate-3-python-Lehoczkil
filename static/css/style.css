@@ -66,7 +66,7 @@ nav div ul li i:hover{
         transition: 0.5s;
 }
 
-.underline::after{
+.underline::after, #comments-container button::after {
         background: var(--red);
         content: '';
         display: block;
@@ -76,7 +76,7 @@ nav div ul li i:hover{
         width: 0;
 }
 
-.underline:hover::after{
+.underline:hover::after, #comments-container button:hover::after {
     width: 100%;
 }
 
@@ -371,17 +371,17 @@ section {
 .question-details{
         background: var(--purple);
         border-radius: 1vw;
-        margin-bottom: 5vw;
+        margin-bottom: 1vw;
         padding: 1vw;
         text-align: left;
         width: 60%;
 }
 
-#edit-container, #delete-container{
+#edit-container, #delete-container, #comments-container {
         position: relative;
 }
 
-#edit-container a, #delete-container button {
+#edit-container a, #delete-container button, #comments-container button {
         background: transparent;
         border: none;
         color: white;
@@ -398,8 +398,13 @@ section {
         transition: 0.2s;
 }
 
-#delete-container button{
+#delete-container button, #comments-container button {
         bottom: 0;
+}
+
+#comments-container button{
+        left: 0;
+        padding-right: 52.5vw;
 }
 
 #question-image{
@@ -414,6 +419,7 @@ section {
 .post-answer{
         background: var(--purple);
         color: white;
+        margin-top: 1vw;
         text-decoration: none;
 }
 
@@ -498,6 +504,15 @@ section {
 .answer img{
         width: 20vw;
         margin: 0 0 1vw 2vw;
+}
+
+.add-comment{
+        font-size: 0.8vw;
+        padding: 0.5vw 1vw;
+}
+
+.add-comment:hover{
+        padding: 0.5vw 1.5vw;
 }
 
 /*-------------------------------------------------Contacts Page------------------------------------------------------*/
