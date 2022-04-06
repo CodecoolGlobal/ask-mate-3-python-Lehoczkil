@@ -44,9 +44,11 @@ def list_questions_page():
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
-    question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
+    if question:
+        question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     answers = data_handler.search_by_id('answer', 'question_id', question_id)
-    answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
+    if answers:
+        answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     return render_template('question_details.html', question=question, answers=answers)
 
 
