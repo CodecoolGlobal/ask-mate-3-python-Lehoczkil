@@ -29,6 +29,8 @@ def about_us_page():
 def list_questions_page():
     questions = data_handler.read_table('question')
     headers = [table_header for table_header in questions[0]]
+    for question in questions:
+        question['submission_time'] = question['submission_time'].strftime("%Y.%m.%d")
 
     if request.method == 'POST':
         select_id = request.form.get('select_sort')
@@ -41,7 +43,9 @@ def list_questions_page():
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
+    question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     answers = data_handler.search_by_id('answer', 'question_id', question_id)
+    answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     return render_template('question_details.html', question=question, answers=answers)
 
 
@@ -103,6 +107,17 @@ def post_answer(question_id):
         data_handler.add_answer(question_id, message, image)
         return redirect(url_for('question_details_page', question_id=question_id))
     return render_template('post_answer.html', question=question)
+
+
+@app.route('/answer/<answer_id>', methods=['GET', 'POST'])
+def update_answer(answer_id):
+    answer = data_handler.search_by_id('answer', 'id', answer_id)
+
+    if request.method == 'POST':
+        update_message = request.form.get('message')
+        data_handler.update_answer(answer_id, update_message)
+        return redirect('question_details_page')
+    return render_template('edit-answer.html', answer=answer)
 
 
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
@@ -177,8 +192,8 @@ def answer_vote_down(answer_id=None):
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_comment_to_question(question_id):
     if request.method == 'POST':
-        message = request.form.get('message')
-        data_handler.add_comment_to_question(question_id, message)
+        updated_message = request.form.get('message')
+        data_handler.add_comment_to_question(question_id, updated_message)
         return redirect('/answer/<answer_id>')
     return render_template('new-comment.html')
 
@@ -186,8 +201,8 @@ def add_comment_to_question(question_id):
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_comment_to_answer(answer_id):
     if request.method == 'POST':
-        message = request.form.get('message')
-        data_handler.add_comment_to_answer(answer_id, message)
+        updated_message = request.form.get('message')
+        data_handler.add_comment_to_answer(answer_id, updated_message)
         return redirect('/answer/<answer_id>')
     return render_template('new-comment.html')
 
@@ -220,6 +235,17 @@ def edit_question_comment(comment_id, question_id):
         return redirect('question/<question_id>')
     return render_template('edit_comment.html', question_id=question_id, comment_id=comment_id, comment=comment)
 
+
+@app.route('/question/<question_id>/tag', methods=['GET', 'POST'])
+def add_tag(question_id):
+    tags = data_handler.get_tag()
+    if request.method == 'POST':
+        new_tag = request.form.get('tag_name')
+        data_handler.add_tag_to_table(new_tag)
+        data_handler.add_tag_to_question(question_id, new_tag)
+        return redirect('/question/<question_id>')
+    return render_template('tag.html', question_id=question_id, tags=tags)
+        
 
 if __name__ == '__main__':
     app.run(

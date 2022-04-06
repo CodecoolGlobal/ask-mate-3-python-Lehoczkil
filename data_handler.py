@@ -58,6 +58,15 @@ def add_answer(cursor, question_id, message, image):
 
 
 @database_common.connection_handler
+def update_answer(cursor, answer_id, message):
+    cursor.execute(sql.SQL("""
+        UPDATE answer
+        SET "message"={message}
+        WHERE id = {answer_id}
+        """).format(answer_id=sql.Literal(answer_id), message=sql.Literal(message)))
+
+
+@database_common.connection_handler
 def update_question(cursor, question_id, updated_title, updated_message):
     cursor.execute(sql.SQL("""
     UPDATE question
@@ -96,7 +105,7 @@ def add_comment_to_answer(cursor, answer_id, message):
 def edit_comment(cursor, message, comment_id, edited_count):
     cursor.execute(sql.SQL("""
     UPDATE comment
-    SET 'message' = {message}, 'edited_count'
+    SET "message" = {message}, 'edited_count'
     WHERE id = {comment_id}""").format(comment_id=sql.Literal(comment_id), message=sql.Literal(message), edited_count=sql.Literal(edited_count)))
 
 
@@ -147,3 +156,26 @@ def vote_down_answer(cursor, answer_id):
     UPDATE answer
     SET vote_number = vote_number - 1
     WHERE id={answer_id}""").format(answer_id=sql.Literal(answer_id)))
+
+
+
+@database_common.connection_handler
+def add_tag_to_table(cursor, tag):
+    cursor.execute("""
+    INSERT INTO tag (name)
+    VALUES ({name})""").format(tag=sql.Literal(tag))
+
+
+@database_common.connection_handler
+def add_tag_to_question(cursor, question_id, tag_id):
+    cursor.execute(sql.SQL("""
+        INSERT INTO question_tag (question_id, tag_id)
+        VALUES ({question_id}, {tag_id})""").format(question_id=sql.Literal(question_id), tag_id=sql.Literal(tag_id)))
+
+
+@database_common.connection_handler
+def get_tag(cursor):
+    cursor.execute("""
+        SELECT name
+        FROM tag""")
+    return cursor.fetchall()
