@@ -72,3 +72,11 @@ def get_comment_data(cursor, comment_id):
     WHERE id = {comment_id}
     """).format(comment_id=sql.Literal(comment_id)))
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def add_comment_to_question(cursor, question_id, message):
+    cursor.execute(sql.SQL("""
+    INSERT INTO comment (question_id, message, edited_count)
+    VALUES ({question_id}, {message}, {edited_count})
+    """).format(question_id=sql.Literal(question_id), message=sql.Literal(message), edited_count=sql.Literal(0)))
