@@ -217,6 +217,17 @@ def edit_answer_comment(comment_id, answer_id):
     return render_template('edit_comment.html', answer_id=answer_id, comment_id=comment_id, comment=comment)
 
 
+@app.route('/question/<question_id>/comment/<comment_id>', methods=['GET', 'POST'])
+def edit_question_comment(comment_id, question_id):
+    comment = data_handler.get_comment_data(comment_id)
+    if request.method == 'POST':
+        edited_comment = request.form['message']
+        edited_count = int(request.form['edited_count']) + 1
+        data_handler.edit_comment(edited_comment, comment_id, edited_count)
+        return redirect('question/<question_id>')
+    return render_template('edit_comment.html', question_id=question_id, comment_id=comment_id, comment=comment)
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
