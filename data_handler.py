@@ -56,6 +56,15 @@ def add_answer(cursor, question_id, message, image):
 
 
 @database_common.connection_handler
+def update_answer(cursor, answer_id, message):
+    cursor.execute(sql.SQL("""
+        UPDATE answer
+        SET "message"={message}
+        WHERE id = {answer_id}
+        """).format(answer_id=sql.Literal(answer_id), message=sql.Literal(message)))
+
+
+@database_common.connection_handler
 def update_question(cursor, question_id, updated_title, updated_message):
     cursor.execute(sql.SQL("""
     UPDATE question
@@ -94,7 +103,7 @@ def add_comment_to_answer(cursor, answer_id, message):
 def edit_comment(cursor, message, comment_id, edited_count):
     cursor.execute(sql.SQL("""
     UPDATE comment
-    SET 'message' = {message}, 'edited_count'
+    SET "message" = {message}, 'edited_count'
     WHERE id = {comment_id}""").format(comment_id=sql.Literal(comment_id), message=sql.Literal(message), edited_count=sql.Literal(edited_count)))
 
 
