@@ -125,7 +125,7 @@ def add_tag_to_table(cursor, tag):
 def add_tag_to_question(cursor, question_id, tag_id):
     cursor.execute(sql.SQL("""
         INSERT INTO question_tag (question_id, tag_id)
-        VALUES ({question_id}, {tag_id})""").format(question_id=sql.Literal(question_id), tag_id=sql.Literal(tag_id))
+        VALUES ({question_id}, {tag_id})""").format(question_id=sql.Literal(question_id), tag_id=sql.Literal(tag_id)))
 
 
 @database_common.connection_handler
