@@ -13,12 +13,14 @@ def read_table(cursor, table_name, order_method='submission_time', order_type='D
 
 
 @database_common.connection_handler
-def search_by_id(cursor, table_name, column, question_id):
+def search_by_id(cursor, table_name, column, question_id, order='id'):
     cursor.execute(sql.SQL("""
     SELECT *
     FROM {table_name}
     WHERE {column} = {question_id}
-    """).format(table_name=sql.Identifier(table_name), column=sql.Identifier(column), question_id=sql.Literal(question_id)))
+    ORDER BY {order}
+    """).format(table_name=sql.Identifier(table_name), column=sql.Identifier(column),
+                question_id=sql.Literal(question_id), order=sql.Identifier(order)))
     data_by_id = cursor.fetchall()
     return [dict(detail) for detail in data_by_id]
 
@@ -115,10 +117,60 @@ def delete_comment(cursor, comment_id):
 
 
 @database_common.connection_handler
-def add_tag(cursor, tag):
+def vote_up_question(cursor, question_id):
+    cursor.execute(sql.SQL("""
+    UPDATE question
+    SET vote_number = vote_number + 1
+    WHERE id={question_id}""").format(question_id=sql.Literal(question_id)))
+
+
+@database_common.connection_handler
+def vote_down_question(cursor, question_id):
+    cursor.execute(sql.SQL("""
+    UPDATE question
+    SET vote_number = vote_number - 1
+    WHERE id={question_id}""").format(question_id=sql.Literal(question_id)))
+
+
+@database_common.connection_handler
+def get_question_by_answer_id(cursor, answer_id):
+    cursor.execute(sql.SQL("""
+    SELECT question_id
+    FROM answer
+    WHERE id={answer_id}""").format(answer_id=sql.Literal(answer_id)))
+    data = cursor.fetchall()
+    return [dict(detail) for detail in data]
+
+
+@database_common.connection_handler
+def vote_up_answer(cursor, answer_id):
+    cursor.execute(sql.SQL("""
+    UPDATE answer
+    SET vote_number = vote_number + 1
+    WHERE id={answer_id}""").format(answer_id=sql.Literal(answer_id)))
+
+
+@database_common.connection_handler
+def vote_down_answer(cursor, answer_id):
+    cursor.execute(sql.SQL("""
+    UPDATE answer
+    SET vote_number = vote_number - 1
+    WHERE id={answer_id}""").format(answer_id=sql.Literal(answer_id)))
+
+
+
+@database_common.connection_handler
+def add_tag_to_table(cursor, tag):
     cursor.execute("""
     INSERT INTO tag (name)
     VALUES ({name})""").format(tag=sql.Literal(tag))
+
+
+@database_common.connection_handler
+def add_tag_to_question(cursor, question_id, tag_id):
+    cursor.execute(sql.SQL("""
+        INSERT INTO question_tag (question_id, tag_id)
+        VALUES ({question_id}, {tag_id})""").format(question_id=sql.Literal(question_id), tag_id=sql.Literal(tag_id)))
 
 
 @database_common.connection_handler
