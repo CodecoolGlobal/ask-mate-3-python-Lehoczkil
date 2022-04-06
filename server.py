@@ -29,6 +29,8 @@ def about_us_page():
 def list_questions_page():
     questions = data_handler.read_table('question')
     headers = [table_header for table_header in questions[0]]
+    for question in questions:
+        question['submission_time'] = question['submission_time'].strftime("%Y.%m.%d")
 
     if request.method == 'POST':
         select_id = request.form.get('select_sort')
@@ -41,7 +43,9 @@ def list_questions_page():
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
+    question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     answers = data_handler.search_by_id('answer', 'question_id', question_id)
+    answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     return render_template('question_details.html', question=question, answers=answers)
 
 
