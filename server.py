@@ -105,6 +105,17 @@ def post_answer(question_id):
     return render_template('post_answer.html', question=question)
 
 
+@app.route('/answer/<answer_id>', methods=['GET', 'POST'])
+def update_answer(answer_id):
+    answer = data_handler.search_by_id('answer', 'id', answer_id)
+
+    if request.method == 'POST':
+        update_message = request.form.get('message')
+        data_handler.update_answer(answer_id, update_message)
+        return redirect('question_details_page')
+    return render_template('edit-answer.html', answer=answer)
+
+
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
 def delete_answer(answer_id=None):
     answer_data = data_handler.search_by_id('answer', 'id', answer_id)
@@ -173,8 +184,8 @@ def answer_vote_down(answer_id=None):
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_comment_to_question(question_id):
     if request.method == 'POST':
-        message = request.form.get('message')
-        data_handler.add_comment_to_question(question_id, message)
+        updated_message = request.form.get('message')
+        data_handler.add_comment_to_question(question_id, updated_message)
         return redirect('/answer/<answer_id>')
     return render_template('new-comment.html')
 
@@ -182,8 +193,8 @@ def add_comment_to_question(question_id):
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_comment_to_answer(answer_id):
     if request.method == 'POST':
-        message = request.form.get('message')
-        data_handler.add_comment_to_answer(answer_id, message)
+        updated_message = request.form.get('message')
+        data_handler.add_comment_to_answer(answer_id, updated_message)
         return redirect('/answer/<answer_id>')
     return render_template('new-comment.html')
 
