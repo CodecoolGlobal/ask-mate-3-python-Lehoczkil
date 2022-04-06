@@ -206,3 +206,14 @@ def delete_tag(cursor, tag_id):
         DELETE FROM tag
         WHERE id = {tag_id}
         """).format(tag_id=sql.Literal(tag_id)))
+
+
+@database_common.connection_handler
+def display_latest_question(cursor):
+    cursor.execute(sql.SQL("""
+        SELECT * 
+        FROM question
+        ORDER BY submission_time DESC
+        LIMIT 5
+        """))
+
