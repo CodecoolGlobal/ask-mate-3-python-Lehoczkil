@@ -176,7 +176,7 @@ def add_comment_to_question(question_id):
         message = request.form.get('message')
         data_handler.add_comment_to_question(question_id, message)
         return redirect('/answer/<answer_id>')
-    return render_template('new-comment.html')
+    return render_template('add-comment.html')
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
@@ -203,7 +203,7 @@ def edit_answer_comment(comment_id, answer_id):
         edited_count = int(request.form['edited_count']) + 1
         data_handler.edit_comment(edited_comment, comment_id, edited_count)
         return redirect('answer/<answer_id>')
-    return render_template('edit_comment.html', answer_id=answer_id, comment_id=comment_id, comment=comment)
+    return render_template('edit-comment.html', answer_id=answer_id, comment_id=comment_id, comment=comment)
 
 
 @app.route('/question/<question_id>/comment/<comment_id>', methods=['GET', 'POST'])
@@ -214,7 +214,7 @@ def edit_question_comment(comment_id, question_id):
         edited_count = int(request.form['edited_count']) + 1
         data_handler.edit_comment(edited_comment, comment_id, edited_count)
         return redirect('question/<question_id>')
-    return render_template('edit_comment.html', question_id=question_id, comment_id=comment_id, comment=comment)
+    return render_template('edit-comment.html', question_id=question_id, comment_id=comment_id, comment=comment)
 
 
 if __name__ == '__main__':

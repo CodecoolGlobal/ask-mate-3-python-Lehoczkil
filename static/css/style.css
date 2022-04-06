@@ -371,7 +371,7 @@ section {
 .question-details{
         background: var(--purple);
         border-radius: 1vw;
-        margin-bottom: 5vw;
+        margin-bottom: 1vw;
         padding: 1vw;
         text-align: left;
         width: 60%;
@@ -414,6 +414,7 @@ section {
 .post-answer{
         background: var(--purple);
         color: white;
+        margin-top: 1vw;
         text-decoration: none;
 }
 
@@ -498,6 +499,15 @@ section {
 .answer img{
         width: 20vw;
         margin: 0 0 1vw 2vw;
+}
+
+.add-comment{
+        font-size: 0.8vw;
+        padding: 0.5vw 1vw;
+}
+
+.add-comment:hover{
+        padding: 0.5vw 1.5vw;
 }
 
 /*-------------------------------------------------Contacts Page------------------------------------------------------*/

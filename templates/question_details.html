@@ -29,7 +29,9 @@
                         <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
                     </form>
                 </div>
+
             </div>
+            <a class="submit-button post-answer add-comment" href="{{ url_for('add_comment_to_question', question_id=question_detail.id) }}">Add Comment <i class="fa-solid fa-pen-to-square"></i></a>
             <a class="submit-button post-answer" href="{{ url_for('post_answer', question_id=question_detail.id) }}">Post answer <i class="fa-solid fa-pen-to-square"></i></a>
         {% endfor %}
 
