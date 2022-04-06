@@ -128,30 +128,30 @@ def delete_answer(answer_id=None):
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
-def question_vote(direction, question_id):
-    questions = data_handler.read_file('sample_data/question.csv')
-    edited_questions = []
-    for question in questions:
-        if question['id'] == question_id:
-            if direction == 'up':
-                question['vote_number'] = int(question['vote_number']) + 1
-            else:
-                question['vote_number'] = int(question['vote_number']) - 1
-            edited_questions.append(question)
-        else:
-            edited_questions.append(question)
-    data_handler.update_line('sample_data/question.csv', edited_questions)
+# def question_vote(direction, question_id):
+#     questions = data_handler.read_file('sample_data/question.csv')
+#     edited_questions = []
+#     for question in questions:
+#         if question['id'] == question_id:
+#             if direction == 'up':
+#                 question['vote_number'] = int(question['vote_number']) + 1
+#             else:
+#                 question['vote_number'] = int(question['vote_number']) - 1
+#             edited_questions.append(question)
+#         else:
+#             edited_questions.append(question)
+#     data_handler.update_line('sample_data/question.csv', edited_questions)
 
 
 @app.route('/question/<question_id>/vote-down', methods=['GET', 'POST'])
 def question_vote_down(question_id=None):
-    question_vote('down', question_id)
+    data_handler.vote_down_question(question_id)
     return redirect(url_for('list_questions_page'))
 
 
 @app.route('/question/<question_id>/vote-up', methods=['GET', 'POST'])
 def question_vote_up(question_id=None):
-    question_vote('up', question_id)
+    data_handler.vote_up_question(question_id)
     return redirect(url_for('list_questions_page'))
 
 
@@ -175,13 +175,17 @@ def answer_vote(direction, answer_id):
 
 @app.route('/answer/<answer_id>/vote-up', methods=['GET', 'POST'])
 def answer_vote_up(answer_id=None):
-    question_id = answer_vote('up', answer_id)
+    question = data_handler.get_question_by_answer_id(answer_id, )[0]
+    question_id = question['question_id']
+    data_handler.vote_up_answer(answer_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/vote-down', methods=['GET', 'POST'])
 def answer_vote_down(answer_id=None):
-    question_id = answer_vote('down', answer_id)
+    question = data_handler.get_question_by_answer_id(answer_id, )[0]
+    question_id = question['question_id']
+    data_handler.vote_down_answer(answer_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
