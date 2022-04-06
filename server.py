@@ -202,11 +202,10 @@ def add_comment_to_answer(answer_id):
     return render_template('new-comment.html', answer_id=answer_id)
 
 
-@app.route('/answer/<answer_id>/delete_comment/<comment_id>', methods=['GET', 'POST'])
-def delete_comment(comment_id):
-    if request.method == 'GET':
-        data_handler.delete_comment(comment_id)
-        return redirect('/answer/<answer_id>')
+@app.route('/question/<question_id>/delete_comment/<comment_id>', methods=['GET', 'POST'])
+def delete_question_comment(comment_id, question_id):
+    data_handler.delete_comment(comment_id)
+    return redirect(url_for('question_comments_page', question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/comment/<comment_id>', methods=['GET', 'POST'])
