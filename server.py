@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request
 import data_handler
 import os
+import string
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'static/images'
@@ -12,8 +13,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index_page():
-    latest_five = data_handler.display_five_latest_questions()
-    return render_template('index.html', questions=latest_five)
+    latest_questions = data_handler.display_latest_question()
+    return render_template('index.html', questions=latest_questions)
 
 
 @app.route('/contacts')
@@ -230,8 +231,8 @@ def add_tag(question_id):
         new_tag = request.form.get('tag_name')
         data_handler.add_tag_to_table(new_tag)
         data_handler.add_tag_to_question(question_id, new_tag)
-        return redirect('/question/<question_id>')
-    return render_template('tag.html', question_id=question_id, tags=tags)
+        return redirect(url_for('question_details_page', question_id=question_id))
+    return render_template('add-tag.html', question_id=question_id, tags=tags)
 
 
 @app.route('/question/<question_id>/tag/<tag_id>/delete', methods=['GET', 'POST'])
@@ -244,26 +245,36 @@ def delete_tag(tag_id):
 @app.route('/search')
 def get_search_results():
     search_phrase = request.args.get('search-query')
-    if search_phrase and not search_phrase.isspace():
-        try:
-            results = data_handler.find_search_results(search_phrase)
-            headers = [header for header in results[0]]
-        except Exception:
-            return render_template('search_results.html', message="No results found")
-    else:
-        return redirect(request.referrer)
-    return render_template('search_results.html', results=results, headers=headers)
+    special_characters_to_exclude = string.punctuation
+    table = str.maketrans('', '', special_characters_to_exclude)
 
+    try:
+        if search_phrase:
+            search_phrase_words = search_phrase.split(' ')
+            search_safe_words = [word.translate(table) for word in search_phrase_words]
 
-@app.route('/')
-def display_five_latest_questions():
-    questions = data_handler.display_five_latest_questions()
-    return render_template('index.html', questions=questions)
+            if '' not in search_safe_words:
+                query_results = [data_handler.find_search_results(word) for word in search_safe_words]
+
+                unique_results = []
+                for result_item in query_results:
+                    if result_item not in unique_results:
+                        unique_results.append(result_item)
+
+                headers = [header for header in query_results[0][0]]
+            else:
+                return redirect(request.referrer)
+        else:
+            return redirect(request.referrer)
+    except IndexError:
+        return render_template('search_results.html', message="No results found")
+
+    return render_template('search_results.html', results=unique_results, headers=headers)
 
 
 if __name__ == '__main__':
     app.run(
-        host='0.0.0.0',
+        host='localhost',
         debug=True,
         port=5200
     )

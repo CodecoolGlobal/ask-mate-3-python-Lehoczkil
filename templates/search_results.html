@@ -29,22 +29,24 @@
                 <div class="table-content">
                     <table>
                         <tbody>
-                            {% for line in results %}
-                                <tr>
-                                    <td>{{ line.id }}</td>
-                                    <td>{{ line.submission_time }}</td>
-                                    <td>{{ line.view_number }}</td>
-                                    <td><form action="{{ url_for('question_vote_up', question_id=line.id) }}" method="post">
-                                            <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>
-                                        </form>
-                                        {{ line.vote_number }}
-                                    <form action="{{ url_for('question_vote_down', question_id=line.id) }}" method="post">
-                                        <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-down"></i></button>
-                                    </form> </td>
-                                    <td><a class="table-question-title" href="{{ url_for('question_details_page', question_id=line.id) }}">{{ line.title }}</a></td>
-                                    <td>{{ line.message }}</td>
-                                    <td>{{ line.image }}</td>
-                                </tr>
+                            {% for result in results %}
+                                {% for line in result %}
+                                    <tr>
+                                        <td>{{ line.id }}</td>
+                                        <td>{{ line.submission_time }}</td>
+                                        <td>{{ line.view_number }}</td>
+                                        <td><form action="{{ url_for('question_vote_up', question_id=line.id) }}" method="post">
+                                                <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>
+                                            </form>
+                                            {{ line.vote_number }}
+                                        <form action="{{ url_for('question_vote_down', question_id=line.id) }}" method="post">
+                                            <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-down"></i></button>
+                                        </form> </td>
+                                        <td><a class="table-question-title" href="{{ url_for('question_details_page', question_id=line.id) }}">{{ line.title }}</a></td>
+                                        <td>{{ line.message }}</td>
+                                        <td>{{ line.image }}</td>
+                                    </tr>
+                                {% endfor %}
                             {% endfor %}
                         </tbody>
                     </table>

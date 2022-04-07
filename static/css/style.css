@@ -211,6 +211,14 @@ section {
         width: 7vw;
 }
 
+.latest_questions{
+        margin: 10vw 0;
+}
+
+.answers button{
+        margin-left: 8vw;
+}
+
 /*---------------------------------------------------list page*-------------------------------------------------------*/
 
 #question-title{
@@ -537,6 +545,22 @@ section {
         color: var(--purple);
         font-size: 0.8vw;
         transition: 0.2s;
+}
+
+.add-tag-button{
+        background: transparent;
+        border: none;
+        color: var(--red);
+        font-size: 0.8vw;
+        padding: 0.5vw 0.5vw 0.3vw 0.5vw;
+        transition: 0.5s;
+}
+
+.add-tag-button:hover{
+        background: white;
+        border-radius: 1vw;
+        color: var(--purple);
+        transition: 0.5s;
 }
 
 /*-------------------------------------------------Contacts Page------------------------------------------------------*/

@@ -13,31 +13,33 @@
     <a id="left-arrow" href="{{ url_for('list_questions_page') }}"><i class="fa-solid fa-arrow-left"></i></a>
 
     <section>
-        {% for question_detail in question %}
+        {% for question_details in question %}
             <div class="question-details">
-                <div id="edit-container">
-                    <a href="{{ url_for('edit_question', question_id=question_detail.id) }}"><i class="fa-solid fa-file-pen"></i></a>
+                <div>
+                    <button class="add-tag-button"><i class="fa-solid fa-plus"></i></button>
                 </div>
-                <p>{{ question_detail.submission_time }}</p>
-                <h1>{{ question_detail.title }}</h1>
-                <p>{{ question_detail.message | safe }}</p>
+                <div id="edit-container">
+                    <a href="{{ url_for('edit_question', question_id=question_details.id) }}"><i class="fa-solid fa-file-pen"></i></a>
+                </div>
+                <p>{{ question_details.submission_time }}</p>
+                <h1>{{ question_details.title }}</h1>
+                <p>{{ question_details.message | safe }}</p>
                 <div class="question-image-container">
-                    <img id="question-image" src="/static/images/{{ question_detail.image }}" onerror="this.style.display='none'" alt="image">
+                    <img id="question-image" src="/static/images/{{ question_details.image }}" onerror="this.style.display='none'" alt="image">
                 </div>
                 <div id="delete-container">
-                    <form action="{{ url_for('delete_question', question_id=question_detail.id) }}" >
+                    <form action="{{ url_for('delete_question', question_id=question_details.id) }}" >
                         <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
                     </form>
                 </div>
                 <div id="comments-container">
-                    <form action="{{ url_for('question_comments_page', question_id=question_detail.id) }}" >
+                    <form action="{{ url_for('question_comments_page', question_id=question_details.id) }}" >
                         <button type="submit">See comments</button>
                     </form>
                 </div>
-
             </div>
-            <a class="submit-button post-answer add-comment" href="{{ url_for('add_comment_to_question', question_id=question_detail.id) }}">Add Comment <i class="fa-solid fa-pen-to-square"></i></a>
-            <a class="submit-button post-answer" href="{{ url_for('post_answer', question_id=question_detail.id) }}">Post answer <i class="fa-solid fa-pen-to-square"></i></a>
+            <a class="submit-button post-answer add-comment" href="{{ url_for('add_comment_to_question', question_id=question_details.id) }}">Add Comment <i class="fa-solid fa-pen-to-square"></i></a>
+            <a class="submit-button post-answer" href="{{ url_for('post_answer', question_id=question_details.id) }}">Post answer <i class="fa-solid fa-pen-to-square"></i></a>
         {% endfor %}
 
         <div class="answers">
