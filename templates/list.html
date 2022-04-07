@@ -19,8 +19,8 @@
                             {% for header in headers %}
                                 <th>{{ header }}
                                     <form action="{{ url_for('list_questions_page') }}" method="post">
-                                        <button type="submit" name="select_sort" value="ASC;{{ header }}">button ASC</button>
-                                        <button type="submit" name="select_sort" value="DESC;{{ header }}">button DESC</button>
+                                        <button class="vote-button" type="submit" name="select_sort" value="ASC;{{ header }}"><i class="fa-solid fa-angle-up"></i></button>
+                                        <button class="vote-button" type="submit" name="select_sort" value="DESC;{{ header }}"><i class="fa-solid fa-angle-down"></i></button>
                                     </form></th>
                             {% endfor %}
                         </tr>

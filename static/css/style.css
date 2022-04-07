@@ -211,11 +211,12 @@ section {
         width: 7vw;
 }
 
-.latest_questions{
-        margin: 10vw 0;
+.latest-questions{
+        height: 60%;
+        margin-top: 10vw;
 }
 
-.answers button{
+.main-see-answer button{
         margin-left: 8vw;
 }
 
@@ -737,4 +738,16 @@ section {
 
 .add-comment-left-arrow{
         margin-right:83vw;
+}
+
+/*---------------------------------------------------Add Tag Page-----------------------------------------------------*/
+
+#new-tag-title{
+        font-size: 2vw;
+}
+
+#tag{
+        border-radius: 1vw;
+        border: none;
+        padding: 0 2vw;
 }

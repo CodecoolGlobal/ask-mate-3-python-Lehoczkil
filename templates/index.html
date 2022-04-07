@@ -59,7 +59,7 @@
         <div class="curve"></div>
     </section>
 
-    <section class="latest_questions">
+    <section class="latest-questions">
         {% for question in questions %}
             <div class="question-details">
                 <div>
@@ -85,7 +85,7 @@
                     <form action="{{ url_for('question_comments_page', question_id=question.id) }}" >
                         <button type="submit">See comments</button>
                     </form>
-                    <form class="answers" action="{{ url_for('question_details_page', question_id=question.id) }}">
+                    <form class="answers main-see-answer" action="{{ url_for('question_details_page', question_id=question.id) }}">
                         <button type="submit">See answers</button>
                     </form>
                 </div>
