@@ -8,7 +8,8 @@ def read_table(cursor, table_name, order_method='submission_time', order_type='D
     SELECT * 
     FROM {table_name}
     ORDER BY {order_method} {order_type}
-    """).format(table_name=sql.Identifier(table_name), order_method=sql.Identifier(order_method), order_type=sql.SQL(order_type)))
+    """).format(table_name=sql.Identifier(table_name),
+                order_method=sql.Identifier(order_method), order_type=sql.SQL(order_type)))
     return cursor.fetchall()
 
 

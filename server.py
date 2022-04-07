@@ -35,10 +35,12 @@ def list_questions_page():
         question['submission_time'] = question['submission_time'].strftime("%Y.%m.%d")
 
     if request.method == 'POST':
-        select_id = request.form.get('select_sort')
-        questions = data_handler.read_table('question', select_id)
+        button_value = request.form.get('select_sort').split(' ')
+        selected_order, selected_header = button_value
+        questions = data_handler.read_table('question', selected_header, selected_order)
+        for question in questions:
+            question['submission_time'] = question['submission_time'].strftime("%Y.%m.%d")
 
-        return redirect(url_for('list_questions_page', questions=questions, headers=headers))
     return render_template('list.html', questions=questions, headers=headers)
 
 
