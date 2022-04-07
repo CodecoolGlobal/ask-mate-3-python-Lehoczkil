@@ -36,19 +36,11 @@ def search_by_id(cursor, table_name, column, question_id, order='id'):
 
 
 @database_common.connection_handler
-def delete_question(cursor, question_id):
+def delete_record(cursor, table_name, record_id):
     cursor.execute(sql.SQL("""
-    DELETE FROM question
-    WHERE id = {question_id}
-    """).format(question_id=sql.Literal(question_id)))
-
-
-@database_common.connection_handler
-def delete_answer(cursor, answer_id):
-    cursor.execute(sql.SQL("""
-    DELETE FROM answer
-    WHERE id = {answer_id}
-    """).format(answer_id=sql.Literal(answer_id)))
+    DELETE FROM {table_name}
+    WHERE id = {record_id}
+    """).format(table_name=sql.Identifier(table_name), record_id=sql.Literal(record_id)))
 
 
 @database_common.connection_handler

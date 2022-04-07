@@ -68,7 +68,7 @@ def answer_comments_page(answer_id=None):
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id=None):
-    data_handler.delete_question(question_id)
+    data_handler.delete_record(table_name='question', record_id=question_id)
     return redirect(url_for('list_questions_page'))
 
 
@@ -140,7 +140,7 @@ def update_answer(answer_id):
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
 def delete_answer(answer_id=None):
     answer_data = data_handler.search_by_id('answer', 'id', answer_id)
-    data_handler.delete_answer(answer_id)
+    data_handler.delete_record(table_name='answer', record_id=answer_id)
     question_id = answer_data[0]['question_id']
     return redirect(url_for('question_details_page', question_id=question_id))
 
@@ -155,24 +155,6 @@ def question_vote_down(question_id=None):
 def question_vote_up(question_id=None):
     data_handler.vote_up_question(question_id)
     return redirect(url_for('list_questions_page'))
-
-
-def answer_vote(direction, answer_id):
-    answers = data_handler.read_file('sample_data/answer.csv')
-    edited_answers = []
-    question_id = 0
-    for answer in answers:
-        if answer['id'] == answer_id:
-            question_id = answer['question_id']
-            if direction == 'up':
-                answer['vote_number'] = int(answer['vote_number']) + 1
-            else:
-                answer['vote_number'] = int(answer['vote_number']) - 1
-            edited_answers.append(answer)
-        else:
-            edited_answers.append(answer)
-    data_handler.update_line('sample_data/answer.csv', edited_answers)
-    return question_id
 
 
 @app.route('/answer/<answer_id>/vote-up', methods=['GET', 'POST'])
