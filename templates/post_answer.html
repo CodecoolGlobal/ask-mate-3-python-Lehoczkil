@@ -9,7 +9,7 @@
 {% block body %}
     {% for question_detail in question %}
         <h1 id="question-title">{{ question_detail.title }}</h1>
-        <a id="left-arrow" href="{{ url_for('list_questions_page') }}"><i class="fa-solid fa-arrow-left"></i></a>
+        <a id="left-arrow" href="{{ url_for('question_details_page', question_id=question_id) }}"><i class="fa-solid fa-arrow-left"></i></a>
         <div class="question-box">
             <form class="question-form" action="{{ url_for('post_answer', question_id=question_detail.id) }}" method="POST" enctype="multipart/form-data">
 

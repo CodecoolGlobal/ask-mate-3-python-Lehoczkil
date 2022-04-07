@@ -123,7 +123,7 @@ def post_answer(question_id):
         image = request.form.get('image')
         data_handler.add_answer(question_id, message, image)
         return redirect(url_for('question_details_page', question_id=question_id))
-    return render_template('post_answer.html', question=question)
+    return render_template('post_answer.html', question=question, question_id=question_id)
 
 
 @app.route('/answer/<answer_id>', methods=['GET', 'POST'])
@@ -267,4 +267,3 @@ if __name__ == '__main__':
         debug=True,
         port=5200
     )
-
