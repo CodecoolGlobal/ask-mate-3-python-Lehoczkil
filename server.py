@@ -230,8 +230,8 @@ def add_tag(question_id):
         new_tag = request.form.get('tag_name')
         data_handler.add_tag_to_table(new_tag)
         data_handler.add_tag_to_question(question_id, new_tag)
-        return redirect('/question/<question_id>')
-    return render_template('tag.html', question_id=question_id, tags=tags)
+        return redirect(url_for('question_details_page', question_id=question_id))
+    return render_template('add-tag.html', question_id=question_id, tags=tags)
 
 
 @app.route('/question/<question_id>/tag/<tag_id>/delete', methods=['GET', 'POST'])
