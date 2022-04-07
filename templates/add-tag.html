@@ -8,13 +8,13 @@
 {% block body %}
     {% include 'header.html' %}
     <section class="add-question">
-        <h1>Add Tag</h1>
+        <h1 id="new-tag-title" >Add Tag</h1>
         <div class="question-box">
-            <form class="question-form" action="{{ url_for('add_comment_to_answer', answer_id=answer_id) }}" method="post" enctype="multipart/form-data">
+            <form class="question-form" action="{{ url_for('add_tag', question_id=question_id) }}" method="post" enctype="multipart/form-data">
                 <label for="tag">Choose Tag</label>
                 <select name="tag" id="tag">
                     {% for tag in tags %}
-                        <option value="tag.name"></option>
+                        <option value="tag.name">{{ tag.name }}</option>
                     {% endfor %}
                 </select>
                 <div>
@@ -22,7 +22,7 @@
                 </div>
             </form>
         </div>
-        <h1>New  Tag</h1>
+        <h1 id="new-tag-title">New Tag</h1>
         <div class="question-box">
             <form class="question-form" action="{{ url_for('add_question') }}" method="post" enctype="multipart/form-data">
                 <label for="name">Name:</label>
