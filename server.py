@@ -232,16 +232,13 @@ def edit_question_comment(comment_id, question_id):
     return render_template('edit-comment.html', question_id=question_id, comment=comment)
 
 
-@app.route('/question/<question_id>/tag', methods=['GET', 'POST'])
-def add_tag(question_id):
+@app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
+def add_tag(question_id=None):
     tags = data_handler.get_tag()
-    tag_names = [tag['name'] for tag in tags]
     if request.method == 'POST':
-        new_tag = request.form.get('tag')
-        if new_tag not in tag_names:
-            data_handler.add_tag_to_table(new_tag)
-        my_tag = data_handler.search_by_id('tag', 'name', new_tag)
-        data_handler.add_tag_to_question(question_id, int(my_tag[0]['id']))
+        new_tag = request.form.get('tag_name')
+        tag_id = data_handler.add_tag_to_table(new_tag)
+        data_handler.add_tag_to_question(question_id, tag_id)
         return redirect(url_for('question_details_page', question_id=question_id))
     return render_template('add-tag.html', question_id=question_id, tags=tags)
 
@@ -266,10 +263,12 @@ def get_search_results():
 
             if '' not in search_safe_words:
                 query_results = [data_handler.find_search_results(word) for word in search_safe_words]
+
                 unique_results = []
                 for result_item in query_results:
                     if result_item not in unique_results:
                         unique_results.append(result_item)
+
                 headers = [header for header in query_results[0][0]]
             else:
                 return redirect(request.referrer)
