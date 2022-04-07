@@ -24,13 +24,11 @@
         </div>
         <h1 id="new-tag-title">New Tag</h1>
         <div class="question-box">
-            <form class="question-form" action="{{ url_for('add_question') }}" method="post" enctype="multipart/form-data">
+            <form class="question-form" action="{{ url_for('add_tag', question_id=question_id) }}" method="post" enctype="multipart/form-data">
                 <label for="name">Name:</label>
-                <input type="text" name="name" id="name">
+                <input type="text" name="tag_name" id="name">
                 <div>
-                    <form action="">
-                        <button class="submit-button" type="submit"><i class="fa-solid fa-pen submit-child"></i></button>
-                    </form>
+                    <button class="submit-button" type="submit"><i class="fa-solid fa-pen submit-child"></i></button>
                 </div>
             </form>
         </div>
