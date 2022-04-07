@@ -46,13 +46,15 @@ def list_questions_page():
 
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
+    tags = data_handler.get_question_tags(question_id)
+    print(tags)
     question = data_handler.search_by_id('question', 'id', question_id)
     if question:
         question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     answers = data_handler.search_by_id('answer', 'question_id', question_id)
     if answers:
         answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
-    return render_template('question_details.html', question=question, answers=answers)
+    return render_template('question_details.html', question=question, answers=answers, tags=tags)
 
 
 @app.route('/question/<question_id>/comments')
@@ -235,6 +237,7 @@ def edit_question_comment(comment_id, question_id):
 @app.route('/question/<question_id>/tag', methods=['GET', 'POST'])
 def add_tag(question_id=None):
     tags = data_handler.get_tag()
+    question_tags = data_handler.get_question_tags(question_id)
     tag_names = [tag['name'] for tag in tags]
     if request.method == 'POST':
         new_tag = request.form.get('tag_name')
@@ -247,7 +250,7 @@ def add_tag(question_id=None):
         print(existing_tag)
         print(my_tag)
         data_handler.add_tag_to_question(question_id, int(my_tag[0]['id']))
-        return redirect(url_for('question_details_page', question_id=question_id))
+        return redirect(url_for('question_details_page', question_id=question_id, tags=question_tags))
     return render_template('add-tag.html', question_id=question_id, tags=tags)
 
 

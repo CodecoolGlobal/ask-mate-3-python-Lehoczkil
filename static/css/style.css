@@ -564,6 +564,27 @@ section {
         transition: 0.5s;
 }
 
+.tag-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+}
+
+.tag{
+        border-radius: 1vw;
+        font-size: 0.8vw;
+        font-weight: 500;
+        padding: 0.2vw 1vw;
+}
+
+.tag:nth-of-type(odd){
+        background: var(--red);
+}
+
+.tag:nth-of-type(even){
+        background: var(--blue);
+}
+
 /*-------------------------------------------------Contacts Page------------------------------------------------------*/
 
 .contacts-body{

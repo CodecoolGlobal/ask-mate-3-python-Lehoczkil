@@ -14,16 +14,6 @@ def read_table(cursor, table_name, order_method='submission_time', order_type='D
 
 
 @database_common.connection_handler
-def display_five_latest_questions(cursor):
-    cursor.execute(sql.SQL("""
-    SELECT *
-    FROM question
-    ORDER BY submission_time
-    LIMIT 5"""))
-    return cursor.fetchall()
-
-
-@database_common.connection_handler
 def search_by_id(cursor, table_name, column, question_id, order='id'):
     cursor.execute(sql.SQL("""
     SELECT *
@@ -186,4 +176,15 @@ def display_latest_question(cursor):
         ORDER BY submission_time DESC
         LIMIT 5
         """))
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_question_tags(cursor, question_id):
+    cursor.execute(sql.SQL("""
+        SELECT tag.name
+        FROM tag
+        INNER JOIN question_tag ON tag.id = question_tag.tag_id
+        WHERE question_tag.question_id = {question_id}
+        """).format(question_id=sql.Literal(question_id)))
     return cursor.fetchall()
