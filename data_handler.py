@@ -14,6 +14,16 @@ def read_table(cursor, table_name, order_method='submission_time', order_type='D
 
 
 @database_common.connection_handler
+def display_five_latest_questions(cursor):
+    cursor.execute(sql.SQL("""
+    SELECT *
+    FROM question
+    ORDER BY submission_time
+    LIMIT 5"""))
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
 def search_by_id(cursor, table_name, column, question_id, order='id'):
     cursor.execute(sql.SQL("""
     SELECT *
@@ -128,19 +138,18 @@ def get_question_by_answer_id(cursor, answer_id):
 
 
 @database_common.connection_handler
-def add_tag_to_table(cursor, tag):
+def add_tag_to_table(cursor, new_tag):
     cursor.execute(sql.SQL("""
-    INSERT INTO tag (name)
-    VALUES ({tag})
-    """).format(tag=sql.Literal(tag)))
+    INSERT INTO tag (name) 
+    VALUES ({new_tag}) RETURNING id""").format(new_tag=sql.Literal(new_tag)))
+    return cursor.fetchone()['id']
 
 
 @database_common.connection_handler
 def add_tag_to_question(cursor, question_id, tag_id):
     cursor.execute(sql.SQL("""
         INSERT INTO question_tag (question_id, tag_id)
-        VALUES ({question_id}, {tag_id})
-        """).format(question_id=sql.Literal(question_id), tag_id=sql.Literal(tag_id)))
+        VALUES ({question_id}, {tag_id})""").format(question_id=sql.Literal(question_id), tag_id=sql.Literal(tag_id)))
 
 
 @database_common.connection_handler
