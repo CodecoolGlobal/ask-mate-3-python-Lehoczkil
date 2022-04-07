@@ -44,7 +44,8 @@ def delete_record(cursor, table_name, record_id):
 
 
 @database_common.connection_handler
-def add_question(cursor, title, message, image):
+def add_question(cursor, question_fields):
+    title, message, image = question_fields
     cursor.execute(sql.SQL("""
         INSERT INTO question (view_number, vote_number, title, message, image)
         VALUES ({view_number}, {vote_number}, {title}, {message}, {image})

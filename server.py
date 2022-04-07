@@ -78,27 +78,22 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def add_image(fields, data):
-    for field in fields:
-        if field == 'image':
-            image_file = request.files.get('image')
-            if image_file and allowed_file(image_file.filename):
-                filename = secure_filename(image_file.filename)
-                image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                data.append(filename)
-        else:
-            data.append(request.form.get(field))
-    return data
-
-
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
-    title = request.form.get('title')
-    message = request.form.get('message')
-    image = request.form.get('image')
+    question_fields = 'title', 'message', 'image'
+    new_question_data_items = []
     if request.method == 'POST':
-        data_handler.add_question(title, message, image)
-        return redirect(url_for('list_questions_page'))
+        for field in question_fields:
+            if field == 'image':
+                image_file = request.files.get('image')
+                if image_file and allowed_file(image_file.filename):
+                    filename = secure_filename(image_file.filename)
+                    image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    new_question_data_items.append(filename)
+            else:
+                new_question_data_items.append(request.form.get(field))
+        data_handler.add_question(new_question_data_items)
+        return redirect('/list')
     return render_template('add_question.html')
 
 
