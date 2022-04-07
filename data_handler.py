@@ -182,7 +182,7 @@ def display_latest_question(cursor):
 @database_common.connection_handler
 def get_question_tags(cursor, question_id):
     cursor.execute(sql.SQL("""
-        SELECT tag.name
+        SELECT *
         FROM tag
         INNER JOIN question_tag ON tag.id = question_tag.tag_id
         WHERE question_tag.question_id = {question_id}
