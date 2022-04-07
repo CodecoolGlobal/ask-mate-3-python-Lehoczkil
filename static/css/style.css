@@ -66,7 +66,7 @@ nav div ul li i:hover{
         transition: 0.5s;
 }
 
-.underline::after, #comments-container button::after {
+.underline::after, #comments-container button::after, .answer-comments-container button::after {
         background: var(--red);
         content: '';
         display: block;
@@ -76,7 +76,7 @@ nav div ul li i:hover{
         width: 0;
 }
 
-.underline:hover::after, #comments-container button:hover::after {
+.underline:hover::after, #comments-container button:hover::after, .answer-comments-container button:hover::after {
     width: 100%;
 }
 
@@ -529,6 +529,14 @@ section {
 
 .add-comment:hover{
         padding: 0.5vw 1.5vw;
+}
+
+.answer-comments-container button{
+        background: transparent;
+        border: none;
+        color: var(--purple);
+        font-size: 0.8vw;
+        transition: 0.2s;
 }
 
 /*-------------------------------------------------Contacts Page------------------------------------------------------*/

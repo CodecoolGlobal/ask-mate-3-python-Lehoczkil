@@ -61,6 +61,12 @@
                                         </form>
                                     </div>
                                     <p id="vote">{{ answer.vote_number }}</p>
+                                    <a class="edit" id="del-ans" href="{{ url_for('add_comment_to_answer', answer_id=answer.id) }}"><i class="fa-solid fa-feather"></i></a>
+                                    <div class="answer-comments-container">
+                                        <form action="{{ url_for('answer_comments_page', answer_id=answer.id) }}" >
+                                            <button type="submit">See comments</button>
+                                        </form>
+                                    </div>
                                 </div>
                                 <p id="message">{{ answer.message }}</p>
                                 <div class="date-del-wrapper">
