@@ -47,7 +47,6 @@ def list_questions_page():
 @app.route('/question/<question_id>')
 def question_details_page(question_id=None):
     tags = data_handler.get_question_tags(question_id)
-    print(tags)
     question = data_handler.search_by_id('question', 'id', question_id)
     if question:
         question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
@@ -247,8 +246,6 @@ def add_tag(question_id=None):
             return redirect(url_for('question_details_page', question_id=question_id))
         existing_tag = request.form.get('tag')
         my_tag = data_handler.search_by_id('tag', 'name', existing_tag)
-        print(existing_tag)
-        print(my_tag)
         data_handler.add_tag_to_question(question_id, int(my_tag[0]['id']))
         return redirect(url_for('question_details_page', question_id=question_id, tags=question_tags))
     return render_template('add-tag.html', question_id=question_id, tags=tags)
