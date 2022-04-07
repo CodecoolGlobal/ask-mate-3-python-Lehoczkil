@@ -59,5 +59,34 @@
         <div class="curve"></div>
     </section>
 
+    <section>
+        {% for question in questions %}
+            <div class="question-details">
+                <div>
+                    <button>Add Tag</button>
+                </div>
+                <div id="edit-container">
+                    <a href="{{ url_for('edit_question', question_id=question.id) }}"><i class="fa-solid fa-file-pen"></i></a>
+                </div>
+                <p>{{ question.submission_time }}</p>
+                <h1>{{ question.title }}</h1>
+                <p>{{ question.message | safe }}</p>
+                <div class="question-image-container">
+                    <img id="question-image" src="/static/images/{{ question.image }}" onerror="this.style.display='none'" alt="image">
+                </div>
+                <div id="delete-container">
+                    <form action="{{ url_for('delete_question', question_id=question.id) }}" >
+                        <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
+                    </form>
+                </div>
+                <div id="comments-container">
+                    <form action="{{ url_for('question_comments_page', question_id=question.id) }}" >
+                        <button type="submit">See comments</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+
 
 {% endblock %}

@@ -12,8 +12,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index_page():
-    latest_five = data_handler.display_five_latest_questions()
-    return render_template('index.html', questions=latest_five)
+    latest_questions = data_handler.display_latest_question()
+    return render_template('index.html', questions=latest_questions)
 
 
 @app.route('/contacts')
@@ -255,15 +255,9 @@ def get_search_results():
     return render_template('search_results.html', results=results, headers=headers)
 
 
-@app.route('/')
-def display_five_latest_questions():
-    questions = data_handler.display_five_latest_questions()
-    return render_template('index.html', questions=questions)
-
-
 if __name__ == '__main__':
     app.run(
-        host='0.0.0.0',
+        host='localhost',
         debug=True,
         port=5200
     )
