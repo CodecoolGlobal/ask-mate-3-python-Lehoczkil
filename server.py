@@ -113,14 +113,25 @@ def edit_question(question_id=None):
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
-def post_answer(question_id):
+def post_answer(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
 
+    answer_fields = 'message', 'image'
+    new_answer_data_items = [question_id]
+
     if request.method == 'POST':
-        message = request.form.get('message')
-        image = request.form.get('image')
-        data_handler.add_answer(question_id, message, image)
+        for field in answer_fields:
+            if field == 'image':
+                image_file = request.files.get('image')
+                if image_file and allowed_file(image_file.filename):
+                    filename = secure_filename(image_file.filename)
+                    image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    new_answer_data_items.append(filename)
+            else:
+                new_answer_data_items.append(request.form.get(field))
+        data_handler.add_answer(new_answer_data_items)
         return redirect(url_for('question_details_page', question_id=question_id))
+
     return render_template('post_answer.html', question=question, question_id=question_id)
 
 
