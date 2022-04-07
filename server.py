@@ -254,6 +254,12 @@ def add_tag(question_id=None):
     return render_template('add-tag.html', question_id=question_id, tags=tags)
 
 
+@app.route('/question/<question_id>/tag/<tag_id>/delete')
+def delete_tag(question_id=None, tag_id=None):
+    data_handler.delete_tag(tag_id)
+    return redirect(url_for('question_details_page', question_id=question_id))
+
+
 @app.route('/search')
 def get_search_results():
     search_phrase = request.args.get('search-query')
