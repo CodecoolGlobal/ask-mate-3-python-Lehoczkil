@@ -110,19 +110,19 @@ def delete_comment(cursor, comment_id):
 
 
 @database_common.connection_handler
-def vote_up_question(cursor, question_id):
+def vote_up(cursor, table_name, selected_id):
     cursor.execute(sql.SQL("""
-    UPDATE question
+    UPDATE {column_name}
     SET vote_number = vote_number + 1
-    WHERE id={question_id}""").format(question_id=sql.Literal(question_id)))
+    WHERE id={selected_id}""").format(selected_id=sql.Literal(selected_id), column_name=sql.Identifier(table_name)))
 
 
 @database_common.connection_handler
-def vote_down_question(cursor, question_id):
+def vote_down(cursor, table_name, selected_id):
     cursor.execute(sql.SQL("""
-    UPDATE question
+    UPDATE {column_name}
     SET vote_number = vote_number - 1
-    WHERE id={question_id}""").format(question_id=sql.Literal(question_id)))
+    WHERE id={selected_id}""").format(selected_id=sql.Literal(selected_id), column_name=sql.Identifier(table_name)))
 
 
 @database_common.connection_handler
@@ -133,23 +133,6 @@ def get_question_by_answer_id(cursor, answer_id):
     WHERE id={answer_id}""").format(answer_id=sql.Literal(answer_id)))
     data = cursor.fetchall()
     return [dict(detail) for detail in data]
-
-
-@database_common.connection_handler
-def vote_up_answer(cursor, answer_id):
-    cursor.execute(sql.SQL("""
-    UPDATE answer
-    SET vote_number = vote_number + 1
-    WHERE id={answer_id}""").format(answer_id=sql.Literal(answer_id)))
-
-
-@database_common.connection_handler
-def vote_down_answer(cursor, answer_id):
-    cursor.execute(sql.SQL("""
-    UPDATE answer
-    SET vote_number = vote_number - 1
-    WHERE id={answer_id}""").format(answer_id=sql.Literal(answer_id)))
-
 
 
 @database_common.connection_handler

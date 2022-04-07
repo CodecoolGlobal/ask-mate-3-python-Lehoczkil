@@ -35,7 +35,7 @@ def list_questions_page():
         question['submission_time'] = question['submission_time'].strftime("%Y.%m.%d")
 
     if request.method == 'POST':
-        button_value = request.form.get('select_sort').split(' ')
+        button_value = request.form.get('select_sort').split(';')
         selected_order, selected_header = button_value
         questions = data_handler.read_table('question', selected_header, selected_order)
         for question in questions:
@@ -150,29 +150,29 @@ def delete_answer(answer_id=None):
 
 @app.route('/question/<question_id>/vote-down', methods=['GET', 'POST'])
 def question_vote_down(question_id=None):
-    data_handler.vote_down_question(question_id)
+    data_handler.vote_down('question', question_id)
     return redirect(url_for('list_questions_page'))
 
 
 @app.route('/question/<question_id>/vote-up', methods=['GET', 'POST'])
 def question_vote_up(question_id=None):
-    data_handler.vote_up_question(question_id)
+    data_handler.vote_up('question', question_id)
     return redirect(url_for('list_questions_page'))
 
 
 @app.route('/answer/<answer_id>/vote-up', methods=['GET', 'POST'])
 def answer_vote_up(answer_id=None):
-    question = data_handler.get_question_by_answer_id(answer_id, )[0]
+    question = data_handler.get_question_by_answer_id(answer_id)[0]
     question_id = question['question_id']
-    data_handler.vote_up_answer(answer_id)
+    data_handler.vote_up('answer', answer_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/vote-down', methods=['GET', 'POST'])
 def answer_vote_down(answer_id=None):
-    question = data_handler.get_question_by_answer_id(answer_id, )[0]
+    question = data_handler.get_question_by_answer_id(answer_id)[0]
     question_id = question['question_id']
-    data_handler.vote_down_answer(answer_id)
+    data_handler.vote_down('answer', answer_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
