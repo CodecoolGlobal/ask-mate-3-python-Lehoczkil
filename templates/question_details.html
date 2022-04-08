@@ -20,8 +20,10 @@
                         <button class="add-tag-button"><i class="fa-solid fa-plus"></i></button>
                     </form>
                         {% for tag in tags %}
-                            <p class="tag">{{ tag.name }}</p>
-                            <a href="{{ url_for('delete_tag', question_id=question_details.id, tag_id=tag.id) }}">X</a>
+                            <div class="question-tag-wrapper">
+                                <p class="tag">{{ tag.name }}</p>
+                                <a href="{{ url_for('delete_tag', question_id=question_details.id, tag_id=tag.id) }}"><i class="fa-solid fa-xmark"></i></a>
+                            </div>
                         {% endfor %}
                 </div>
                 <div id="edit-container">

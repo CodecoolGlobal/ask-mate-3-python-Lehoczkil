@@ -570,18 +570,31 @@ section {
         justify-content: space-around;
 }
 
-.tag{
+.question-tag-wrapper{
+        align-items: center;
         border-radius: 1vw;
+        display: flex;
         font-size: 0.8vw;
         font-weight: 500;
-        padding: 0.2vw 1vw;
+        padding: 0 1vw;
 }
 
-.tag:nth-of-type(odd){
+.question-tag-wrapper a{
+        color: var(--purple);
+        padding-left: 0.7vw;
+        transition: 0.4s;
+}
+
+.question-tag-wrapper a:hover{
+        color: white;
+        transition: 0.4s;
+}
+
+.question-tag-wrapper:nth-of-type(odd){
         background: var(--red);
 }
 
-.tag:nth-of-type(even){
+.question-tag-wrapper:nth-of-type(even){
         background: var(--blue);
 }
 
