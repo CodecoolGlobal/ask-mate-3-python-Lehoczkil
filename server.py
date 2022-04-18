@@ -3,6 +3,7 @@ import data_handler
 import os
 import string
 from werkzeug.utils import secure_filename
+from bonus_questions import SAMPLE_QUESTIONS
 
 UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -16,6 +17,9 @@ def index_page():
     latest_questions = data_handler.display_latest_question()
     return render_template('index.html', questions=latest_questions)
 
+@app.route("/bonus-questions")
+def main():
+    return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
 
 @app.route('/contacts')
 def contacts_page():
