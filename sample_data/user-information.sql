@@ -1,5 +1,5 @@
 --------------------------------------- Store data for user-information ------------------------------------------------
-DROP TABLE IF EXISTS ONLY public.users;
+DROP TABLE IF EXISTS public.users;
 CREATE TABLE users (
     id serial NOT NULL,
     username text,
