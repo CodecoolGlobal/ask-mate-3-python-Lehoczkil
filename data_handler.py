@@ -1,4 +1,5 @@
 import database_common
+import bcrypt
 from psycopg2 import sql
 
 
@@ -188,3 +189,11 @@ def get_question_tags(cursor, question_id):
         WHERE question_tag.question_id = {question_id}
         """).format(question_id=sql.Literal(question_id)))
     return cursor.fetchall()
+
+
+def hash_password(plain_text_password):
+    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+
+
+def verify_password(plain_text_password, hashed_password):
+    return bcrypt.checkpw(plain_text_password, hashed_password)
