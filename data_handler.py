@@ -81,11 +81,14 @@ def update_question(cursor, question_id, updated_title, updated_message):
 
 
 @database_common.connection_handler
-def add_comment_to_question(cursor, question_id, message):
+def add_comment_to_question(cursor, question_id, message, user_id):
     cursor.execute(sql.SQL("""
-    INSERT INTO comment (question_id, message, edited_count)
-    VALUES ({question_id}, {message}, {edited_count})
-    """).format(question_id=sql.Literal(question_id), message=sql.Literal(message), edited_count=sql.Literal(0)))
+    INSERT INTO comment (question_id, message, edited_count, user_id)
+    VALUES ({question_id}, {message}, {edited_count}, {user_id})
+    """).format(question_id=sql.Literal(question_id),
+                message=sql.Literal(message),
+                edited_count=sql.Literal(0),
+                user_id=sql.Literal(user_id)))
 
 
 @database_common.connection_handler
