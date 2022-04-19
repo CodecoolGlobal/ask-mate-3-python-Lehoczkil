@@ -295,7 +295,8 @@ def get_search_results():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        users = data_handler.read_table('users', 'id')
+        users = data_handler.get_users()
+        print(users)
         password = request.form.get('reg-password')
         password_again = request.form.get('reg-password-again')
         if password == '' or password_again == '':
@@ -309,7 +310,7 @@ def register():
             first_name = request.form.get('first-name')
             last_name = request.form.get('last-name')
             if first_name != '' and last_name != '':
-                if user_email in users:
+                if user_email in users[0]['username']:
                     flash('Email already in use')
                     return redirect(url_for('register'))
                 else:
