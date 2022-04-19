@@ -37,11 +37,16 @@ def delete_record(cursor, table_name, record_id):
 
 @database_common.connection_handler
 def add_question(cursor, question_fields):
-    title, message, image = question_fields
+    title, message, image, user_id = question_fields
     cursor.execute(sql.SQL("""
-        INSERT INTO question (view_number, vote_number, title, message, image)
-        VALUES ({view_number}, {vote_number}, {title}, {message}, {image})
-        """).format(view_number=sql.Literal(0), vote_number=sql.Literal(0), title=sql.Literal(title), message=sql.Literal(message), image=sql.Literal(image)))
+        INSERT INTO question (view_number, vote_number, title, message, image, user_id)
+        VALUES ({view_number}, {vote_number}, {title}, {message}, {image}, {user_id})
+        """).format(view_number=sql.Literal(0),
+                    vote_number=sql.Literal(0),
+                    title=sql.Literal(title),
+                    message=sql.Literal(message),
+                    image=sql.Literal(image),
+                    user_id=sql.Literal(user_id)))
 
 
 @database_common.connection_handler
