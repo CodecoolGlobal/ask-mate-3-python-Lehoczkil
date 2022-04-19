@@ -1,4 +1,5 @@
 import database_common
+import bcrypt
 from psycopg2 import sql
 
 
@@ -187,4 +188,29 @@ def get_question_tags(cursor, question_id):
         INNER JOIN question_tag ON tag.id = question_tag.tag_id
         WHERE question_tag.question_id = {question_id}
         """).format(question_id=sql.Literal(question_id)))
+    return cursor.fetchall()
+
+
+def hash_password(plain_text_password):
+    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+
+
+def verify_password(plain_text_password, hashed_password):
+    return bcrypt.checkpw(plain_text_password, hashed_password)
+
+
+@database_common.connection_handler
+def add_user(cursor, username, first_name, last_name, password):
+    cursor.execute(sql.SQL("""
+        INSERT INTO users (username, first_name, last_name, password)
+        VALUES({username}, {first_name}, {last_name}, {password})
+        """).format(username=sql.Literal(username), first_name=sql.Literal(first_name), last_name=sql.Literal(last_name), password=sql.Literal(password)))
+
+
+@database_common.connection_handler
+def get_users(cursor):
+    cursor.execute(sql.SQL("""
+    SELECT username
+    FROM users
+    ORDER BY id"""))
     return cursor.fetchall()
