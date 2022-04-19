@@ -51,11 +51,15 @@ def add_question(cursor, question_fields):
 
 @database_common.connection_handler
 def add_answer(cursor, new_answer_data_items):
-    question_id, message, image = new_answer_data_items
+    question_id, message, image, user_id = new_answer_data_items
     cursor.execute(sql.SQL("""
-        INSERT INTO "answer" (vote_number, question_id, message, image)
-        VALUES ({vote_number}, {question_id}, {message}, {image})
-        """).format(vote_number=sql.Literal(0), question_id=sql.Literal(question_id), message=sql.Literal(message), image=sql.Literal(image)))
+        INSERT INTO "answer" (vote_number, question_id, message, image, user_id)
+        VALUES ({vote_number}, {question_id}, {message}, {image}, {user_id})
+        """).format(vote_number=sql.Literal(0),
+                    question_id=sql.Literal(question_id),
+                    message=sql.Literal(message),
+                    image=sql.Literal(image),
+                    user_id=sql.Literal(user_id)))
 
 
 @database_common.connection_handler
