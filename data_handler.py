@@ -92,11 +92,14 @@ def add_comment_to_question(cursor, question_id, message, user_id):
 
 
 @database_common.connection_handler
-def add_comment_to_answer(cursor, answer_id, message):
+def add_comment_to_answer(cursor, answer_id, message, user_id):
     cursor.execute(sql.SQL("""
-    INSERT INTO comment (answer_id, message, edited_count)
-    VALUES ({answer_id}, {message}, {edited_count})
-    """).format(answer_id=sql.Literal(answer_id), message=sql.Literal(message), edited_count=sql.Literal(0)))
+    INSERT INTO comment (answer_id, message, edited_count, user_id)
+    VALUES ({answer_id}, {message}, {edited_count}, {user_id})
+    """).format(answer_id=sql.Literal(answer_id),
+                message=sql.Literal(message),
+                edited_count=sql.Literal(0),
+                user_id=sql.Literal(user_id)))
 
 
 @database_common.connection_handler
@@ -204,19 +207,26 @@ def get_question_tags(cursor, question_id):
 
 
 def hash_password(plain_text_password):
-    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    # By using bcrypt, the salt is saved into the hash itself
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
 
 
 def verify_password(plain_text_password, hashed_password):
-    return bcrypt.checkpw(plain_text_password, hashed_password)
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
 
 
 @database_common.connection_handler
 def add_user(cursor, username, first_name, last_name, password):
+    print(password)
     cursor.execute(sql.SQL("""
         INSERT INTO users (username, first_name, last_name, password)
         VALUES({username}, {first_name}, {last_name}, {password})
-        """).format(username=sql.Literal(username), first_name=sql.Literal(first_name), last_name=sql.Literal(last_name), password=sql.Literal(password)))
+        """).format(username=sql.Literal(username),
+                    first_name=sql.Literal(first_name),
+                    last_name=sql.Literal(last_name),
+                    password=sql.Literal(password)))
 
 
 @database_common.connection_handler
@@ -226,3 +236,5 @@ def get_users(cursor):
     FROM users
     ORDER BY id"""))
     return cursor.fetchall()
+
+
