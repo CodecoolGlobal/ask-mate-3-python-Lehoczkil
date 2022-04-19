@@ -10,6 +10,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = os.urandom(24)
 
 
 @app.route('/')
@@ -294,7 +295,7 @@ def get_search_results():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        users = data_handler.read_table('user', 'id')
+        users = data_handler.read_table('users', 'id')
         password = request.form.get('reg-password')
         password_again = request.form.get('reg-password-again')
         if password == '' or password_again == '':
