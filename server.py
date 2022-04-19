@@ -296,7 +296,6 @@ def get_search_results():
 def register():
     if request.method == 'POST':
         users = data_handler.get_users()
-        print(users)
         password = request.form.get('reg-password')
         password_again = request.form.get('reg-password-again')
         if password == '' or password_again == '':
