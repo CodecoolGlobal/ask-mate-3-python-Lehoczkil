@@ -192,11 +192,13 @@ def get_question_tags(cursor, question_id):
 
 
 def hash_password(plain_text_password):
-    return bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
 
 
 def verify_password(plain_text_password, hashed_password):
-    return bcrypt.checkpw(plain_text_password, hashed_password)
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
 
 
 @database_common.connection_handler
@@ -213,4 +215,13 @@ def get_users(cursor):
     SELECT username
     FROM users
     ORDER BY id"""))
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_password_by_username(cursor, input_username):
+    cursor.execute(sql.SQL("""
+    SELECT password
+    FROM users
+    WHERE username = {input_username};""").format(input_username=sql.Literal(input_username)))
     return cursor.fetchall()

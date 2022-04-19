@@ -313,7 +313,9 @@ def register():
                     flash('Email already in use')
                     return redirect(url_for('register'))
                 else:
-                    data_handler.add_user(user_email, first_name, last_name, data_handler.hash_password(password))
+                    hashed_password = data_handler.hash_password(password)
+                    print(hashed_password)
+                    data_handler.add_user(user_email, first_name, last_name, hashed_password)
                     session['user_email'] = user_email
                     return redirect(url_for('index_page'))
             else:
@@ -326,6 +328,26 @@ def register():
         flash('Already logged in')
         return redirect(url_for('index_page'))
     return render_template('register.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        usernames = [data['username'] for data in data_handler.get_users()]
+        username = request.form['username']
+        input_password = request.form['password']
+        if username in usernames:
+            password = data_handler.get_password_by_username(username)[0]['password']
+            print(password)
+            print(data_handler.verify_password(input_password, password))
+            if data_handler.verify_password(input_password, password):
+                session['username'] = username
+                return redirect(url_for('index_page'))
+            else:
+                return render_template('login_form.html', error="password")
+        else:
+            return render_template('login_form.html', error="user")
+    return render_template('login_form.html')
 
 
 if __name__ == '__main__':
