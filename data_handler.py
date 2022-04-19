@@ -205,3 +205,12 @@ def add_user(cursor, username, first_name, last_name, password):
         INSERT INTO users (username, first_name, last_name, password)
         VALUES({username}, {first_name}, {last_name}, {password})
         """).format(username=sql.Literal(username), first_name=sql.Literal(first_name), last_name=sql.Literal(last_name), password=sql.Literal(password)))
+
+
+@database_common.connection_handler
+def get_users(cursor):
+    cursor.execute(sql.SQL("""
+    SELECT username
+    FROM users
+    ORDER BY id"""))
+    return cursor.fetchall()
