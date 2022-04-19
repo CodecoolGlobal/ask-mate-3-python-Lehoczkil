@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, session, flash
 import data_handler
 import os
 import string
@@ -289,6 +289,42 @@ def get_search_results():
         return render_template('search_results.html', message="No results found")
 
     return render_template('search_results.html', results=unique_results, headers=headers)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        users = data_handler.read_table('user', 'id')
+        password = request.form.get('reg-password')
+        password_again = request.form.get('reg-password-again')
+        if password == '' or password_again == '':
+            flash('Please enter a password')
+            return redirect(url_for('register'))
+        elif password == password_again:
+            user_email = request.form.get('reg-email')
+            if user_email == '':
+                flash('Please enter your email address')
+                return redirect(url_for('register'))
+            first_name = request.form.get('first-name')
+            last_name = request.form.get('last-name')
+            if first_name != '' and last_name != '':
+                if user_email in users:
+                    flash('Email already in use')
+                    return redirect(url_for('register'))
+                else:
+                    data_handler.add_user(user_email, first_name, last_name, data_handler.hash_password(password))
+                    session['user_email'] = user_email
+                    return redirect(url_for('index_page'))
+            else:
+                flash('Please enter a name', 'info')
+                return redirect(url_for('register'))
+        else:
+            flash("Password doesn't match", 'info')
+            return redirect(url_for('register'))
+    elif "user_email" in session:
+        flash('Already logged in')
+        return redirect(url_for('index_page'))
+    return render_template('register.html')
 
 
 if __name__ == '__main__':
