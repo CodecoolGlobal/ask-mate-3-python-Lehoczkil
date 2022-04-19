@@ -37,29 +37,20 @@ def delete_record(cursor, table_name, record_id):
 
 @database_common.connection_handler
 def add_question(cursor, question_fields):
-    title, message, image, user_id = question_fields
+    title, message, image = question_fields
     cursor.execute(sql.SQL("""
-        INSERT INTO question (view_number, vote_number, title, message, image, user_id)
-        VALUES ({view_number}, {vote_number}, {title}, {message}, {image}, {user_id})
-        """).format(view_number=sql.Literal(0),
-                    vote_number=sql.Literal(0),
-                    title=sql.Literal(title),
-                    message=sql.Literal(message),
-                    image=sql.Literal(image),
-                    user_id=sql.Literal(user_id)))
+        INSERT INTO question (view_number, vote_number, title, message, image)
+        VALUES ({view_number}, {vote_number}, {title}, {message}, {image})
+        """).format(view_number=sql.Literal(0), vote_number=sql.Literal(0), title=sql.Literal(title), message=sql.Literal(message), image=sql.Literal(image)))
 
 
 @database_common.connection_handler
 def add_answer(cursor, new_answer_data_items):
-    question_id, message, image, user_id = new_answer_data_items
+    question_id, message, image = new_answer_data_items
     cursor.execute(sql.SQL("""
-        INSERT INTO "answer" (vote_number, question_id, message, image, user_id)
-        VALUES ({vote_number}, {question_id}, {message}, {image}, {user_id})
-        """).format(vote_number=sql.Literal(0),
-                    question_id=sql.Literal(question_id),
-                    message=sql.Literal(message),
-                    image=sql.Literal(image),
-                    user_id=sql.Literal(user_id)))
+        INSERT INTO "answer" (vote_number, question_id, message, image)
+        VALUES ({vote_number}, {question_id}, {message}, {image})
+        """).format(vote_number=sql.Literal(0), question_id=sql.Literal(question_id), message=sql.Literal(message), image=sql.Literal(image)))
 
 
 @database_common.connection_handler
@@ -81,25 +72,19 @@ def update_question(cursor, question_id, updated_title, updated_message):
 
 
 @database_common.connection_handler
-def add_comment_to_question(cursor, question_id, message, user_id):
+def add_comment_to_question(cursor, question_id, message):
     cursor.execute(sql.SQL("""
-    INSERT INTO comment (question_id, message, edited_count, user_id)
-    VALUES ({question_id}, {message}, {edited_count}, {user_id})
-    """).format(question_id=sql.Literal(question_id),
-                message=sql.Literal(message),
-                edited_count=sql.Literal(0),
-                user_id=sql.Literal(user_id)))
+    INSERT INTO comment (question_id, message, edited_count)
+    VALUES ({question_id}, {message}, {edited_count})
+    """).format(question_id=sql.Literal(question_id), message=sql.Literal(message), edited_count=sql.Literal(0)))
 
 
 @database_common.connection_handler
-def add_comment_to_answer(cursor, answer_id, message, user_id):
+def add_comment_to_answer(cursor, answer_id, message):
     cursor.execute(sql.SQL("""
-    INSERT INTO comment (answer_id, message, edited_count, user_id)
-    VALUES ({answer_id}, {message}, {edited_count}, {user_id})
-    """).format(answer_id=sql.Literal(answer_id),
-                message=sql.Literal(message),
-                edited_count=sql.Literal(0),
-                user_id=sql.Literal(user_id)))
+    INSERT INTO comment (answer_id, message, edited_count)
+    VALUES ({answer_id}, {message}, {edited_count})
+    """).format(answer_id=sql.Literal(answer_id), message=sql.Literal(message), edited_count=sql.Literal(0)))
 
 
 @database_common.connection_handler
@@ -207,7 +192,6 @@ def get_question_tags(cursor, question_id):
 
 
 def hash_password(plain_text_password):
-    # By using bcrypt, the salt is saved into the hash itself
     hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
     return hashed_bytes.decode('utf-8')
 
@@ -219,14 +203,10 @@ def verify_password(plain_text_password, hashed_password):
 
 @database_common.connection_handler
 def add_user(cursor, username, first_name, last_name, password):
-    print(password)
     cursor.execute(sql.SQL("""
         INSERT INTO users (username, first_name, last_name, password)
         VALUES({username}, {first_name}, {last_name}, {password})
-        """).format(username=sql.Literal(username),
-                    first_name=sql.Literal(first_name),
-                    last_name=sql.Literal(last_name),
-                    password=sql.Literal(password)))
+        """).format(username=sql.Literal(username), first_name=sql.Literal(first_name), last_name=sql.Literal(last_name), password=sql.Literal(password)))
 
 
 @database_common.connection_handler
@@ -238,3 +218,10 @@ def get_users(cursor):
     return cursor.fetchall()
 
 
+@database_common.connection_handler
+def get_password_by_username(cursor, input_username):
+    cursor.execute(sql.SQL("""
+    SELECT password
+    FROM users
+    WHERE username = {input_username};""").format(input_username=sql.Literal(input_username)))
+    return cursor.fetchall()
