@@ -18,9 +18,11 @@ def index_page():
     latest_questions = data_handler.display_latest_question()
     return render_template('index.html', questions=latest_questions)
 
+
 @app.route("/bonus-questions")
 def main():
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+
 
 @app.route('/contacts')
 def contacts_page():
@@ -294,6 +296,8 @@ def get_search_results():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if session:
+        return redirect(url_for('index_page'))
     if request.method == 'POST':
         users = data_handler.get_users()
         password = request.form.get('reg-password')
@@ -332,6 +336,8 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if session:
+        return redirect(url_for('index_page'))
     if request.method == 'POST':
         usernames = [data['username'] for data in data_handler.get_users()]
         username = request.form['username']
@@ -348,6 +354,12 @@ def login():
         else:
             return render_template('login_form.html', error="user")
     return render_template('login_form.html')
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index_page'))
 
 
 if __name__ == '__main__':
