@@ -18,9 +18,11 @@ def index_page():
     latest_questions = data_handler.display_latest_question()
     return render_template('index.html', questions=latest_questions)
 
+
 @app.route("/bonus-questions")
 def main():
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+
 
 @app.route('/contacts')
 def contacts_page():
@@ -88,7 +90,7 @@ def allowed_file(filename):
 
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
-    question_fields = 'title', 'message', 'image', 'user_id'
+    question_fields = 'title', 'message', 'id', 'image'
     new_question_data_items = []
     if request.method == 'POST':
         for field in question_fields:
@@ -98,9 +100,11 @@ def add_question():
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     new_question_data_items.append(filename)
-            elif field == 'user_id':
-                user = data_handler.search_by_id('users', 'username', session['user_email'])
-                user_id = user[0]['user_id'][0]
+                new_question_data_items.append(None)
+            elif field == 'id':
+                session_user = session['username']
+                user = data_handler.search_by_id('users', 'username', session_user)
+                user_id = user[0]['id']
                 new_question_data_items.append(user_id)
             else:
                 new_question_data_items.append(request.form.get(field))
@@ -125,10 +129,8 @@ def edit_question(question_id=None):
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def post_answer(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
-
-    answer_fields = 'message', 'image', 'user_id'
+    answer_fields = 'message', 'id', 'image'
     new_answer_data_items = [question_id]
-
     if request.method == 'POST':
         for field in answer_fields:
             if field == 'image':
@@ -137,22 +139,21 @@ def post_answer(question_id=None):
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     new_answer_data_items.append(filename)
-            elif field == 'user_id':
-                user = data_handler.search_by_id('users', 'username', session['user_email'])
-                user_id = user[0]['user_id'][0]
+                new_answer_data_items.append(None)
+            elif field == 'id':
+                user = data_handler.search_by_id('users', 'username', session['username'])
+                user_id = user[0]['id']
                 new_answer_data_items.append(user_id)
             else:
                 new_answer_data_items.append(request.form.get(field))
         data_handler.add_answer(new_answer_data_items)
         return redirect(url_for('question_details_page', question_id=question_id))
-
     return render_template('post_answer.html', question=question, question_id=question_id)
 
 
 @app.route('/answer/<answer_id>', methods=['GET', 'POST'])
 def update_answer(answer_id):
     answer = data_handler.search_by_id('answer', 'id', answer_id)
-
     if request.method == 'POST':
         update_message = request.form.get('message')
         data_handler.update_answer(answer_id, update_message)
@@ -200,7 +201,9 @@ def answer_vote_down(answer_id=None):
 def add_comment_to_question(question_id):
     if request.method == 'POST':
         updated_message = request.form.get('message')
-        data_handler.add_comment_to_question(question_id, updated_message)
+        user = data_handler.search_by_id('users', 'username', session['username'])
+        user_id = user[0]['id']
+        data_handler.add_comment_to_question(question_id, updated_message, user_id)
         return redirect(url_for('question_comments_page', question_id=question_id))
     return render_template('add-comment-to-question.html', question_id=question_id)
 
@@ -209,7 +212,9 @@ def add_comment_to_question(question_id):
 def add_comment_to_answer(answer_id):
     if request.method == 'POST':
         updated_message = request.form.get('message')
-        data_handler.add_comment_to_answer(answer_id, updated_message)
+        user = data_handler.search_by_id('users', 'username', session['username'])
+        user_id = user[0]['id']
+        data_handler.add_comment_to_answer(answer_id, updated_message, user_id)
         return redirect(url_for('answer_comments_page', answer_id=answer_id))
     return render_template('add-comment-to-answer.html', answer_id=answer_id)
 
@@ -324,7 +329,7 @@ def register():
                     hashed_password = data_handler.hash_password(password)
                     print(hashed_password)
                     data_handler.add_user(user_email, first_name, last_name, hashed_password)
-                    session['user_email'] = user_email
+                    session['username'] = user_email
                     return redirect(url_for('index_page'))
             else:
                 flash('Please enter a name', 'info')
@@ -346,8 +351,6 @@ def login():
         input_password = request.form['password']
         if username in usernames:
             password = data_handler.get_password_by_username(username)[0]['password']
-            print(password)
-            print(data_handler.verify_password(input_password, password))
             if data_handler.verify_password(input_password, password):
                 session['username'] = username
                 return redirect(url_for('index_page'))
@@ -356,14 +359,6 @@ def login():
         else:
             return render_template('login_form.html', error="user")
     return render_template('login_form.html')
-
-
-@app.route('/users')
-def users():
-    users_attributes = data_handler.list_users()
-    headers = ['Username', 'Registration date', 'Questions', 'Answers', 'Comments', 'Reputation']
-    logged_in = True if session else False
-    return render_template('users.html', logged_in=logged_in, headers=headers, users_attributes_data_rows=users_attributes)
 
 
 if __name__ == '__main__':
