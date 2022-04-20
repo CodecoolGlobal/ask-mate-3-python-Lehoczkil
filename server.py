@@ -88,7 +88,7 @@ def allowed_file(filename):
 
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
-    question_fields = 'title', 'message', 'image', 'user_id'
+    question_fields = 'title', 'message', 'id', 'image'
     new_question_data_items = []
     if request.method == 'POST':
         for field in question_fields:
@@ -98,12 +98,15 @@ def add_question():
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     new_question_data_items.append(filename)
-            elif field == 'user_id':
-                user = data_handler.search_by_id('users', 'username', session['user_email'])
-                user_id = user[0]['user_id'][0]
+                new_question_data_items.append(None)
+            elif field == 'id':
+                session_user = session['username']
+                user = data_handler.search_by_id('users', 'username', session_user)
+                user_id = user[0]['id']
                 new_question_data_items.append(user_id)
             else:
                 new_question_data_items.append(request.form.get(field))
+        print(new_question_data_items)
         data_handler.add_question(new_question_data_items)
         return redirect('/list')
     return render_template('add_question.html')
@@ -324,7 +327,7 @@ def register():
                     hashed_password = data_handler.hash_password(password)
                     print(hashed_password)
                     data_handler.add_user(user_email, first_name, last_name, hashed_password)
-                    session['user_email'] = user_email
+                    session['username'] = user_email
                     return redirect(url_for('index_page'))
             else:
                 flash('Please enter a name', 'info')
@@ -346,8 +349,6 @@ def login():
         input_password = request.form['password']
         if username in usernames:
             password = data_handler.get_password_by_username(username)[0]['password']
-            print(password)
-            print(data_handler.verify_password(input_password, password))
             if data_handler.verify_password(input_password, password):
                 session['username'] = username
                 return redirect(url_for('index_page'))
