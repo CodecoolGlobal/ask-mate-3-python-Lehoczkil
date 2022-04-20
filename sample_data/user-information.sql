@@ -8,3 +8,6 @@ CREATE TABLE users (
     password text,
     registration_time timestamp without time zone
 );
+
+INSERT INTO users (username, first_name, last_name, password)
+VALUES ('TestUser', 'Test', 'User', '1234')
