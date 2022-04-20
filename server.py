@@ -88,7 +88,7 @@ def allowed_file(filename):
 
 @app.route('/add_question', methods=['GET', 'POST'])
 def add_question():
-    question_fields = 'title', 'message', 'image'
+    question_fields = 'title', 'message', 'image', 'user_id'
     new_question_data_items = []
     if request.method == 'POST':
         for field in question_fields:
@@ -98,6 +98,10 @@ def add_question():
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     new_question_data_items.append(filename)
+            elif field == 'user_id':
+                user = data_handler.search_by_id('users', 'username', session['user_email'])
+                user_id = user[0]['user_id'][0]
+                new_question_data_items.append(user_id)
             else:
                 new_question_data_items.append(request.form.get(field))
         data_handler.add_question(new_question_data_items)
@@ -122,7 +126,7 @@ def edit_question(question_id=None):
 def post_answer(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
 
-    answer_fields = 'message', 'image'
+    answer_fields = 'message', 'image', 'user_id'
     new_answer_data_items = [question_id]
 
     if request.method == 'POST':
@@ -133,6 +137,10 @@ def post_answer(question_id=None):
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     new_answer_data_items.append(filename)
+            elif field == 'user_id':
+                user = data_handler.search_by_id('users', 'username', session['user_email'])
+                user_id = user[0]['user_id'][0]
+                new_answer_data_items.append(user_id)
             else:
                 new_answer_data_items.append(request.form.get(field))
         data_handler.add_answer(new_answer_data_items)
