@@ -51,7 +51,7 @@ def add_question(cursor, question_fields):
 
 @database_common.connection_handler
 def add_answer(cursor, new_answer_data_items):
-    question_id, message, image, user_id = new_answer_data_items
+    question_id, message, user_id, image = new_answer_data_items
     cursor.execute(sql.SQL("""
         INSERT INTO "answer" (vote_number, question_id, message, image, user_id)
         VALUES ({vote_number}, {question_id}, {message}, {image}, {user_id})

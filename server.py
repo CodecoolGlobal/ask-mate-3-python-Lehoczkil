@@ -18,9 +18,11 @@ def index_page():
     latest_questions = data_handler.display_latest_question()
     return render_template('index.html', questions=latest_questions)
 
+
 @app.route("/bonus-questions")
 def main():
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+
 
 @app.route('/contacts')
 def contacts_page():
@@ -106,7 +108,6 @@ def add_question():
                 new_question_data_items.append(user_id)
             else:
                 new_question_data_items.append(request.form.get(field))
-        print(new_question_data_items)
         data_handler.add_question(new_question_data_items)
         return redirect('/list')
     return render_template('add_question.html')
@@ -128,10 +129,8 @@ def edit_question(question_id=None):
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def post_answer(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
-
-    answer_fields = 'message', 'image', 'user_id'
+    answer_fields = 'message', 'id', 'image'
     new_answer_data_items = [question_id]
-
     if request.method == 'POST':
         for field in answer_fields:
             if field == 'image':
@@ -140,22 +139,21 @@ def post_answer(question_id=None):
                     filename = secure_filename(image_file.filename)
                     image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     new_answer_data_items.append(filename)
-            elif field == 'user_id':
-                user = data_handler.search_by_id('users', 'username', session['user_email'])
-                user_id = user[0]['user_id'][0]
+                new_answer_data_items.append(None)
+            elif field == 'id':
+                user = data_handler.search_by_id('users', 'username', session['username'])
+                user_id = user[0]['id']
                 new_answer_data_items.append(user_id)
             else:
                 new_answer_data_items.append(request.form.get(field))
         data_handler.add_answer(new_answer_data_items)
         return redirect(url_for('question_details_page', question_id=question_id))
-
     return render_template('post_answer.html', question=question, question_id=question_id)
 
 
 @app.route('/answer/<answer_id>', methods=['GET', 'POST'])
 def update_answer(answer_id):
     answer = data_handler.search_by_id('answer', 'id', answer_id)
-
     if request.method == 'POST':
         update_message = request.form.get('message')
         data_handler.update_answer(answer_id, update_message)
@@ -203,7 +201,9 @@ def answer_vote_down(answer_id=None):
 def add_comment_to_question(question_id):
     if request.method == 'POST':
         updated_message = request.form.get('message')
-        data_handler.add_comment_to_question(question_id, updated_message)
+        user = data_handler.search_by_id('users', 'username', session['username'])
+        user_id = user[0]['id']
+        data_handler.add_comment_to_question(question_id, updated_message, user_id)
         return redirect(url_for('question_comments_page', question_id=question_id))
     return render_template('add-comment-to-question.html', question_id=question_id)
 
@@ -212,7 +212,9 @@ def add_comment_to_question(question_id):
 def add_comment_to_answer(answer_id):
     if request.method == 'POST':
         updated_message = request.form.get('message')
-        data_handler.add_comment_to_answer(answer_id, updated_message)
+        user = data_handler.search_by_id('users', 'username', session['username'])
+        user_id = user[0]['id']
+        data_handler.add_comment_to_answer(answer_id, updated_message, user_id)
         return redirect(url_for('answer_comments_page', answer_id=answer_id))
     return render_template('add-comment-to-answer.html', answer_id=answer_id)
 
