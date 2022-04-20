@@ -225,3 +225,16 @@ def get_password_by_username(cursor, input_username):
     FROM users
     WHERE username = {input_username};""").format(input_username=sql.Literal(input_username)))
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def list_users(cursor):
+    cursor.execute(sql.SQL("""
+        SELECT MAX(users.id) AS user_id, users.username, MAX(TO_CHAR(users.registration_time :: DATE, 'yyyy.mm.dd')) AS registration_time, COUNT(question.user_id) AS number_of_questions, COUNT(answer.user_id) AS number_of_answers, COUNT(comment.user_id) AS number_of_comments, MAX(reputation.reputation_points) AS reputation_points
+        FROM users
+        LEFT JOIN question ON users.id = question.user_id
+        LEFT JOIN answer ON users.id = answer.user_id
+        LEFT JOIN comment ON users.id = comment.user_id
+        LEFT JOIN reputation on users.id = reputation.user_id
+        GROUP BY username"""))
+    return cursor.fetchall()
