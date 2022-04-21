@@ -43,6 +43,7 @@ def connection_handler(function):
         dict_cur.close()
         connection.close()
         return ret_value
+
     return wrapper
 
 
@@ -54,7 +55,3 @@ def login_required(func):
         else:
             return redirect(request.referrer)
     return decorated_func
-
-
-def is_logged(func):
-    pass
