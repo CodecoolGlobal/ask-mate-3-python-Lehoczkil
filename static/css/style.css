@@ -2,11 +2,12 @@
         --purple: #10002b;
         --red: #B7094C;
         --blue: #2E6F95;
+        --white: white;
 }
 
 body {
         background: var(--red);
-        color: white;
+        color: var(--white);
         font-family: 'Poppins', sans-serif;
         margin: 0;
         overflow-x: hidden;
@@ -36,7 +37,7 @@ nav div ul li{
 }
 
 nav div ul li a, #nav-title, .button{
-        color: white;
+        color: var(--white);
         font-size: 0.7vw;
         text-decoration: None;
 }
@@ -280,7 +281,7 @@ section {
 }
 
 .table-header table a, .table-content table a{
-        color: white;
+        color: var(--white);
         font-weight: 500;
         text-decoration: none;
         transition: 0.5s;
@@ -309,7 +310,7 @@ section {
 }
 
 .vote-button:hover{
-        color: white;
+        color: var(--white);
         font-weight: 800;
         transition: 0.5s;
 }
@@ -360,11 +361,11 @@ section {
 }
 
 .submit-button:hover .submit-child{
-        color: white;
+        color: var(--white);
 }
 
 .question-form label{
-        color: white;
+        color: var(--white);
         font-weight: 500;
 }
 
@@ -374,7 +375,7 @@ section {
         background: var(--purple);
         border: none;
         border-radius: 2vw;
-        color: white;
+        color: var(--white);
         font-size: 1vw;
         font-weight: 600;
         margin-left: 15%;
@@ -386,7 +387,7 @@ section {
         background: var(--purple);
         border: none;
         border-radius: 2vw;
-        color: white;
+        color: var(--white);
         font-size: 1vw;
         font-weight: 600;
         margin-left: 10%;
@@ -451,7 +452,7 @@ section {
 
 .post-answer{
         background: var(--purple);
-        color: white;
+        color: var(--white);
         margin-top: 1vw;
         text-decoration: none;
 }
@@ -477,7 +478,7 @@ section {
 }
 
 .answer{
-        background: white;
+        background: var(--white);
         border: none;
         border-radius: 2vw;
         color: var(--purple);
@@ -509,7 +510,7 @@ section {
 #vote{
         background: var(--purple);
         border-radius: 1vw;
-        color: white;
+        color: var(--white);
         font-size: 1vw;
         font-weight: 600;
         padding: 0.2vw 2vw;
@@ -574,7 +575,7 @@ section {
 }
 
 .add-tag-button:hover{
-        background: white;
+        background: var(--white);
         border-radius: 1vw;
         color: var(--purple);
         transition: 0.5s;
@@ -602,7 +603,7 @@ section {
 }
 
 .question-tag-wrapper a:hover{
-        color: white;
+        color: var(--white);
         transition: 0.4s;
 }
 
@@ -687,7 +688,7 @@ section {
 .left, .right{
         background: linear-gradient(45deg, var(--purple), var(--red));
         border: 0.5vw solid white;
-        color: white;
+        color: var(--white);
 }
 
 .left{

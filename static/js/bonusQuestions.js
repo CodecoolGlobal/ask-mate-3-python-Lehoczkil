@@ -65,8 +65,21 @@ function getFilteredItems(items, filterValue) {
     }
 }
 
+
 function toggleTheme() {
-    console.log("toggle theme")
+    let root = document.querySelector(':root');
+    if (getComputedStyle(document.documentElement).getPropertyValue('--red') === '#B7094C'){
+        root.style.setProperty('--red', '#f8edeb');
+        root.style.setProperty('--purple', '#00b4d8');
+        root.style.setProperty('--blue', '#f4a261');
+        root.style.setProperty('--white', '#1d3557');
+    }
+    else{
+        root.style.setProperty('--red', '#B7094C');
+        root.style.setProperty('--purple', '#10002b');
+        root.style.setProperty('--blue', '#2E6F95');
+        root.style.setProperty('--white', 'white');
+    }
 }
 
 function increaseFont() {
