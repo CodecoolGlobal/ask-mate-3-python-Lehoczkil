@@ -395,7 +395,7 @@ def users():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index_page'))
-
+  
 
 @app.route('/tag', methods=['GET', 'POST'])
 def list_questions_with_tag():

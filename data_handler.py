@@ -207,6 +207,7 @@ def get_question_tags(cursor, question_id):
 
 
 def hash_password(plain_text_password):
+    # By using bcrypt, the salt is saved into the hash itself
     hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
     return hashed_bytes.decode('utf-8')
 
@@ -221,7 +222,19 @@ def add_user(cursor, username, first_name, last_name, password):
     cursor.execute(sql.SQL("""
         INSERT INTO users (username, first_name, last_name, password)
         VALUES({username}, {first_name}, {last_name}, {password})
-        """).format(username=sql.Literal(username), first_name=sql.Literal(first_name), last_name=sql.Literal(last_name), password=sql.Literal(password)))
+        """).format(username=sql.Literal(username),
+                    first_name=sql.Literal(first_name),
+                    last_name=sql.Literal(last_name),
+                    password=sql.Literal(password)))
+
+    cursor.execute(sql.SQL("""
+        SELECT id FROM users
+        WHERE username = {username}""").format(username=sql.Literal(username)))
+    new_user_id = cursor.fetchone()['id']
+
+    cursor.execute(sql.SQL("""
+        INSERT INTO reputation (user_id, reputation_points) VALUES ({new_user_id}, 0)
+    """).format(new_user_id=sql.Literal(new_user_id)))
 
 
 @database_common.connection_handler
@@ -289,21 +302,54 @@ def list_users(cursor):
 
 
 @database_common.connection_handler
-def get_question_id_by_tag_id(cursor, tag_id):
+def calculate_reputation_points_of_user(cursor, user_id):
     cursor.execute(sql.SQL("""
-    SELECT question_id
-    FROM question_tag
-    WHERE tag_id = {tag_id}
-    """).format(tag_id=sql.Literal(tag_id)))
-    return cursor.fetchall()
+        SELECT SUM(question.vote_number) * 5 AS question
+        FROM users
+        LEFT JOIN question ON users.id = question.user_id
+        WHERE users.id = {user_id}""").format(user_id=sql.Literal(user_id)))
+    reputation_points_on_questions = cursor.fetchone()['question'] or 0
+
+    cursor.execute(sql.SQL("""
+        SELECT SUM(answer.vote_number) * 10 as answer
+        FROM users
+        LEFT JOIN answer ON users.id = answer.user_id
+        WHERE users.id = {user_id}""").format(user_id=sql.Literal(user_id)))
+    reputation_points_on_answers = cursor.fetchone()['answer'] or 0
+
+    sum_of_reputation_points = reputation_points_on_questions + reputation_points_on_answers
+    set_reputation_points_of_user(user_id, sum_of_reputation_points)
 
 
 @database_common.connection_handler
-def get_tag_id(cursor, tag_name):
+def set_reputation_points_of_user(cursor, user_id, sum_of_reputation_points):
     cursor.execute(sql.SQL("""
-    SELECT id
-    FROM tag
-    WHERE name = {tag_name}
-    """).format(tag_name=sql.Literal(tag_name)))
-    return cursor.fetchall()
+        UPDATE reputation
+        SET reputation_points = {sum_of_reputation_points}
+        WHERE reputation.user_id = {user_id}
+        """).format(sum_of_reputation_points=sql.Literal(sum_of_reputation_points), user_id=sql.Literal(user_id)))
 
+
+@database_common.connection_handler
+def get_actual_reputation_points_of_user(cursor, user_id):
+    cursor.execute(sql.SQL("""
+        SELECT reputation_points FROM reputation
+        WHERE reputation.user_id = {user_id}
+        """).format(user_id=sql.Literal(user_id)))
+    return cursor.fetchone()['reputation_points']
+
+
+@database_common.connection_handler
+def lose_reputation_points(cursor, user_id, reputation_points):
+    cursor.execute(sql.SQL("""
+        UPDATE reputation
+        SET reputation_points = {reputation_points} - 2
+        WHERE user_id = {user_id}""").format(reputation_points=sql.Literal(reputation_points), user_id=sql.Literal(user_id)))
+
+
+@database_common.connection_handler
+def get_logged_in_user_id(cursor, username):
+    cursor.execute(sql.SQL("""
+        SELECT id FROM users
+        WHERE username = {username}""").format(username=sql.Literal(username)))
+    return cursor.fetchall()
