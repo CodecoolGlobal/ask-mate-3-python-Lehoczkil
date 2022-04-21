@@ -320,3 +320,12 @@ def calculate_reputation_points_of_user(cursor, user_id):
     sum_of_reputation_points = reputation_points_on_questions + reputation_points_on_answers
     set_reputation_points_of_user(user_id, sum_of_reputation_points)
 
+
+
+@database_common.connection_handler
+def set_reputation_points_of_user(cursor, user_id, sum_of_reputation_points):
+    cursor.execute(sql.SQL("""
+        UPDATE reputation
+        SET reputation_points = {sum_of_reputation_points}
+        WHERE reputation.user_id = {user_id}
+        """).format(sum_of_reputation_points=sql.Literal(sum_of_reputation_points), user_id=sql.Literal(user_id)))
