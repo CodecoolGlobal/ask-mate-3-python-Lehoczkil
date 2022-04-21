@@ -374,6 +374,11 @@ def get_reputation(user_id):
     return reputation_points
 
 
+def gain_reputation(user_id):
+    reputation_points = get_reputation(user_id)
+    data_handler.update_reputation_points(user_id, reputation_points)
+
+
 if __name__ == '__main__':
     app.run(
         host='localhost',
