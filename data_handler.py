@@ -207,7 +207,6 @@ def get_question_tags(cursor, question_id):
 
 
 def hash_password(plain_text_password):
-    # By using bcrypt, the salt is saved into the hash itself
     hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
     return hashed_bytes.decode('utf-8')
 
@@ -290,3 +289,13 @@ def list_users(cursor):
                 attributes.update(data)
 
     return user_attributes
+
+
+@database_common.connection_handler
+def get_question_id_by_tag_id(cursor, tag_id):
+    cursor.execute(sql.SQL("""
+    SELECT question_id
+    FROM question_tag
+    WHERE tag_id = {tag_id}
+    """).format(tag_id=sql.Literal(tag_id)))
+    return cursor.fetchall()
