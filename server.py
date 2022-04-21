@@ -3,6 +3,8 @@ import data_handler
 import os
 import string
 from werkzeug.utils import secure_filename
+
+import database_common
 from bonus_questions import SAMPLE_QUESTIONS
 
 UPLOAD_FOLDER = 'static/images'
@@ -78,6 +80,7 @@ def answer_comments_page(answer_id=None):
 
 
 @app.route('/question/<question_id>/delete')
+@database_common.login_required
 def delete_question(question_id=None):
     data_handler.delete_record(table_name='question', record_id=question_id)
     return redirect(url_for('list_questions_page'))
@@ -89,6 +92,7 @@ def allowed_file(filename):
 
 
 @app.route('/add_question', methods=['GET', 'POST'])
+@database_common.login_required
 def add_question():
     question_fields = 'title', 'message', 'id', 'image'
     new_question_data_items = []
@@ -114,6 +118,7 @@ def add_question():
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+@database_common.login_required
 def edit_question(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
 
@@ -127,6 +132,7 @@ def edit_question(question_id=None):
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+@database_common.login_required
 def post_answer(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
     answer_fields = 'message', 'id', 'image'
@@ -152,6 +158,7 @@ def post_answer(question_id=None):
 
 
 @app.route('/answer/<answer_id>', methods=['GET', 'POST'])
+@database_common.login_required
 def update_answer(answer_id):
     answer = data_handler.search_by_id('answer', 'id', answer_id)
     if request.method == 'POST':
@@ -162,6 +169,7 @@ def update_answer(answer_id):
 
 
 @app.route('/answer/<answer_id>/delete', methods=['GET', 'POST'])
+@database_common.login_required
 def delete_answer(answer_id=None):
     answer_data = data_handler.search_by_id('answer', 'id', answer_id)
     data_handler.delete_record(table_name='answer', record_id=answer_id)
@@ -170,18 +178,21 @@ def delete_answer(answer_id=None):
 
 
 @app.route('/question/<question_id>/vote-down', methods=['GET', 'POST'])
+@database_common.login_required
 def question_vote_down(question_id=None):
     data_handler.vote_down('question', question_id)
     return redirect(url_for('list_questions_page'))
 
 
 @app.route('/question/<question_id>/vote-up', methods=['GET', 'POST'])
+@database_common.login_required
 def question_vote_up(question_id=None):
     data_handler.vote_up('question', question_id)
     return redirect(url_for('list_questions_page'))
 
 
 @app.route('/answer/<answer_id>/vote-up', methods=['GET', 'POST'])
+@database_common.login_required
 def answer_vote_up(answer_id=None):
     question = data_handler.get_question_by_answer_id(answer_id)[0]
     question_id = question['question_id']
@@ -190,6 +201,7 @@ def answer_vote_up(answer_id=None):
 
 
 @app.route('/answer/<answer_id>/vote-down', methods=['GET', 'POST'])
+@database_common.login_required
 def answer_vote_down(answer_id=None):
     question = data_handler.get_question_by_answer_id(answer_id)[0]
     question_id = question['question_id']
@@ -198,6 +210,7 @@ def answer_vote_down(answer_id=None):
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+@database_common.login_required
 def add_comment_to_question(question_id):
     if request.method == 'POST':
         updated_message = request.form.get('message')
@@ -209,6 +222,7 @@ def add_comment_to_question(question_id):
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+@database_common.login_required
 def add_comment_to_answer(answer_id):
     if request.method == 'POST':
         updated_message = request.form.get('message')
@@ -220,18 +234,21 @@ def add_comment_to_answer(answer_id):
 
 
 @app.route('/question/<question_id>/delete_comment/<comment_id>', methods=['GET', 'POST'])
+@database_common.login_required
 def delete_question_comment(comment_id, question_id):
     data_handler.delete_comment(comment_id)
     return redirect(url_for('question_comments_page', question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/delete_comment/<comment_id>', methods=['GET', 'POST'])
+@database_common.login_required
 def delete_answer_comment(comment_id, answer_id):
     data_handler.delete_comment(comment_id)
     return redirect(url_for('answer_comments_page', answer_id=answer_id))
 
 
 @app.route('/answer/<answer_id>/comment/<comment_id>', methods=['GET', 'POST'])
+@database_common.login_required
 def edit_answer_comment(comment_id, answer_id):
     comment = data_handler.search_by_id('comment', 'id', comment_id)
     if request.method == 'POST':
@@ -242,6 +259,7 @@ def edit_answer_comment(comment_id, answer_id):
 
 
 @app.route('/question/<question_id>/comment/<comment_id>', methods=['GET', 'POST'])
+@database_common.login_required
 def edit_question_comment(comment_id, question_id):
     comment = data_handler.search_by_id('comment', 'id', comment_id)
     if request.method == 'POST':
@@ -252,6 +270,7 @@ def edit_question_comment(comment_id, question_id):
 
 
 @app.route('/question/<question_id>/tag', methods=['GET', 'POST'])
+@database_common.login_required
 def add_tag(question_id=None):
     tags = data_handler.get_tag()
     question_tags = data_handler.get_question_tags(question_id)
@@ -270,6 +289,7 @@ def add_tag(question_id=None):
 
 
 @app.route('/question/<question_id>/tag/<tag_id>/delete')
+@database_common.login_required
 def delete_tag(question_id=None, tag_id=None):
     data_handler.delete_tag(tag_id)
     return redirect(url_for('question_details_page', question_id=question_id))
@@ -345,12 +365,14 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if session:
+        return redirect(url_for('index_page'))
     if request.method == 'POST':
         usernames = [data['username'] for data in data_handler.get_users()]
         username = request.form['username']
         input_password = request.form['password']
         if username in usernames:
-            password = data_handler.get_password_by_username(username)[0]['password']
+            password = data_handler.get_password_by_username(username)['password']
             if data_handler.verify_password(input_password, password):
                 session['username'] = username
                 return redirect(url_for('index_page'))
@@ -369,15 +391,11 @@ def users():
     return render_template('users.html', logged_in=logged_in, headers=headers, users_attributes_data_rows=users_attributes)
 
 
-def get_reputation(user_id):
-    reputation_points = data_handler.calculate_reputation_points_of_user(user_id)
-    return reputation_points
-
-
-def gain_reputation(user_id):
-    reputation_points = get_reputation(user_id)
-    data_handler.update_reputation_points(user_id, reputation_points)
-
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index_page'))
+  
 
 if __name__ == '__main__':
     app.run(
