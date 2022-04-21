@@ -37,8 +37,12 @@ nav div ul li{
 
 nav div ul li a, #nav-title, .button{
         color: white;
-        font-size: 1vw;
+        font-size: 0.7vw;
         text-decoration: None;
+}
+
+.button{
+        font-size: 1vw;
 }
 
 nav div ul li input{
