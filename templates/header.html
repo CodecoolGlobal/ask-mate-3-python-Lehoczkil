@@ -1,8 +1,6 @@
 <nav>
     <a href="/" id="nav-title">Ask<span>Mate</span></a>
-    {% if is_logged %}
-        <a class="underline"><a href="{{ url_for('logout') }}">Logout</a>
-    {% endif %}
+    <a class="underline"><a href="{{ url_for('logout') }}">Logout</a>
     <div>
         <ul>
             <li>
@@ -14,10 +12,8 @@
             <li class="underline"><a href="{{ url_for('list_questions_page') }}">Questions</a></li>
             <li class="underline"><a href="{{ url_for('add_question') }}">Ask</a></li>
             <li class="underline"><a href="{{ url_for('contacts_page') }}">Contacts</a></li>
-            {% if not is_logged %}
-                <li class="underline"><a href="{{ url_for('register') }}">Register</a></li>
-                <li class="underline"><a href="{{ url_for('login') }}">Login</a></li>
-            {% endif %}
+            <li class="underline"><a href="{{ url_for('register') }}">Register</a></li>
+            <li class="underline"><a href="{{ url_for('login') }}">Login</a></li>
             <li id="about-us"><a href="{{ url_for('about_us_page') }}">About us</a></li>
             {% if session %}
                 <li id="user"><a href="{{ url_for('users') }}">Statistics</a></li>
