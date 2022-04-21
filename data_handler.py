@@ -227,6 +227,15 @@ def add_user(cursor, username, first_name, last_name, password):
                     last_name=sql.Literal(last_name),
                     password=sql.Literal(password)))
 
+    cursor.execute(sql.SQL("""
+        SELECT id FROM users
+        WHERE username = {username}""").format(username=sql.Literal(username)))
+    new_user_id = cursor.fetchone()['id']
+
+    cursor.execute(sql.SQL("""
+        INSERT INTO reputation (user_id, reputation_points) VALUES ({new_user_id}, 0)
+    """).format(new_user_id=sql.Literal(new_user_id)))
+
 
 @database_common.connection_handler
 def get_users(cursor):
