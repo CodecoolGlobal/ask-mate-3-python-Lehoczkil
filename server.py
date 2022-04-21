@@ -70,6 +70,7 @@ def question_details_page(question_id=None):
 def question_comments_page(question_id=None):
     question = data_handler.search_by_id('question', 'id', question_id)
     comments = data_handler.search_by_id('comment', 'question_id', question_id)
+    question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d")
     return render_template('question-comments.html', question=question, comments=comments)
 
 
@@ -77,6 +78,7 @@ def question_comments_page(question_id=None):
 def answer_comments_page(answer_id=None):
     answer = data_handler.search_by_id('answer', 'id', answer_id)
     comments = data_handler.search_by_id('comment', 'answer_id', answer_id)
+    answer[0]['submission_time'] = answer[0]['submission_time'].strftime("%Y.%m.%d")
     return render_template('answer-comments.html', answer=answer, comments=comments)
 
 
