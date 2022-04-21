@@ -181,6 +181,9 @@ def delete_answer(answer_id=None):
 @database_common.login_required
 def question_vote_down(question_id=None):
     data_handler.vote_down('question', question_id)
+    username = session['username'] if session else None
+    user_id = data_handler.get_logged_in_user_id(username)[0]['id']
+    lose_reputation(user_id)
     return redirect(url_for('list_questions_page'))
 
 
@@ -188,6 +191,9 @@ def question_vote_down(question_id=None):
 @database_common.login_required
 def question_vote_up(question_id=None):
     data_handler.vote_up('question', question_id)
+    username = session['username'] if session else None
+    user_id = data_handler.get_logged_in_user_id(username)[0]['id']
+    gain_reputation(user_id)
     return redirect(url_for('list_questions_page'))
 
 
@@ -395,7 +401,16 @@ def users():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index_page'))
-  
+
+
+def gain_reputation(user_id):
+    data_handler.calculate_reputation_points_of_user(user_id)
+
+
+def lose_reputation(user_id):
+    reputation_points = data_handler.get_actual_reputation_points_of_user(user_id)
+    data_handler.lose_reputation_points(user_id, reputation_points)
+
 
 if __name__ == '__main__':
     app.run(
