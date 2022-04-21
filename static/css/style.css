@@ -378,7 +378,19 @@ section {
         transition: 0.5s;
 }
 
-#left-arrow:hover{
+#left-arrow\ login{
+        background: var(--purple);
+        border: none;
+        border-radius: 2vw;
+        color: white;
+        font-size: 1vw;
+        font-weight: 600;
+        margin-left: 10%;
+        padding: 0.5vw 0.8vw;
+        transition: 0.5s;
+}
+
+#left-arrow:hover, #left-arrow\ login:hover {
         background: var(--blue);
         border-radius: 0.7vw;
 }
@@ -773,6 +785,8 @@ section {
 .add-comment-left-arrow{
         margin-right:83vw;
 }
+
+
 
 /*---------------------------------------------------Add Tag Page-----------------------------------------------------*/
 

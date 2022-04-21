@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 
 {% block body %}
+    {% include 'header.html' %}
     {% if error %}
         <script>
             alert('Invalid {{ error }}')
         </script>
     {% endif %}
+
+    <h1 id="question-title">Login</h1>
+    <a id="left-arrow login" href="{{ url_for('index_page') }}"><i class="fa-solid fa-arrow-left"></i></a>
+
     <section>
         <div class="table-container">
-            <h1>Login User</h1>
-            <a href="{{ url_for('index_page') }}">Back</a>
-            <form class="question-form" action="{{ url_for('login') }}" method="post">
+            <form class="question-form" action="{{ url_for('login') }}" method="post" style="margin-top: 1vw">
             <div class="row">
                 <div class="col">
                     <input class="form-control" placeholder="Username" type=text name=username>
@@ -19,7 +22,7 @@
                     <input class="form-control" placeholder="Password" type=password name="password">
                 </div>
             </div>
-        <button type="submit">Login</button>
+        <button class="submit-button post-answer" type="submit">Login</button>
             </form>
         </div>
     </section>
