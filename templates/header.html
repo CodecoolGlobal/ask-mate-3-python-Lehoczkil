@@ -10,11 +10,13 @@
             </li>
             <li class="underline"><a href="{{ url_for('list_questions_page') }}">Questions</a></li>
             <li class="underline"><a href="{{ url_for('add_question') }}">Ask</a></li>
+            <li class="underline"><a href="{{ url_for('main') }}">Bonus Questions</a></li>
             <li class="underline"><a href="{{ url_for('contacts_page') }}">Contacts</a></li>
             <li id="about-us"><a href="{{ url_for('about_us_page') }}">About us</a></li>
             {% if session %}
                 <li><a class="underline" href="{{ url_for('logout') }}">Logout</a></li>
                 <li id="user"><a class="underline" href="{{ url_for('users') }}">Statistics</a></li>
+                <li class="underline"><a href="{{ url_for('list_questions_with_tag') }}">Tags</a></li>
                 <li id="user"><a class="underline" href="{{ url_for('user_profile', user_id = session['user_id']) }}">Profile</a></li>
             {% else %}
                 <li class="underline"><a href="{{ url_for('register') }}">Register</a></li>
