@@ -363,3 +363,4 @@ def get_question_id_by_tag_id(cursor, tag_id):
     WHERE tag_id = {tag_id}
     """).format(tag_id=sql.Literal(tag_id)))
     return cursor.fetchall()
+
