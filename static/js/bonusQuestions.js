@@ -31,15 +31,38 @@ function getFilteredItems(items, filterValue) {
     // === SAMPLE CODE ===
     // if you have not changed the original html uncomment the code below to have an idea of the
     // effect this function has on the table
-    //
+
+    let filter1 = "!"
+    let filter2 = "Description:"
+    let filter3 = "!Description:"
+
     let result = []
-    for (let element of items) {
-        if (element['Title'].toLowerCase().includes(filterValue.toLowerCase())) {
-            // console.log(element['Title'])
-            result.push(element)
-            console.log(result)
-        }}
-    return result
+
+    if (filterValue.startsWith(filter3)){
+        for (let element of items) {
+            if (!element['Description'].toLowerCase().includes(filterValue.replace(filter3,"").toLowerCase())){
+                result.push(element)
+                console.log(result)}}
+        return result
+    } else if (filterValue.startsWith(filter2)){
+        for (let element of items) {
+            if (element['Description'].toLowerCase().includes(filterValue.replace(filter2,"").toLowerCase())) {
+                result.push(element)
+                console.log(result)}}
+        return result
+    } else if (filterValue.startsWith(filter1)){
+        for (let element of items) {
+            if (!element['Title'].toLowerCase().includes(filterValue.replace(filter1,"").toLowerCase())) {
+                result.push(element)
+                console.log(result)}}
+        return result
+    } else {
+        for (let element of items) {
+            if (element['Title'].toLowerCase().includes(filterValue.toLowerCase())) {
+                result.push(element)
+                console.log(result)}}
+        return result
+    }
 }
 
 function toggleTheme() {
