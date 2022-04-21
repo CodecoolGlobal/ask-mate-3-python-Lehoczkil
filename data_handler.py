@@ -304,14 +304,14 @@ def list_users(cursor):
 @database_common.connection_handler
 def calculate_reputation_points_of_user(cursor, user_id):
     cursor.execute(sql.SQL("""
-        SELECT SUM(question.vote_number) AS question
+        SELECT SUM(question.vote_number) * 5 AS question
         FROM users
         LEFT JOIN question ON users.id = question.user_id
         WHERE users.id = {user_id}""").format(user_id=sql.Literal(user_id)))
     reputation_points = [dict(point) for point in cursor.fetchall()][0]
 
     cursor.execute(sql.SQL("""
-            SELECT SUM(answer.vote_number) as answer
+            SELECT SUM(answer.vote_number) * 10 as answer
             FROM users
             LEFT JOIN answer ON users.id = answer.user_id
             WHERE users.id = {user_id}""").format(user_id=sql.Literal(user_id)))
