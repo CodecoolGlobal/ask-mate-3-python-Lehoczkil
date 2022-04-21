@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+
+{% block head %}{% endblock %}
+
+{% block body %}
+
+    {% include 'header.html' %}
+    <h1 id="question-title">Questions By Tag</h1>
+
+        {% for tag in tags %}
+            <div class="tag-wrapper">
+                <form action="{{ url_for('list_questions_with_tag') }}" method="post">
+                <button name="tag" value="{{ tag.name }}">{{ tag.name }}</button>
+                </form>
+            </div>
+        {% endfor %}
+
+    <section class="center">
+    <section class="table-container">
+        <div class="table-header">
+            <table>
+                <thead>
+                    <tr>
+                        {% for header in headers %}
+                            <th>{{ header }}
+                                <form action="{{ url_for('list_questions_page') }}" method="post">
+                                    <button class="vote-button" type="submit" name="select_sort" value="ASC;{{ header }}"><i class="fa-solid fa-angle-up"></i></button>
+                                    <button class="vote-button" type="submit" name="select_sort" value="DESC;{{ header }}"><i class="fa-solid fa-angle-down"></i></button>
+                                </form></th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div class="table-content">
+                <table>
+                    <tbody>
+                        {% for line in tag_questions %}
+                            <tr>
+                                <td>{{ line.id }}</td>
+                                <td>{{ line.submission_time }}</td>
+                                <td>{{ line.view_number }}</td>
+                                <td><form action="{{ url_for('question_vote_up', question_id=line.id) }}" method="post">
+                                        <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-up"></i></button>
+                                    </form>
+                                    {{ line.vote_number }}
+                                <form action="{{ url_for('question_vote_down', question_id=line.id) }}" method="post">
+                                    <button type="submit" class="vote-button" ><i class="fa-solid fa-angle-down"></i></button>
+                                </form> </td>
+                                <td><a class="table-question-title" href="{{ url_for('list_questions_with_tag', question_id=line.id) }}">{{ line.title }}</a></td>
+                                <td>{{ line.message }}</td>
+                                <td>{{ line.image }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </section>
+
+{% endblock %}
