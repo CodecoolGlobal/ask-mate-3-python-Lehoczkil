@@ -227,6 +227,15 @@ def add_user(cursor, username, first_name, last_name, password):
                     last_name=sql.Literal(last_name),
                     password=sql.Literal(password)))
 
+    cursor.execute(sql.SQL("""
+        SELECT id FROM users
+        WHERE username = {username}""").format(username=sql.Literal(username)))
+    new_user_id = cursor.fetchone()['id']
+
+    cursor.execute(sql.SQL("""
+        INSERT INTO reputation (user_id, reputation_points) VALUES ({new_user_id}, 0)
+    """).format(new_user_id=sql.Literal(new_user_id)))
+
 
 @database_common.connection_handler
 def get_users(cursor):
@@ -290,3 +299,57 @@ def list_users(cursor):
                 attributes.update(data)
 
     return user_attributes
+
+
+@database_common.connection_handler
+def calculate_reputation_points_of_user(cursor, user_id):
+    cursor.execute(sql.SQL("""
+        SELECT SUM(question.vote_number) * 5 AS question
+        FROM users
+        LEFT JOIN question ON users.id = question.user_id
+        WHERE users.id = {user_id}""").format(user_id=sql.Literal(user_id)))
+    reputation_points_on_questions = cursor.fetchone()['question'] or 0
+
+    cursor.execute(sql.SQL("""
+        SELECT SUM(answer.vote_number) * 10 as answer
+        FROM users
+        LEFT JOIN answer ON users.id = answer.user_id
+        WHERE users.id = {user_id}""").format(user_id=sql.Literal(user_id)))
+    reputation_points_on_answers = cursor.fetchone()['answer'] or 0
+
+    sum_of_reputation_points = reputation_points_on_questions + reputation_points_on_answers
+    set_reputation_points_of_user(user_id, sum_of_reputation_points)
+
+
+@database_common.connection_handler
+def set_reputation_points_of_user(cursor, user_id, sum_of_reputation_points):
+    cursor.execute(sql.SQL("""
+        UPDATE reputation
+        SET reputation_points = {sum_of_reputation_points}
+        WHERE reputation.user_id = {user_id}
+        """).format(sum_of_reputation_points=sql.Literal(sum_of_reputation_points), user_id=sql.Literal(user_id)))
+
+
+@database_common.connection_handler
+def get_actual_reputation_points_of_user(cursor, user_id):
+    cursor.execute(sql.SQL("""
+        SELECT reputation_points FROM reputation
+        WHERE reputation.user_id = {user_id}
+        """).format(user_id=sql.Literal(user_id)))
+    return cursor.fetchone()['reputation_points']
+
+
+@database_common.connection_handler
+def lose_reputation_points(cursor, user_id, reputation_points):
+    cursor.execute(sql.SQL("""
+        UPDATE reputation
+        SET reputation_points = {reputation_points} - 2
+        WHERE user_id = {user_id}""").format(reputation_points=sql.Literal(reputation_points), user_id=sql.Literal(user_id)))
+
+
+@database_common.connection_handler
+def get_logged_in_user_id(cursor, username):
+    cursor.execute(sql.SQL("""
+        SELECT id FROM users
+        WHERE username = {username}""").format(username=sql.Literal(username)))
+    return cursor.fetchall()

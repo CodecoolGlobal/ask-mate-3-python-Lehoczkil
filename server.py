@@ -395,7 +395,7 @@ def users():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index_page'))
-
+  
 
 if __name__ == '__main__':
     app.run(
