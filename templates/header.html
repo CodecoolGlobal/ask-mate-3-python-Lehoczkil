@@ -14,7 +14,9 @@
             <li class="underline"><a href="{{ url_for('register') }}">Register</a></li>
             <li class="underline"><a href="{{ url_for('login') }}">Login</a></li>
             <li id="about-us"><a href="{{ url_for('about_us_page') }}">About us</a></li>
-            <li id="user"><a href="{{ url_for('users') }}">User</a></li>
+            {% if session %}
+                <li id="user"><a href="{{ url_for('users') }}">Statistics</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
