@@ -40,25 +40,25 @@ function getFilteredItems(items, filterValue) {
 
     if (filterValue.startsWith(filter3)){
         for (let element of items) {
-            if (!element['Description'].toLowerCase().includes(filterValue.replace(filter3,"").toLowerCase())){
+            if (!element['Description'].toLowerCase().includes(filterValue.replace(filter3,"").trim().toLowerCase())){
                 result.push(element)
                 console.log(result)}}
         return result
     } else if (filterValue.startsWith(filter2)){
         for (let element of items) {
-            if (element['Description'].toLowerCase().includes(filterValue.replace(filter2,"").toLowerCase())) {
+            if (element['Description'].toLowerCase().includes(filterValue.replace(filter2,"").trim().toLowerCase())) {
                 result.push(element)
                 console.log(result)}}
         return result
     } else if (filterValue.startsWith(filter1)){
         for (let element of items) {
-            if (!element['Title'].toLowerCase().includes(filterValue.replace(filter1,"").toLowerCase())) {
+            if (!element['Title'].toLowerCase().includes(filterValue.replace(filter1,"").trim().toLowerCase())) {
                 result.push(element)
                 console.log(result)}}
         return result
     } else {
         for (let element of items) {
-            if (element['Title'].toLowerCase().includes(filterValue.toLowerCase())) {
+            if (element['Title'].toLowerCase().includes(filterValue.trim().toLowerCase())) {
                 result.push(element)
                 console.log(result)}}
         return result
