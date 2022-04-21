@@ -2,9 +2,8 @@
 
 {% block body %}
     {% if error %}
-        Invalid {{ error }}
         <script>
-            alert('Invalid' + {{ error }})
+            alert('Invalid {{ error }}')
         </script>
     {% endif %}
     <section>
