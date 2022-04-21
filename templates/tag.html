@@ -11,12 +11,12 @@
         {% for tag in tags %}
             <div class="tag-wrapper">
                 <form action="{{ url_for('list_questions_with_tag') }}" method="post">
-                <button name="tag" value="{{ tag.name }}">{{ tag.name }}</button>
+                <button class="submit-button post-answer add-comment" name="tag" value="{{ tag.name }}">{{ tag.name }}</button>
                 </form>
             </div>
         {% endfor %}
 
-    <section class="center">
+    <section class="center" style="margin-top: 1vw">
     <section class="table-container">
         <div class="table-header">
             <table>
