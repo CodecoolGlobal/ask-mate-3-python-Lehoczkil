@@ -337,7 +337,7 @@ def register():
         else:
             flash("Password doesn't match", 'info')
             return redirect(url_for('register'))
-    elif "user_email" in session:
+    elif "username" in session:
         flash('Already logged in')
         return redirect(url_for('index_page'))
     return render_template('register.html')
