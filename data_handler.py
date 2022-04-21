@@ -302,6 +302,61 @@ def list_users(cursor):
 
 
 @database_common.connection_handler
+def get_user_data(cursor, user_id):
+
+    cursor.execute(sql.SQL("""
+            SELECT CONCAT(first_name,' ', last_name)
+            FROM users
+            WHERE id = {user_id}""").format(user_id=sql.Literal(user_id)))
+    name = [dict(detail) for detail in cursor.fetchall()]
+
+    cursor.execute(sql.SQL("""
+                SELECT username
+                FROM users
+                WHERE id = {user_id}""").format(user_id=sql.Literal(user_id)))
+    username = [dict(detail) for detail in cursor.fetchall()]
+
+    cursor.execute(sql.SQL("""
+            SELECT registration_time
+            FROM users
+            WHERE id = {user_id}""").format(user_id=sql.Literal(user_id)))
+    registration_date = [dict(detail) for detail in cursor.fetchall()]
+
+    cursor.execute(sql.SQL("""
+           SELECT COUNT(answer.user_id) AS number_of_answers
+            FROM answer
+            WHERE answer.user_id = {user_id};""").format(user_id=sql.Literal(user_id)))
+    num_of_answers = [dict(detail) for detail in cursor.fetchall()]
+
+    cursor.execute(sql.SQL("""
+               SELECT COUNT(question.user_id) AS number_of_questions
+                FROM question
+                WHERE question.user_id = {user_id};""").format(user_id=sql.Literal(user_id)))
+    num_of_question = [dict(detail) for detail in cursor.fetchall()]
+
+    cursor.execute(sql.SQL("""
+               SELECT COUNT(comment.user_id) AS number_of_comments
+                FROM comment
+                WHERE comment.user_id = {user_id};""").format(user_id=sql.Literal(user_id)))
+    num_of_comment = [dict(detail) for detail in cursor.fetchall()]
+
+    cursor.execute(sql.SQL("""
+                   SELECT reputation_points
+                    FROM reputation
+                    WHERE reputation.user_id = {user_id};""").format(user_id=sql.Literal(user_id)))
+    reputation_points = [dict(detail) for detail in cursor.fetchall()]
+
+    return [user_id,
+            name[0]['concat'],
+            username[0]['username'],
+            registration_date[0]['registration_time'],
+            num_of_question[0]['number_of_questions'],
+            num_of_answers[0]['number_of_answers'],
+            num_of_comment[0]['number_of_comments'],
+            reputation_points]
+
+
+@database_common.connection_handler
 def calculate_reputation_points_of_user(cursor, user_id):
     cursor.execute(sql.SQL("""
         SELECT SUM(question.vote_number) * 5 AS question
