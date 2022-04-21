@@ -6,7 +6,7 @@
 
     {% for message in get_flashed_messages() %}
         <script>
-            alert({{ message }})
+            alert('{{ message }}')
         </script>
     {% endfor %}
 
