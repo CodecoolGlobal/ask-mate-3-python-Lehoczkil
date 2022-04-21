@@ -46,6 +46,7 @@
                                 <td><a class="table-question-title" href="{{ url_for('question_details_page', question_id=line.id) }}">{{ line.title }}</a></td>
                                 <td>{{ line.message }}</td>
                                 <td>{{ line.image }}</td>
+                                <td>{{ line.user_id }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
