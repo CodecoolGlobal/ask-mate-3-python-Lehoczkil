@@ -361,7 +361,9 @@ def register():
                 else:
                     hashed_password = data_handler.hash_password(password)
                     data_handler.add_user(user_email, first_name, last_name, hashed_password)
+                    user_id = data_handler.get_user_id(user_email)[0]['id']
                     session['username'] = user_email
+                    session['user_id'] = user_id
                     return redirect(url_for('index_page'))
             else:
                 flash('Please enter a name', 'info')
@@ -386,7 +388,9 @@ def login():
         if username in usernames:
             password = data_handler.get_password_by_username(username)['password']
             if data_handler.verify_password(input_password, password):
+                user_id = data_handler.get_user_id(username)[0]['id']
                 session['username'] = username
+                session['user_id'] = user_id
                 return redirect(url_for('index_page'))
             else:
                 return render_template('login_form.html', error="password")
