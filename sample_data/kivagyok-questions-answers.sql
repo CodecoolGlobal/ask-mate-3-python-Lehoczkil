@@ -54,25 +54,25 @@ INSERT INTO comment VALUES(12, NULL , 12, 'Noooo, you are cute', '2022-3-24 01:1
 SELECT pg_catalog.setval('comment_id_seq', 12, true);
 
 INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('nyal_tamás@gmail.com', 'Nyal', 'Tamás', 'nyaltamas', '2018-04-20 09:44:40.154868');
+VALUES ('nyal_tamás@gmail.com', 'Nyal', 'Tamás', '$2b$12$.VVlsiBKZFbfiUBKxLYXbeKmgl0yBNHXO5gfcLx9XCFoA2EF3xITu', '2018-04-20 09:44:40.154868');
 
 INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('para_zita@gmail.com', 'Para', 'Zita', 'parazita', '2018-05-12 09:44:40.154868')
+VALUES ('para_zita@gmail.com', 'Para', 'Zita', '$2b$12$KOApsEFcJGsF.R0h04/5uOyc/tbBiuOQsa72bSbXtOzIKtBxwj4RW', '2018-05-12 09:44:40.154868');
 
 INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('nyomo_reka@gmail.com', 'Nyomo', 'Réka', 'nyomoreka', '2018-08-02 09:44:40.154868')
+VALUES ('nyomo_reka@gmail.com', 'Nyomo', 'Réka', '$2b$12$iI/zJXoqPu57YZ4Ur3pX5.UQlHqIs6FXDKd5ztgVRuWvuLId3MA8O', '2018-08-02 09:44:40.154868');
 
 INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('remek_elek@gmail.com', 'Remek', 'Elek', 'remekelek', '2018-11-07 09:44:40.154868')
+VALUES ('remek_elek@gmail.com', 'Remek', 'Elek', '$2b$12$/jshUZZrZHqKpFKJZiDQwuCqqK0E65a4gTvrnaKzRiE9p32OfBolG', '2018-11-07 09:44:40.154868');
 
 INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('paradi_csoma@gmail.com', 'Paradi', 'Csoma', 'paradicsoma', '2019-01-20 09:44:40.154868')
+VALUES ('paradi_csoma@gmail.com', 'Paradi', 'Csoma', '$2b$12$u4GDwjV0a0HWn/AnjmdejuDjgg7124wFgWAzaa3dxaHjpatBQvHx2', '2019-01-20 09:44:40.154868');
 
 INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('fasomer_mitfizetskiy@gmail.com', 'Fasomer', 'Mitfizetskiy', 'fasomermitfizetskiy', '2019-03-11 09:44:40.154868')
+VALUES ('fasomer_mitfizetskiy@gmail.com', 'Fasomer', 'Mitfizetskiy', '$2b$12$BwUMJC9XsNtZp6k7G8dn6eHiQcDw5t/CJTHCbFdaakDiykUmEXvgO', '2019-03-11 09:44:40.154868')
 
 INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('vak_cina@gmail.com', 'Vak', 'Cina', 'vakcina', '2020-04-20 09:44:40.154868')
+VALUES ('vak_cina@gmail.com', 'Vak', 'Cina', '$2b$12$t1GmC5PepiCkuvxGVsj.CO5JpSn2GM47z/bHQR5wQkoiCOxfu5dya', '2020-04-20 09:44:40.154868');
 
 INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('hu_jeno@gmail.com', 'Hü', 'Jenő', 'hujeno', '2022-02-17 09:44:40.154868')
+VALUES ('hu_jeno@gmail.com', 'Hü', 'Jenő', '$2b$12$JRb7WjPgpuRD4vXs0tuE/eLZh3x.bfh/v8hvMuTw.hror8ruHWY5a', '2022-02-17 09:44:40.154868');

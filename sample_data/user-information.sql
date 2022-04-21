@@ -8,6 +8,3 @@ CREATE TABLE users (
     password varchar(200) NOT NULL,
     registration_time timestamp without time zone
 );
-
-INSERT INTO users (username, first_name, last_name, password, registration_time)
-VALUES ('test.user@test.com', 'Test', 'User', '1234', '2022-04-20 09:44:40.154868')
