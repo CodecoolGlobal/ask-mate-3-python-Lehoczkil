@@ -393,9 +393,9 @@ def login():
                 session['user_id'] = user_id
                 return redirect(url_for('index_page'))
             else:
-                return render_template('login_form.html', error="password")
+                return redirect(url_for('login_form.html', error="password"))
         else:
-            return render_template('login_form.html', error="user")
+            return redirect(url_for('login_form.html', error="username"))
     return render_template('login_form.html')
 
 
