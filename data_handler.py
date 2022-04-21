@@ -437,3 +437,12 @@ def raise_view_count(cursor, question_id, view_number):
     SET view_number = {view_number} + 1
     WHERE id = {question_id}
     """).format(question_id=sql.Literal(question_id), view_number=sql.Literal(view_number)))
+
+
+@database_common.connection_handler
+def get_user_id(cursor, username):
+    cursor.execute(sql.SQL("""
+        SELECT id
+        FROM users
+        WHERE username = {username}""").format(username=sql.Literal(username)))
+    return cursor.fetchall()
