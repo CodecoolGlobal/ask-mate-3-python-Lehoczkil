@@ -353,3 +353,13 @@ def get_logged_in_user_id(cursor, username):
         SELECT id FROM users
         WHERE username = {username}""").format(username=sql.Literal(username)))
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_question_id_by_tag_id(cursor, tag_id):
+    cursor.execute(sql.SQL("""
+    SELECT question_id
+    FROM question_tag
+    WHERE tag_id = {tag_id}
+    """).format(tag_id=sql.Literal(tag_id)))
+    return cursor.fetchall()
