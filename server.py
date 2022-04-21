@@ -337,7 +337,7 @@ def register():
         else:
             flash("Password doesn't match", 'info')
             return redirect(url_for('register'))
-    elif "user_email" in session:
+    elif "username" in session:
         flash('Already logged in')
         return redirect(url_for('index_page'))
     return render_template('register.html')
@@ -359,6 +359,14 @@ def login():
         else:
             return render_template('login_form.html', error="user")
     return render_template('login_form.html')
+
+
+@app.route('/users')
+def users():
+    users_attributes = data_handler.list_users()
+    headers = ['Username', 'Registration date', 'Questions', 'Answers', 'Comments', 'Reputation']
+    logged_in = True if session else False
+    return render_template('users.html', logged_in=logged_in, headers=headers, users_attributes_data_rows=users_attributes)
 
 
 if __name__ == '__main__':
