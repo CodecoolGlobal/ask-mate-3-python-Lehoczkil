@@ -369,6 +369,11 @@ def users():
     return render_template('users.html', logged_in=logged_in, headers=headers, users_attributes_data_rows=users_attributes)
 
 
+def get_reputation(user_id):
+    reputation_points = data_handler.calculate_reputation_points_of_user(user_id)
+    return reputation_points
+
+
 if __name__ == '__main__':
     app.run(
         host='localhost',
