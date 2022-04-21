@@ -225,3 +225,13 @@ def get_password_by_username(cursor, input_username):
     FROM users
     WHERE username = {input_username};""").format(input_username=sql.Literal(input_username)))
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_question_id_by_tag_id(cursor, tag_id):
+    cursor.execute(sql.SQL("""
+    SELECT question_id
+    FROM question_tag
+    WHERE tag_id = {tag_id}
+    """).format(tag_id=sql.Literal(tag_id)))
+    return cursor.fetchall()
