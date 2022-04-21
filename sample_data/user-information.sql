@@ -9,5 +9,5 @@ CREATE TABLE users (
     registration_time timestamp without time zone
 );
 
-INSERT INTO users
-VALUES (0, 'hello@world.com', 'Hello', 'World', 'b''$2b$12$4NSiuW6XzR35VfFxQE0RzOyU7NvTUkj3WKNZKWeeepZMg.ss01Rzq''')
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('test.user@test.com', 'Test', 'User', '1234', '2022-04-20 09:44:40.154868')
