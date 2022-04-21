@@ -373,3 +373,12 @@ def get_tag_id(cursor, tag_name):
     WHERE name = {tag_name}
     """).format(tag_name=sql.Literal(tag_name)))
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def raise_view_count(cursor, question_id, view_number):
+    cursor.execute(sql.SQL("""
+    UPDATE question
+    SET view_number = {view_number} + 1
+    WHERE id = {question_id}
+    """).format(question_id=sql.Literal(question_id), view_number=sql.Literal(view_number)))

@@ -57,12 +57,13 @@ def list_questions_page():
 def question_details_page(question_id=None):
     tags = data_handler.get_question_tags(question_id)
     question = data_handler.search_by_id('question', 'id', question_id)
+    view_number = data_handler.raise_view_count(question_id, question[0]['view_number'])
     if question:
         question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     answers = data_handler.search_by_id('answer', 'question_id', question_id)
     if answers:
         answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
-    return render_template('question_details.html', question=question, answers=answers, tags=tags)
+    return render_template('question_details.html', question=question, answers=answers, tags=tags, view_number=view_number)
 
 
 @app.route('/question/<question_id>/comments')
@@ -181,6 +182,9 @@ def delete_answer(answer_id=None):
 @database_common.login_required
 def question_vote_down(question_id=None):
     data_handler.vote_down('question', question_id)
+    username = session['username'] if session else None
+    user_id = data_handler.get_logged_in_user_id(username)[0]['id']
+    lose_reputation(user_id)
     return redirect(url_for('list_questions_page'))
 
 
@@ -188,6 +192,9 @@ def question_vote_down(question_id=None):
 @database_common.login_required
 def question_vote_up(question_id=None):
     data_handler.vote_up('question', question_id)
+    username = session['username'] if session else None
+    user_id = data_handler.get_logged_in_user_id(username)[0]['id']
+    gain_reputation(user_id)
     return redirect(url_for('list_questions_page'))
 
 
@@ -197,6 +204,9 @@ def answer_vote_up(answer_id=None):
     question = data_handler.get_question_by_answer_id(answer_id)[0]
     question_id = question['question_id']
     data_handler.vote_up('answer', answer_id)
+    username = session['username'] if session else None
+    user_id = data_handler.get_logged_in_user_id(username)[0]['id']
+    gain_reputation(user_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
@@ -206,6 +216,9 @@ def answer_vote_down(answer_id=None):
     question = data_handler.get_question_by_answer_id(answer_id)[0]
     question_id = question['question_id']
     data_handler.vote_down('answer', answer_id)
+    username = session['username'] if session else None
+    user_id = data_handler.get_logged_in_user_id(username)[0]['id']
+    lose_reputation(user_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
@@ -395,7 +408,16 @@ def users():
 def logout():
     session.pop('username', None)
     return redirect(url_for('index_page'))
-  
+
+
+def gain_reputation(user_id):
+    data_handler.calculate_reputation_points_of_user(user_id)
+
+
+def lose_reputation(user_id):
+    reputation_points = data_handler.get_actual_reputation_points_of_user(user_id)
+    data_handler.lose_reputation_points(user_id, reputation_points)
+
 
 @app.route('/tag', methods=['GET', 'POST'])
 def list_questions_with_tag():
