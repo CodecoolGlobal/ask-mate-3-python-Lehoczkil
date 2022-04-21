@@ -397,6 +397,23 @@ def logout():
     return redirect(url_for('index_page'))
 
 
+@app.route('/tag', methods=['GET', 'POST'])
+def list_questions_with_tag():
+    question_id_list = []
+    questions = []
+    all_questions = data_handler.read_table('question')
+    headers = [table_header for table_header in all_questions[0]]
+    all_tags = data_handler.get_tag()
+    if request.method == 'POST':
+        tag_id = data_handler.get_tag_id(request.form['tag'])
+        question_ids = data_handler.get_question_id_by_tag_id(tag_id[0]['id'])
+        for elem in question_ids:
+            question_id_list.append(elem['question_id'])
+        for id_x in question_id_list:
+            questions += data_handler.search_by_id('question', 'id', id_x)
+    return render_template('tag.html', tags=all_tags, tag_questions=questions, headers=headers)
+
+
 if __name__ == '__main__':
     app.run(
         host='localhost',
