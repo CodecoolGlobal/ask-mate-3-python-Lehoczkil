@@ -360,7 +360,6 @@ def register():
                     return redirect(url_for('register'))
                 else:
                     hashed_password = data_handler.hash_password(password)
-                    print(hashed_password)
                     data_handler.add_user(user_email, first_name, last_name, hashed_password)
                     session['username'] = user_email
                     return redirect(url_for('index_page'))
@@ -434,6 +433,22 @@ def list_questions_with_tag():
         for id_x in question_id_list:
             questions += data_handler.search_by_id('question', 'id', id_x)
     return render_template('tag.html', tags=all_tags, tag_questions=questions, headers=headers)
+
+
+@app.route('/user/<user_id>')
+@database_common.login_required
+def user_profile(user_id):
+    user = data_handler.get_user_data(user_id)
+    return render_template('user_page.html',
+                           user=user,
+                           headers=['ID',
+                                    'Name',
+                                    'Username',
+                                    'Registration Date',
+                                    'Number of Questions',
+                                    'Number of Answers',
+                                    'Number of Comments',
+                                    'Reputation'])
 
 
 if __name__ == '__main__':
