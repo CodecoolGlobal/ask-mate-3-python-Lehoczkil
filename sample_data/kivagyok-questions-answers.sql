@@ -1,6 +1,7 @@
 DELETE FROM question;
 DELETE FROM answer;
 DELETE FROM comment;
+DELETE FROM users;
 
 INSERT INTO question VALUES (1, '2020-05-01 10:41:00', 0, 4, 'Adoptation dilemma', 'Should I tell my parents I’m adopted?', NULL, 1);
 INSERT INTO question VALUES (2, '2020-05-03 09:20:00', 0, -3, 'Cannibalism', 'If I eat myself, will I get twice as big or disappear completely?', NULL, 1);
@@ -50,4 +51,28 @@ INSERT INTO comment VALUES(9, 9, NULL, 'No', '2021-08-11 01:14:00', 1, 3);
 INSERT INTO comment VALUES(10, NULL , 4, 'Why', '2022-01-02 01:14:00', 0, 3);
 INSERT INTO comment VALUES(11, 11, NULL, 'Yes', '2022-02-09 01:14:00', 0, 3);
 INSERT INTO comment VALUES(12, NULL , 12, 'Noooo, you are cute', '2022-3-24 01:14:00', 1, 3);
-SELECT pg_catalog.setval('comment_id_seq', 12, true)
+SELECT pg_catalog.setval('comment_id_seq', 12, true);
+
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('nyal_tamás@gmail.com', 'Nyal', 'Tamás', 'nyaltamas', '2018-04-20 09:44:40.154868');
+
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('para_zita@gmail.com', 'Para', 'Zita', 'parazita', '2018-05-12 09:44:40.154868')
+
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('nyomo_reka@gmail.com', 'Nyomo', 'Réka', 'nyomoreka', '2018-08-02 09:44:40.154868')
+
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('remek_elek@gmail.com', 'Remek', 'Elek', 'remekelek', '2018-11-07 09:44:40.154868')
+
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('paradi_csoma@gmail.com', 'Paradi', 'Csoma', 'paradicsoma', '2019-01-20 09:44:40.154868')
+
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('fasomer_mitfizetskiy@gmail.com', 'Fasomer', 'Mitfizetskiy', 'fasomermitfizetskiy', '2019-03-11 09:44:40.154868')
+
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('vak_cina@gmail.com', 'Vak', 'Cina', 'vakcina', '2020-04-20 09:44:40.154868')
+
+INSERT INTO users (username, first_name, last_name, password, registration_time)
+VALUES ('hu_jeno@gmail.com', 'Hü', 'Jenő', 'hujeno', '2022-02-17 09:44:40.154868')
