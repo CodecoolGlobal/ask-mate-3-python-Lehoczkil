@@ -364,3 +364,12 @@ def get_question_id_by_tag_id(cursor, tag_id):
     """).format(tag_id=sql.Literal(tag_id)))
     return cursor.fetchall()
 
+
+@database_common.connection_handler
+def get_tag_id(cursor, tag_name):
+    cursor.execute(sql.SQL("""
+    SELECT id
+    FROM tag
+    WHERE name = {tag_name}
+    """).format(tag_name=sql.Literal(tag_name)))
+    return cursor.fetchall()
