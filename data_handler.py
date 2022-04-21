@@ -221,10 +221,7 @@ def add_user(cursor, username, first_name, last_name, password):
     cursor.execute(sql.SQL("""
         INSERT INTO users (username, first_name, last_name, password)
         VALUES({username}, {first_name}, {last_name}, {password})
-        """).format(username=sql.Literal(username),
-                    first_name=sql.Literal(first_name),
-                    last_name=sql.Literal(last_name),
-                    password=sql.Literal(password)))
+        """).format(username=sql.Literal(username), first_name=sql.Literal(first_name), last_name=sql.Literal(last_name), password=sql.Literal(password)))
 
 
 @database_common.connection_handler
