@@ -57,12 +57,13 @@ def list_questions_page():
 def question_details_page(question_id=None):
     tags = data_handler.get_question_tags(question_id)
     question = data_handler.search_by_id('question', 'id', question_id)
+    view_number = data_handler.raise_view_count(question_id, question[0]['view_number'])
     if question:
         question[0]['submission_time'] = question[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
     answers = data_handler.search_by_id('answer', 'question_id', question_id)
     if answers:
         answers[0]['submission_time'] = answers[0]['submission_time'].strftime("%Y.%m.%d %H:%M")
-    return render_template('question_details.html', question=question, answers=answers, tags=tags)
+    return render_template('question_details.html', question=question, answers=answers, tags=tags, view_number=view_number)
 
 
 @app.route('/question/<question_id>/comments')
