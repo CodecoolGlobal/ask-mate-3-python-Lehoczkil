@@ -15,7 +15,7 @@
             {% if session %}
                 <li><a class="underline" href="{{ url_for('logout') }}">Logout</a></li>
                 <li id="user"><a class="underline" href="{{ url_for('users') }}">Statistics</a></li>
-                <li id="user"><a class="underline" href="">Profile</a></li>
+                <li id="user"><a class="underline" href="{{ url_for('user_profile', user_id = session['user_id']) }}">Profile</a></li>
             {% else %}
                 <li class="underline"><a href="{{ url_for('register') }}">Register</a></li>
                 <li class="underline"><a href="{{ url_for('login') }}">Login</a></li>
