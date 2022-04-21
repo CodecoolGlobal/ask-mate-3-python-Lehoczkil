@@ -239,11 +239,11 @@ def get_users(cursor):
 
 @database_common.connection_handler
 def get_password_by_username(cursor, input_username):
-    cursor.execute(sql.SQL("""
+    cursor.execute('''
     SELECT password
     FROM users
-    WHERE username = {input_username};""").format(input_username=sql.Literal(input_username)))
-    return cursor.fetchall()
+    WHERE username = %(username)s;''', {'username': input_username})
+    return cursor.fetchone()
 
 
 @database_common.connection_handler
