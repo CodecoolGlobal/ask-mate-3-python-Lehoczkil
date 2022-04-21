@@ -321,7 +321,6 @@ def calculate_reputation_points_of_user(cursor, user_id):
     set_reputation_points_of_user(user_id, sum_of_reputation_points)
 
 
-
 @database_common.connection_handler
 def set_reputation_points_of_user(cursor, user_id, sum_of_reputation_points):
     cursor.execute(sql.SQL("""
@@ -329,3 +328,12 @@ def set_reputation_points_of_user(cursor, user_id, sum_of_reputation_points):
         SET reputation_points = {sum_of_reputation_points}
         WHERE reputation.user_id = {user_id}
         """).format(sum_of_reputation_points=sql.Literal(sum_of_reputation_points), user_id=sql.Literal(user_id)))
+
+
+@database_common.connection_handler
+def get_actual_reputation_points_of_user(cursor, user_id):
+    cursor.execute(sql.SQL("""
+        SELECT reputation_points FROM reputation
+        WHERE reputation.user_id = {user_id}
+        """).format(user_id=sql.Literal(user_id)))
+    return cursor.fetchone()['reputation_points']
