@@ -345,3 +345,11 @@ def lose_reputation_points(cursor, user_id, reputation_points):
         UPDATE reputation
         SET reputation_points = {reputation_points} - 2
         WHERE user_id = {user_id}""").format(reputation_points=sql.Literal(reputation_points), user_id=sql.Literal(user_id)))
+
+
+@database_common.connection_handler
+def get_logged_in_user_id(cursor, username):
+    cursor.execute(sql.SQL("""
+        SELECT id FROM users
+        WHERE username = {username}""").format(username=sql.Literal(username)))
+    return cursor.fetchall()
