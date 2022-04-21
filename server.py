@@ -393,9 +393,9 @@ def login():
                 session['user_id'] = user_id
                 return redirect(url_for('index_page'))
             else:
-                return redirect(url_for('login_form.html', error="password"))
+                return render_template('login_form.html', error="password")
         else:
-            return redirect(url_for('login_form.html', error="username"))
+            return render_template('login_form.html', error="user")
     return render_template('login_form.html')
 
 
@@ -409,7 +409,7 @@ def users():
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    session.clear()
     return redirect(url_for('index_page'))
 
 
