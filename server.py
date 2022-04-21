@@ -203,6 +203,9 @@ def answer_vote_up(answer_id=None):
     question = data_handler.get_question_by_answer_id(answer_id)[0]
     question_id = question['question_id']
     data_handler.vote_up('answer', answer_id)
+    username = session['username'] if session else None
+    user_id = data_handler.get_logged_in_user_id(username)[0]['id']
+    gain_reputation(user_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
@@ -212,6 +215,9 @@ def answer_vote_down(answer_id=None):
     question = data_handler.get_question_by_answer_id(answer_id)[0]
     question_id = question['question_id']
     data_handler.vote_down('answer', answer_id)
+    username = session['username'] if session else None
+    user_id = data_handler.get_logged_in_user_id(username)[0]['id']
+    lose_reputation(user_id)
     return redirect(url_for('question_details_page', question_id=question_id))
 
 
