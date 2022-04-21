@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block body %}
+    {% include 'header.html' %}
+    {% if logged_in %}
+         <section class="center">
+            <section class="table-container">
+                <h1 id="question-title">Registered Users</h1>
+                <div class="table-header">
+                    <table>
+                        <thead>
+                            <tr>
+                                {% for header in headers %}
+                                <th>
+                                    {{ header }}
+                                </th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="table-content">
+                    <table>
+                        <tbody>
+                            {% for user_attributes in users_attributes_data_rows %}
+                            <tr>
+                                <td><a href="">{{ user_attributes.username }}</a></td>
+                                <td>{{ user_attributes.registration_time }}</td>
+                                <td>{{ user_attributes.number_of_questions }}</td>
+                                <td>{{ user_attributes.number_of_answers }}</td>
+                                <td>{{ user_attributes.number_of_comments }}</td>
+                                <td>{{ user_attributes.reputation_points }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+         </section>
+    {% else %}
+        <section class="center">
+            <h1 id="question-title">You are not logged in</h1>
+        </section>
+    {% endif %}
+{% endblock %}
