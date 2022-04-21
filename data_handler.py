@@ -337,3 +337,11 @@ def get_actual_reputation_points_of_user(cursor, user_id):
         WHERE reputation.user_id = {user_id}
         """).format(user_id=sql.Literal(user_id)))
     return cursor.fetchone()['reputation_points']
+
+
+@database_common.connection_handler
+def lose_reputation_points(cursor, user_id, reputation_points):
+    cursor.execute(sql.SQL("""
+        UPDATE reputation
+        SET reputation_points = {reputation_points} - 2
+        WHERE user_id = {user_id}""").format(reputation_points=sql.Literal(reputation_points), user_id=sql.Literal(user_id)))
